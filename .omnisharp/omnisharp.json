@@ -1,0 +1,9 @@
+{
+    "formattingOptions": {
+        "tabSize": 2,
+		"IndentationSize": 2
+    },
+    "RoslynExtensionsOptions": {
+        "enableDecompilationSupport": true
+      }
+}
