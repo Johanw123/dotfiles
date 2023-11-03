@@ -58,8 +58,15 @@ M.general = {
       "<Cmd>lua require('harpoon.ui').nav_file(5)<CR>", 
       "Jump to file 5"
     },
-  },
-}
+
+    ["<leader>mo"] = {
+      "<Cmd>lua require('mini.map').open()<CR>", 
+      "Open mini map"
+    },
+  
+
+  }, -- n
+} -- M.general
 
 -- more keybinds!
 
