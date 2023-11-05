@@ -195,6 +195,10 @@ local plugins = {
 
 
   {
+    "folke/flash.nvim",
+  },
+
+  {
     "j-hui/fidget.nvim",
     tag = "legacy",
     event = "LspAttach",
