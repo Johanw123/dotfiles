@@ -129,7 +129,7 @@ local config = {
   handlers = {
     ["textDocument/definition"] = require('omnisharp_extended').handler,
   },
-  cmd = { omnisharp_bin, '--languageserver' , '--hostPID', tostring(pid) },
+  cmd = { "omnisharp", '--languageserver' , '--hostPID', tostring(pid) },
   -- rest of your settings
     -- Enables support for reading code style, naming convention and analyzer
   -- settings from .editorconfig.

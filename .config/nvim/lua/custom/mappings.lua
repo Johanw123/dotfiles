@@ -59,10 +59,8 @@ M.general = {
       "Jump to file 5"
     },
 
-    ["<leader>mo"] = {
-      "<Cmd>lua require('mini.map').open()<CR>", 
-      "Open mini map"
-    },
+
+    
   
 
   }, -- n

@@ -17,10 +17,9 @@ M.treesitter = {
   },
   indent = {
     enable = true,
-    -- disable = {
-    --   "python"
-    -- },
   },
+  build = { ":TSUpdate" },
+  event = { "BufReadPred", "BufNewFile" },
 }
 
 M.mason = {
@@ -69,5 +68,7 @@ M.nvimtree = {
     },
   },
 }
+
+
 
 return M

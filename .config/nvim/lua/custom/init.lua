@@ -6,13 +6,6 @@
 --   command = "tabdo wincmd =",
 -- })
 
-
-vim.cmd('highlight! HarpoonInactive guibg=NONE guifg=#63698c')
-vim.cmd('highlight! HarpoonActive guibg=NONE guifg=white')
-vim.cmd('highlight! HarpoonNumberActive guibg=NONE guifg=#7aa2f7')
-vim.cmd('highlight! HarpoonNumberInactive guibg=NONE guifg=#7aa2f7')
-vim.cmd('highlight! TabLineFill guibg=NONE guifg=white')
-
 -- Helper function for transparency formatting
 local alpha = function()
 	return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
@@ -36,6 +29,8 @@ if vim.g.neovide then
 	vim.g.neovide_cursor_animation_length = 0
 end
 
+
+-- Setup powershell as shell on windows
 if vim.fn.has('win32') then
 	local powershell_options = {
 		shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
