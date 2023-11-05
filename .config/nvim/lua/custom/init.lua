@@ -24,11 +24,29 @@ if vim.g.neovide then
 	vim.g.neovide_floating_blur_amount_x = 15
 	vim.g.neovide_floating_blur_amount_y = 5
 
-	vim.g.neovide_refresh_rate = 60
+	vim.g.neovide_refresh_rate = 165
 
 	vim.g.neovide_cursor_animation_length = 0
 end
 
+-- let g:OmniSharp_highlighting = 0
+
+vim.g.OmniSharp_highlighting = 3
+vim.g.OmniSharp_server_use_net6 = 1
+vim.g.OmniSharp_selector_ui = 'fzf' 
+
+--let g:OmniSharp_highlight_groups = {
+--	\ 'Comment': 'NonText',
+--	\ 'XmlDocCommentName': 'Identifier',
+--	\ 'XmlDocCommentText': 'NonText'
+--	\}
+
+-- https://github.com/OmniSharp/omnisharp-vim/wiki/Highlighting-configuration
+-- https://github.com/dotnet/roslyn/blob/main/src/Workspaces/Core/Portable/Classification/ClassificationTypeNames.cs
+
+vim.g.OmniSharp_highlight_groups = {
+	PropertyName = "PropertyName",
+}
 
 -- Setup powershell as shell on windows
 if vim.fn.has('win32') then

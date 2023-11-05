@@ -130,12 +130,14 @@ local plugins = {
 
   {
     "OmniSharp/omnisharp-roslyn",
+    lazy = false
   },
   {
     "Hoffs/omnisharp-extended-lsp.nvim",
   },
   {
     "OmniSharp/omnisharp-vim",
+    lazy = false
   },
   
 
@@ -174,6 +176,7 @@ local plugins = {
 
   {
     "karb94/neoscroll.nvim",
+    lazy = false,
     config = function()
       require("neoscroll").setup({
         -- All these keys will be mapped to their corresponding default scrolling animation
@@ -183,7 +186,7 @@ local plugins = {
         use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
         respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
         cursor_scrolls_alone = false, -- The cursor will keep on scrolling even if the window cannot scroll further
-        easing_function = nil, -- Default easing function
+        easing_function = 'quintic', -- Default easing function
         pre_hook = nil, -- Function to run before the scrolling animation starts
         post_hook = nil, -- Function to run after the scrolling animation ends
       })

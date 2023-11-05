@@ -16,7 +16,7 @@ M.ui = {
        base_16 = {
          -- base00 = "#1AF80E",
           base0F = "#CFECF7",
-          base08 = "#DB842B",
+          base08 = "#C57626",
        },
       --  base_30 = {
       --     red = "#1AF80E",
