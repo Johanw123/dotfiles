@@ -63,7 +63,7 @@ nvim
 
 
 ### Updating
-Choco upgrade neovim
-NvChadUpdate
-MasonUpdate
-TSUpdate
+* Choco upgrade neovim
+* NvChadUpdate
+* MasonUpdate
+* TSUpdate
