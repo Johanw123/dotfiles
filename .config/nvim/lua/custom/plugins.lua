@@ -2,7 +2,6 @@ local overrides = require("custom.configs.overrides")
 
 ---@type NvPluginSpec[]
 local plugins = {
-
   -- Override plugin definition options
 
   {
@@ -108,6 +107,27 @@ local plugins = {
     "nvim-tree/nvim-tree.lua",
     opts = overrides.nvimtree,
   },
+
+  {
+    'MeanderingProgrammer/dashboard.nvim',
+    event = 'VimEnter',
+    dependencies = {
+        'nvim-tree/nvim-web-devicons',
+        { 'MaximilianLloyd/ascii.nvim', dependencies = { 'MunifTanjim/nui.nvim' } },
+    },
+    config = function()
+        require('dashboard').setup({
+            header = require('custom/ascii2').pikachu,
+            directories = {
+                'G:\\dev\\susrepo1_2',
+                 '~/dotfiles',
+                -- '~/dev/repos/harpoon-core.nvim',
+                -- '~/dev/repos/dashboard.nvim',
+                -- '~/dev/repos/advent-of-code',
+            },
+        })
+    end,
+},
 
   -- Install a plugin
   {

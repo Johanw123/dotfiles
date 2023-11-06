@@ -18,10 +18,11 @@ new-alias cd-sus gotosusrepo1
 function cd-susrepo1_2 { set-location "G:\dev\susrepo1_2" }
 new-alias cd-sus2 gotosusrepo1_2
 
-function cd_appl { set-location C:\Users\Johan\AppData\Local }
-function cd-home { set-location "C:\Users\johanw" }
-function cd-nvim { set-location "C:\Users\johanw\AppData\Local\nvim" }
-function cd-conan { set-location "C:\Users\johanw\.conan" }
+function cd-appl { set-location "~\AppData\Local" }
+function cd-appr { set-location "~\AppData\Roaming" }
+function cd-home { set-location "~" }
+function cd-nvim { set-location "~\dotfiles\.config\nvim\lua\custom" }
+function cd-conan { set-location "~\.conan" }
 
 function cd-dsus { set-location D:\Dev\SurgicalScience }
 

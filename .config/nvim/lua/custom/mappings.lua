@@ -82,6 +82,12 @@ M.general = {
       "Flash Treesitter Search"
     },
   
+    ["<F2>"] = {
+      "<Cmd>lua vim.lsp.buf.rename()<CR>", 
+      "LSP Rename"
+    },
+
+
 
   }, -- n
 } -- M.general
