@@ -121,8 +121,8 @@ local plugins = {
             directories = {
                 'G:\\dev\\susrepo1_2',
                  '~/dotfiles',
-                -- '~/dev/repos/harpoon-core.nvim',
-                -- '~/dev/repos/dashboard.nvim',
+                 'D:\\Dev\\DungeonRun',
+                 'D:\\Dev\\SurgicalScience\\susrepo1_2',
                 -- '~/dev/repos/advent-of-code',
             },
         })

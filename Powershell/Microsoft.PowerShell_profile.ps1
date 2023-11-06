@@ -23,6 +23,7 @@ function cd-appr { set-location "~\AppData\Roaming" }
 function cd-home { set-location "~" }
 function cd-nvim { set-location "~\dotfiles\.config\nvim\lua\custom" }
 function cd-conan { set-location "~\.conan" }
+function cd-dot { set-location "~\dotfiles" }
 
 function cd-dsus { set-location D:\Dev\SurgicalScience }
 
