@@ -148,17 +148,23 @@ local plugins = {
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
 
 
-  {
-    "OmniSharp/omnisharp-roslyn",
-    lazy = false
-  },
-  {
-    "Hoffs/omnisharp-extended-lsp.nvim",
-  },
+  -- C# stuff:
+
+  -- {
+  --   "OmniSharp/omnisharp-roslyn",
+  --   lazy = false
+  -- },
+  -- {
+  --   "Hoffs/omnisharp-extended-lsp.nvim",
+  -- },
   {
     "OmniSharp/omnisharp-vim",
     lazy = false
   },
+  {
+    "jmederosalvarado/roslyn.nvim",
+  },
+  -- C#
   
 
   {

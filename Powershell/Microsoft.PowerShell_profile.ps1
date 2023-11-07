@@ -6,6 +6,92 @@ function Invoke-Starship-PreCommand {
 
 Invoke-Expression (&starship init powershell)
 
+Import-Module PSReadLine
+
+# Other hosts (ISE, ConEmu) don't always work as well with PSReadLine.
+# Also, if PS is run with -Command, PSRL loading is suppressed.
+$psrlMod = Get-Module PSReadLine
+if (($null -eq $psrlMod) -or ($host.Name -eq 'Windows PowerShell ISE Host')) {
+    return
+}
+elseif ($psrlMod.Version.Major -lt 2) {
+    throw "PSReadLine 1.x installed or not imported, import PSRL or ugprade to at least 2.x."
+}
+
+if ((Get-Module PSReadLine).Version.Major -lt 2) {
+    throw "PSReadLine 1.x installed or not imported, import PSRL or ugprade to at least 2.x."
+}
+
+# Configure PSReadLine options
+$darkGray = "$([char]27)[38;2;192;192;192m"
+$options = @{
+    Colors                        = @{ Parameter = $darkGray; Operator = $darkGray }
+    ExtraPromptLineCount          = 5
+    MaximumHistoryCount           = 10000
+    HistorySavePath               = "$PSScriptRoot\PSReadLine_history.txt"
+    HistoryNoDuplicates           = $true
+    HistorySearchCursorMovesToEnd = $true
+    PromptText                    = "> "
+    AddToHistoryHandler           = {
+        param([string]$line)
+        return $line.Length -gt 3 -and $line[0] -ne ' ' -and $line[0] -ne ';'
+    }
+}
+
+# Need >= 2.1
+if ($psrlMod.Version.Minor -ge 1) {
+    $options['PredictionSource'] = 'History'
+}
+
+# Need >= 2.2
+if ($psrlMod.Version.Minor -ge 2) {
+    $options['PredictionViewStyle'] = 'ListView'
+}
+
+Set-PSReadLineOption @options
+
+
+# VIM STUFF??
+# Set-PSReadLineOption -EditMode Vi
+
+# Set-PSReadLineKeyHandler -vimode insert -Chord "k" -ScriptBlock { mapTwoLetterNormal 'k' 'j' }
+# Set-PSReadLineKeyHandler -vimode insert -Chord "j" -ScriptBlock { mapTwoLetterNormal 'j' 'k' }
+# function mapTwoLetterNormal($a, $b){
+#   mapTwoLetterFunc $a $b -func $function:setViCommandMode
+# }
+# function setViCommandMode{
+#     [Microsoft.PowerShell.PSConsoleReadLine]::ViCommandMode()
+# }
+
+# function mapTwoLetterFunc($a,$b,$func) {
+#   if ([Microsoft.PowerShell.PSConsoleReadLine]::InViInsertMode()) {
+#     $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+#     if ($key.Character -eq $b) {
+#         &$func
+#     } else {
+#       [Microsoft.Powershell.PSConsoleReadLine]::Insert("$a")
+#       # Representation of modifiers (like shift) when ReadKey uses IncludeKeyDown
+#       if ($key.Character -eq 0x00) {
+#         return
+#       } else {
+#         # Insert func above converts escape characters to their literals, e.g.
+#         # converts return to ^M. This doesn't.
+#         $wshell = New-Object -ComObject wscript.shell
+#         $wshell.SendKeys("{$($key.Character)}")
+#       }
+#     }
+#   }
+# }
+
+
+# Bonus example
+# function replaceWithExit {
+#     [Microsoft.PowerShell.PSConsoleReadLine]::BackwardKillLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::KillLine()
+#     [Microsoft.PowerShell.PSConsoleReadLine]::Insert('exit')
+# }
+# Set-PSReadLineKeyHandler -Chord ";" -ScriptBlock { mapTwoLetterFunc ';' 'q' -func $function:replaceWithExit }
+
 
 
 Set-Alias -Name np -Value C:\Windows\notepad.exe

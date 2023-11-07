@@ -3,8 +3,9 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 
 local lspconfig = require "lspconfig"
 
+
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "clangd" }
+local servers = { "html", "cssls", "tsserver", "clangd", "csharp_ls"}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -12,6 +13,34 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+-- local function show_unconst_caps(args)
+--     local token = args.data.token
+--     if token.type ~= "variable" or token.modifiers.readonly then return end
+  
+--     local text = vim.api.nvim_buf_get_text(
+--       args.buf, token.line, token.start_col, token.line, token.end_col, {})[1]
+--     if text ~= string.upper(text) then return end
+  
+--     vim.lsp.semantic_tokens.highlight_token(
+--       token, args.buf, args.data.client_id, "Error")
+--   end
+  
+--   vim.api.nvim_create_autocmd("LspTokenUpdate", {
+--     callback = show_unconst_caps,
+--   })
+
+-- require('lspconfig').clangd.setup {
+--     on_attach = function(client, buffer)
+--       vim.api.nvim_create_autocmd("LspTokenUpdate", {
+--         buffer = buffer,
+--         callback = show_unconst_caps,
+--       })
+  
+--       -- other on_attach logic
+--     end,
+--     capabilities = capabilities,
+--   }
 
 require("clangd_extensions").setup {
     server = {
@@ -106,65 +135,74 @@ require("clangd_extensions").setup {
 }
 
 
-local pid = vim.fn.getpid()
--- On linux/darwin if using a release build, otherwise under scripts/OmniSharp(.Core)(.cmd)
--- local omnisharp_bin = "C:\\Users\\Johan\\AppData\\Local\\nvim-data\\mason\\packages\\omnisharp\\OmniSharp.exe"
--- on Windows
--- local omnisharp_bin = "/path/to/omnisharp/OmniSharp.exe"
+-- local pid = vim.fn.getpid()
 
-local config = {
-    on_attach  = function (client, bufnr)
-        local wk = require("which-key")
-        wk.register({
-            g = {
-                name = "lsp/go", -- optional group name
-                d = { "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", "Go definition" }, -- create a binding with label
-            },
-        })
+-- local config = {
+--     on_attach  = function (client, bufnr)
+--         local wk = require("which-key")
+--         wk.register({
+--             g = {
+--                 name = "lsp/go", -- optional group name
+--                 d = { "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", "Go definition" }, -- create a binding with label
+--             },
+--         })
 
-        --vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", {noremap=false})
+--         --vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", {noremap=false})
 
-        on_attach(client, bufnr)
-    end,
-  handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').handler,
-  },
-  cmd = { "omnisharp", '--languageserver' , '--hostPID', tostring(pid) },
-  -- rest of your settings
-    -- Enables support for reading code style, naming convention and analyzer
-  -- settings from .editorconfig.
-  enable_editorconfig_support = true,
+--         on_attach(client, bufnr)
+--     end,
+--   handlers = {
+--     ["textDocument/definition"] = require('omnisharp_extended').handler,
+--   },
+--   cmd = { "omnisharp", '--languageserver' , '--hostPID', tostring(pid) },
+--   -- rest of your settings
+--     -- Enables support for reading code style, naming convention and analyzer
+--   -- settings from .editorconfig.
+--   enable_editorconfig_support = true,
 
-  -- If true, MSBuild project system will only load projects for files that
-  -- were opened in the editor. This setting is useful for big C# codebases
-  -- and allows for faster initialization of code navigation features only
-  -- for projects that are relevant to code that is being edited. With this
-  -- setting enabled OmniSharp may load fewer projects and may thus display
-  -- incomplete reference lists for symbols.
-  enable_ms_build_load_projects_on_demand = false,
+--   -- If true, MSBuild project system will only load projects for files that
+--   -- were opened in the editor. This setting is useful for big C# codebases
+--   -- and allows for faster initialization of code navigation features only
+--   -- for projects that are relevant to code that is being edited. With this
+--   -- setting enabled OmniSharp may load fewer projects and may thus display
+--   -- incomplete reference lists for symbols.
+--   enable_ms_build_load_projects_on_demand = false,
 
-  -- Enables support for roslyn analyz:ers, code fixes and rulesets.
-  enable_roslyn_analyzers = false,
+--   -- Enables support for roslyn analyz:ers, code fixes and rulesets.
+--   enable_roslyn_analyzers = false,
 
-  -- Specifies whether 'using' directives should be grouped and sorted during
-  -- document formatting.
-  organize_imports_on_format = false,
+--   -- Specifies whether 'using' directives should be grouped and sorted during
+--   -- document formatting.
+--   organize_imports_on_format = false,
 
-  -- Enables support for showing unimported types and unimported extension
-  -- methods in completion lists. When committed, the appropriate using
-  -- directive will be added at the top of the current file. This option can
-  -- have a negative impact on initial completion responsiveness,
-  -- particularly for the first few completion sessions after opening a
-  -- solution.
-  enable_import_completion = false,
+--   -- Enables support for showing unimported types and unimported extension
+--   -- methods in completion lists. When committed, the appropriate using
+--   -- directive will be added at the top of the current file. This option can
+--   -- have a negative impact on initial completion responsiveness,
+--   -- particularly for the first few completion sessions after opening a
+--   -- solution.
+--   enable_import_completion = false,
 
-  -- Specifies whether to include preview versions of the .NET SDK when
-  -- determining which version to use for project loading.
-  sdk_include_prereleases = true,
+--   -- Specifies whether to include preview versions of the .NET SDK when
+--   -- determining which version to use for project loading.
+--   sdk_include_prereleases = true,
 
-  -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
-  -- true
-  analyze_open_documents_only = false,
-}
+--   -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+--   -- true
+--   analyze_open_documents_only = false,
+-- }
 
-require'lspconfig'.omnisharp.setup(config)
+-- require'lspconfig'.omnisharp.setup(config)
+
+
+--require'lspconfig'.roslyn.setup()
+
+
+
+
+-- require("roslyn").setup({
+--     dotnet_cmd = "dotnet", -- this is the default
+--     roslyn_version = "4.8.0-3.23475.7", -- this is the default
+--     on_attach = on_attach, -- required
+--     capabilities = capabilities, -- required
+-- })

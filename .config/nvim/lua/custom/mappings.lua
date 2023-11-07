@@ -91,10 +91,11 @@ M.general = {
       function() 
         --require("nvterm.terminal").send("ping 127.0.0.1", "vertical", "i")
         --vim.fn.feedkeys("<CR>")
-        require("harpoon.term").gotoTerminal(1)   
-        require("harpoon.term").sendCommand(1, "ping 127.0.0.1")  
+        --require("harpoon.term").gotoTerminal(1)   
+        --require("harpoon.term").sendCommand(1, "ping 127.0.0.1")  
+        --require("harpoon.term").sendCommand(1, "dotnet run")  
 
-        --require("nvterm.terminal").send("ping 127.0.0.1", "vertical", "i")
+        require("nvterm.terminal").send("ping 127.0.0.1", "vertical", "i")
 
         vim.cmd('startinsert')
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>',true,false,true),'m',true)

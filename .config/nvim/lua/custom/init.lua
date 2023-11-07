@@ -29,7 +29,7 @@ if vim.g.neovide then
 end
 
 -- Omnisharp settings
-vim.g.OmniSharp_highlighting = 3
+vim.g.OmniSharp_highlighting = 0
 vim.g.OmniSharp_server_use_net6 = 1
 vim.g.OmniSharp_selector_ui = 'fzf' 
 
@@ -38,10 +38,43 @@ vim.g.OmniSharp_selector_ui = 'fzf'
 
 vim.g.OmniSharp_highlight_groups = {
 	PropertyName = "PropertyName",
+	TypeParameterName = "TypeParameterName",
+	Structure = "Structure",
+	StaticSymbol = "PropertyName",
 }
+-- Structure is pink, change
+
+--vim.api.nvim_set_hl(0, 'Structure', { bg ="#82ccdd", fg = "#000000", standout=true, bold=true, })
+
+vim.api.nvim_set_hl(0, 'PropertyName', { fg = "#dfe6e9",  })
+
+vim.api.nvim_set_hl(0, '@type.builtin.c_sharp', {  fg = "#6ab04c", })
+vim.api.nvim_set_hl(0, '@keyword.c_sharp', {  fg = "#6ab04c", })
+vim.api.nvim_set_hl(0, '@type.qualifier.c_sharp', {  fg = "#6ab04c", })
+
+vim.api.nvim_set_hl(0, '@type.builtin.cpp', {  fg = "#6ab04c", })
+vim.api.nvim_set_hl(0, '@type.qualifier.cpp', {  fg = "#6ab04c", })
+vim.api.nvim_set_hl(0, '@conditional.cpp', {  fg = "#6ab04c", })
+
+
+
+
+--vim.api.nvim_set_hl(0, 'Include', { bg ="#82ccdd", fg = "#000000",  })
+--vim.api.nvim_set_hl(0, 'Function', { bg ="#82ccdd", fg = "#000000",  })
+
+
+--Include
+--Function
+
+--vim.api.nvim_set_hl(0, 'Typedef', { bg ="#82ccdd", fg = "#000000", standout=true, bold=true, })
+
+
+--@type.builtin - yellow
+--@keyword.operator - pink
 
 -- flash settings
 vim.api.nvim_set_hl(0, 'FlashLabel', { bg ="#82ccdd", fg = "#000000", standout=true, bold=true, })
+
 
 
 -- Setup powershell as shell on windows

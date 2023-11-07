@@ -11,6 +11,8 @@ M.ui = {
   hl_override = highlights.override,
   hl_add = highlights.add,
 
+  lsp_semantic_tokens = true,
+
   changed_themes = {
     onedark = {
        base_16 = {
