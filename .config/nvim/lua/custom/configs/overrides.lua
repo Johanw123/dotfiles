@@ -14,6 +14,7 @@ M.treesitter = {
     "c_sharp",
     "markdown",
     "markdown_inline",
+    "glsl"
   },
   indent = {
     enable = true,

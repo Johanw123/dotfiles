@@ -255,6 +255,16 @@ local plugins = {
        }
     end,
   },
+
+  {
+    "nolanderc/glsl_analyzer",
+    dependencies = { "tikhomirov/vim-glsl", lazy=false },
+  },
+
+  -- {
+  --   "tikhomirov/vim-glsl",
+  -- },
+
  
 }
 
