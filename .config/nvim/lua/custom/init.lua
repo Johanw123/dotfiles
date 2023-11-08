@@ -29,7 +29,7 @@ if vim.g.neovide then
 end
 
 -- Omnisharp settings
-vim.g.OmniSharp_highlighting = 0
+vim.g.OmniSharp_highlighting = 1
 vim.g.OmniSharp_server_use_net6 = 1
 vim.g.OmniSharp_selector_ui = 'fzf' 
 
@@ -41,6 +41,11 @@ vim.g.OmniSharp_highlight_groups = {
 	TypeParameterName = "TypeParameterName",
 	Structure = "Structure",
 	StaticSymbol = "PropertyName",
+	ParameterName = "ParameterName",
+	FieldName = "FieldName",
+	ClassName = "ClassName",
+	LocalName = "LocalName",
+
 }
 -- Structure is pink, change
 
