@@ -260,12 +260,15 @@ local plugins = {
     "nolanderc/glsl_analyzer",
     dependencies = { "tikhomirov/vim-glsl", lazy=false },
   },
-
-  -- {
-  --   "tikhomirov/vim-glsl",
-  -- },
-
- 
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("oil").setup()
+    end,
+  },
 }
 
 

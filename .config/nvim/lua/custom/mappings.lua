@@ -114,6 +114,12 @@ M.general = {
       end,
       "LSP signature help",
     },
+      
+
+    ["-"] = {
+    "<Cmd>lua require('oil').open(require('oil').get_current_dir())<CR>",
+    "Open parent directory"
+    },
 
 
   }, -- n
