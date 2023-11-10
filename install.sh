@@ -28,3 +28,7 @@
 #ln -sf ~/.dot_files/linux/nvm_default_packages ~/.nvm/default-packages
 #mkdir ~/.tmux
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+
+ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
+ln -sf ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
