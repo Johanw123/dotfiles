@@ -67,17 +67,28 @@ local links = {
 	['@lsp.type.method'] = '@method',
 	['@lsp.type.macro'] = '@macro',
 	['@lsp.type.decorator'] = '@function',
-  }
-  for newgroup, oldgroup in pairs(links) do
-	vim.api.nvim_set_hl(0, newgroup, { link = oldgroup, default = true })
-  end
+}
+
+for newgroup, oldgroup in pairs(links) do
+  vim.api.nvim_set_hl(0, newgroup, { link = oldgroup, default = true })
+end
 
 
-vim.api.nvim_set_hl(0, 'PropertyName', { fg = "#dfe6e9",  })
+--vim.api.nvim_set_hl(0, 'PropertyName', { fg = "#dfe6e9",  })
 
+
+--- C Sharp ---
+vim.api.nvim_set_hl(0, 'PropertyName', { fg = "#9B59B6",  })
 vim.api.nvim_set_hl(0, '@type.builtin.c_sharp', {  fg = "#6ab04c", })
 vim.api.nvim_set_hl(0, '@keyword.c_sharp', {  fg = "#6ab04c", })
 vim.api.nvim_set_hl(0, '@type.qualifier.c_sharp', {  fg = "#6ab04c", })
+vim.api.nvim_set_hl(0, 'ParameterName', {  fg = "#C57626", })
+
+--ParameterName
+--FieldName
+--LocalName (variable)
+
+--- C++ ----
 
 local keywords = "#6ab04c"
 
@@ -88,20 +99,14 @@ vim.api.nvim_set_hl(0, '@repeat.cpp', {  fg = keywords, })
 vim.api.nvim_set_hl(0, '@boolean.cpp', {  fg = keywords, })
 vim.api.nvim_set_hl(0, '@constant.builtin.cpp', {  fg = keywords, })
 vim.api.nvim_set_hl(0, '@keyword.return.cpp', {  fg = keywords, })
-
-
 vim.api.nvim_set_hl(0, '@keyword.return.cpp', {  fg = keywords, })
 
-
-
 vim.api.nvim_set_hl(0, '@conditional.ternary.cpp', {  fg = "#dfe6e9", })
-
-
-
 vim.api.nvim_set_hl(0, '@lsp.type.property.cpp', {  fg = "#9B59B6", })
-
-
 vim.api.nvim_set_hl(0, '@lsp.type.macro.cpp', {  fg = "#7ed6df", })
+
+vim.api.nvim_set_hl(0, '@lsp.type.class.cpp', {  fg = "#eccc68", })
+
 
 
 --local functionColor = "#eccc68"

@@ -96,7 +96,7 @@ M.general = {
         --require("harpoon.term").sendCommand(1, "dotnet run")  
 
         require("nvterm.terminal").send("ping 127.0.0.1", "vertical", "i")
-
+        
         vim.cmd('startinsert')
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>',true,false,true),'m',true)
         -- vim.api.nvim_feedkeys("<Enter>", "i", true)
@@ -105,8 +105,7 @@ M.general = {
       end,
       "LSP Rename"
     },
-
-    -- LSP
+        -- LSP
 
     ["<leader>lh"] = {
       function()
@@ -123,6 +122,7 @@ M.general = {
 
 
   }, -- n
+
 } -- M.general
 
 -- more keybinds!

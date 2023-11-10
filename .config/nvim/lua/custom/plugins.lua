@@ -90,13 +90,13 @@ local plugins = {
           }
         },
         incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
+          enable = false,
+          -- keymaps = {
+          --   init_selection = "<C-space>",
+          --   node_incremental = "<C-space>",
+          --   scope_incremental = false,
+          --   node_decremental = "<bs>",
+          -- },
         },
         additional_vim_regex_highlighting = false,
       }
