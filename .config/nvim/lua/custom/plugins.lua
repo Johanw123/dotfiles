@@ -123,6 +123,8 @@ local plugins = {
                  '~/dotfiles',
                  'D:\\Dev\\DungeonRun',
                  'D:\\Dev\\SurgicalScience\\susrepo1_2',
+                 'D:\\Dev\\SurgicalScience\\experimental\\SusrepoHelper\\BuildCLI\\BuildCLI',
+                 'D:\\Dev\\Projects\\RustStuff\\AoC2022',
                 -- '~/dev/repos/advent-of-code',
             },
         })
