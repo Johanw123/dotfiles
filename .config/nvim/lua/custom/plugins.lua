@@ -27,6 +27,10 @@ local plugins = {
     opts = overrides.mason
   },
 
+  -- {
+  -- "simrat39/rust-tools.nvim"
+  -- },
+
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {

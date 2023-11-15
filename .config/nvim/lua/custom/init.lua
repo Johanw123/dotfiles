@@ -223,7 +223,12 @@ vim.api.nvim_set_hl(0, 'FlashLabel', { bg ="#82ccdd", fg = "#000000", standout=t
 
 --vim.filetype.add({ extension = { frag = "frag" } })
 
--- Setup powershell as shell on windows
+-- Setup powershell as shell on window
+--
+--
+
+
+
 if vim.fn.has('win32') then
 	local powershell_options = {
 		shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
