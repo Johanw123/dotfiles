@@ -29,12 +29,19 @@
 #mkdir ~/.tmux
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-echo "[-] Download fonts [-]"
-echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
-unzip FiraCode.zip -d ~/.fonts
-fc-cache -fv
-echo "done!"
+if fc-list | grep -q -i "FiraCode"; then
+    echo "FiraCode font not found"
+    echo "[-] Download fonts [-]"
+    echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
+    unzip FiraCode.zip -d ~/.fonts
+    fc-cache -fv
+    echo "done!"
+else
+    echo "FiraCode font found"
+fi
+
+
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -sf ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua
