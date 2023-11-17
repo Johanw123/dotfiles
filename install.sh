@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 #ln -sf ~/.dot_files/linux/gemrc ~/.gemrc
 #ln -sf ~/.dot_files/linux/gtkrc-2.0.mine ~/.gtkrc-2.0.mine
