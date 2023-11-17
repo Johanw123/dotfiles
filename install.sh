@@ -30,6 +30,8 @@
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 if fc-list | grep -q -i "FiraCode"; then
+    echo "FiraCode font found"
+else
     echo "FiraCode font not found"
     echo "[-] Download fonts [-]"
     echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
@@ -37,8 +39,6 @@ if fc-list | grep -q -i "FiraCode"; then
     unzip FiraCode.zip -d ~/.fonts
     fc-cache -fv
     echo "done!"
-else
-    echo "FiraCode font found"
 fi
 
 
