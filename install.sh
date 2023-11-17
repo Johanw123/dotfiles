@@ -30,7 +30,7 @@
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 if fc-list | grep -q -i "FiraCode"; then
-    echo "FiraCode font found"
+    echo "FiraCode font found!"
 else
     echo "FiraCode font not found"
     echo "[-] Download fonts [-]"
