@@ -1,10 +1,11 @@
--- local autocmd = vim.api.nvim_create_autocmd
 
--- Auto resize panes when resizing nvim window
--- autocmd("VimResized", {
---   pattern = "*",
---   command = "tabdo wincmd =",
--- })
+local opt = vim.opt
+
+opt.cindent = true
+opt.relativenumber = true
+opt.wrap = false
+
+vim.keymap.set('n', '<Leader>pf', 'i<C-r><C-o>+<ESC>l=`[`]$', { desc = 'Paste block and indent'})
 
 -- Helper function for transparency formatting
 local alpha = function()
@@ -242,4 +243,14 @@ if vim.fn.has('win32') then
 	for option, value in pairs(powershell_options) do
 		vim.opt[option] = value
 	end
+
+  package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?\\init.lua;"
+  package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?.lua;"
+  package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\magick\\init.lua;"
+else
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
 end
+
+
+

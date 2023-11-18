@@ -5,6 +5,9 @@ M.disabled = {
   n = {
     -- add vertical terminal
       ["<leader>h"] = "",
+
+    -- new buffer
+    ["<leader>b"] = "",
   }
 }
 
@@ -63,6 +66,11 @@ M.general = {
       "Jump to file 5"
     },
 
+    ["<leader><leader>x"] = {
+      "<Plug>PlenaryTestFile",
+      "TestFile"
+    },
+
     -- flash
 
     ["<leader>l"] = {
@@ -87,24 +95,6 @@ M.general = {
       "LSP Rename"
     },
 
-    ["<F5>"] = {
-      function() 
-        --require("nvterm.terminal").send("ping 127.0.0.1", "vertical", "i")
-        --vim.fn.feedkeys("<CR>")
-        --require("harpoon.term").gotoTerminal(1)   
-        --require("harpoon.term").sendCommand(1, "ping 127.0.0.1")  
-        --require("harpoon.term").sendCommand(1, "dotnet run")  
-
-        require("nvterm.terminal").send("ping 127.0.0.1", "vertical", "i")
-        
-        vim.cmd('startinsert')
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>',true,false,true),'m',true)
-        -- vim.api.nvim_feedkeys("<Enter>", "i", true)
-        ---vim.api.nvim_feedkeys("<CR>")
-
-      end,
-      "LSP Rename"
-    },
         -- LSP
 
     ["<leader>lh"] = {
@@ -114,6 +104,7 @@ M.general = {
       "LSP signature help",
     },
       
+    -- Dap
 
     ["-"] = {
     "<Cmd>lua require('oil').open(require('oil').get_current_dir())<CR>",
@@ -124,6 +115,37 @@ M.general = {
   }, -- n
 
 } -- M.general
+
+M.nvim_dap = {
+	n = {
+		-- ["<leader>dl"] = { "<cmd>lua require'dap'.step_into()<CR>", "debugger step into" },
+		-- ["<leader>dj"] = { "<cmd>lua require'dap'.step_over()<CR>", "debugger step over" },
+		-- ["<leader>dk"] = { "<cmd>lua require'dap'.step_out()<CR>", "debugger step out" },
+		-- ["<leader>d<space>"] = { "<cmd>lua require'dap'.continue()<CR>", "debugger continue" },
+		-- ["<leader>dbp"] = { "<cmd>lua require'dap'.toggle_breakpoint()<CR>", "debugger toggle breakpoint" },
+		-- ["<leader>dd"] = {
+		-- 	"<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+		-- 	"debugger set conditional breakpoint",
+		-- },
+		-- ["<leader>de"] = { "<cmd>lua require'dap'.terminate()<CR>", "debugger reset" },
+		-- ["<leader>dr"] = { "<cmd>lua require'dap'.run_last()<CR>", "debugger reset" },
+		-- map("n", "<leader>m", ":MaximizerToggle!<CR>", { noremap = true })
+
+    ["<leader>b"] = { "<cmd>lua require'dap'.toggle_breakpoint()<CR>", "debugger toggle breakpoint" },
+    ["<leader>B"] = { "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", "debugger set conditional breakpoint" },
+
+    ["<leader>de"] = { "<cmd>lua require'dap'.terminate()<CR>", "debugger reset" },
+
+    ["<F5>"] = { "<cmd>lua require'dap'.continue()<CR>", "debugger continue" },
+
+    --step into
+    ["<F11>"] = { "<cmd>lua require'dap'.step_into()<CR>", "debugger continue" },
+    --step out
+    ["<S-F11>"] = { "<cmd>lua require'dap'.step_out()<CR>", "debugger continue" },
+    --step over
+    ["<F10>"] = { "<cmd>lua require'dap'.step_over()<CR>", "debugger continue" },
+	},
+}
 
 -- more keybinds!
 

@@ -27,9 +27,31 @@ local plugins = {
     opts = overrides.mason
   },
 
-  -- {
-  -- "simrat39/rust-tools.nvim"
-  -- },
+  {
+    "nvim-lua/plenary.nvim",
+    lazy = false,
+  },
+
+  {
+    "3rd/image.nvim",
+  },
+
+  {
+    "libvips/lua-vips",
+  },
+  {
+    "edluffy/hologram.nvim",
+    config = function()
+        require("hologram").setup()
+    end,
+
+    rocks = { "magick" },
+  },
+
+
+  {
+  "simrat39/rust-tools.nvim"
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -156,22 +178,28 @@ local plugins = {
 
   -- C# stuff:
 
-  -- {
-  --   "OmniSharp/omnisharp-roslyn",
-  --   lazy = false
-  -- },
-  -- {
-  --   "Hoffs/omnisharp-extended-lsp.nvim",
-  -- },
   {
-    "OmniSharp/omnisharp-vim",
+    "OmniSharp/omnisharp-roslyn",
     lazy = false
   },
   {
+    "Hoffs/omnisharp-extended-lsp.nvim",
+    lazy = false,
+  },
+  -- {
+  --   "Decodetalkers/csharpls-extended-lsp.nvim",
+  -- },
+  -- {
+  --   "OmniSharp/omnisharp-vim",
+  --   lazy = false
+  -- },
+  {
     "jmederosalvarado/roslyn.nvim",
   },
+  -- {
+  --   "razzmatazz/csharp-language-server"
+  -- },
   -- C#
-  
 
   {
     "ThePrimeagen/harpoon"
@@ -225,11 +253,17 @@ local plugins = {
     end,
   },
 
-
+	{
+		"hrsh7th/nvim-cmp",
+		opts = overrides.cmp,
+	},
   {
     "folke/flash.nvim",
   },
 
+  {
+    "tjdevries/vlog.nvim"
+  },
   {
     "j-hui/fidget.nvim",
     tag = "legacy",
@@ -262,6 +296,15 @@ local plugins = {
     end,
   },
 
+
+  {
+    "NvChad/nvim-colorizer.lua",
+    opts = {
+      user_default_options = { mode = "background", rgb_fn = true, css  = true,css_fn =true  },
+    }
+  },
+
+
   {
     "nolanderc/glsl_analyzer",
     dependencies = { "tikhomirov/vim-glsl", lazy=false },
@@ -275,6 +318,37 @@ local plugins = {
       require("oil").setup()
     end,
   },
+
+
+  -- Dap
+	{
+		"mfussenegger/nvim-dap",
+		config = function()
+			require("custom.configs.dap")
+		end,
+	},
+
+	{
+		"rcarriga/nvim-dap-ui",
+		config = function()
+			require("dapui").setup()
+		end,
+		requires = { "mfussenegger/nvim-dap" },
+	},
+
+	{
+		"theHamsta/nvim-dap-virtual-text",
+		config = function()
+			require("nvim-dap-virtual-text").setup()
+		end,
+		requires = { "mfussenegger/nvim-dap" },
+	},
+
+
+  {
+    dir= "D:\\Dev\\avalonia_preview.nvim",
+  },
+
 }
 
 

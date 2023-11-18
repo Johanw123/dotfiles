@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "csharp_ls", "glsl_analyzer", "rust_analyzer" }
+local servers = { "html", "cssls", "lua_ls", "tsserver", "glsl_analyzer", "rust_analyzer" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -14,45 +14,6 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- local function show_unconst_caps(args)
---     local token = args.data.token
---     if token.type ~= "variable" or token.modifiers.readonly then return end
---     local text = vim.api.nvim_buf_get_text(
---       args.buf, token.line, token.start_col, token.line, token.end_col, {})[1]
---     if text ~= string.upper(text) then return end
---     vim.lsp.semantic_tokens.highlight_token(
---       token, args.buf, args.data.client_id, "Error")
---   end
---   vim.api.nvim_create_autocmd("LspTokenUpdate", {
---     callback = show_unconst_caps,
---   })
-
--- require('lspconfig').clangd.setup {
---     on_attach = function(client, buffer)
---       vim.api.nvim_create_autocmd("LspTokenUpdate", {
---         buffer = buffer,
---         callback = show_unconst_caps,
---       })
---       -- other on_attach logic
---     end,
---     capabilities = capabilities,
---   }
---
---
---
--- local rt = require("rust-tools")
--- --
--- rt.setup({
---   server = {
---     on_attach = function(_, bufnr)
---       -- Hover actions
---       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
---       -- Code action groups
---       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
---     end,
---   },
--- })
---
 
 
 
@@ -70,159 +31,122 @@ lspconfig["clangd"].setup{
 }
 
 
--- require("clangd_extensions").setup({
---     inlay_hints = {
---         inline = vim.fn.has("nvim-0.10") == 1,
---         -- Options other than `highlight' and `priority' only work
---         -- if `inline' is disabled
---         -- Only show inlay hints for the current line
---         only_current_line = false,
---         -- Event which triggers a refresh of the inlay hints.
---         -- You can make this { "CursorMoved" } or { "CursorMoved,CursorMovedI" } but
---         -- not that this may cause  higher CPU usage.
---         -- This option is only respected when only_current_line and
---         -- autoSetHints both are true.
---         only_current_line_autocmd = { "CursorHold" },
---         -- whether to show parameter hints with the inlay hints or not
---         show_parameter_hints = true,
---         -- prefix for parameter hints
---         parameter_hints_prefix = "<- ",
---         -- prefix for all the other hints (type, chaining)
---         other_hints_prefix = "=> ",
---         -- whether to align to the length of the longest line in the file
---         max_len_align = false,
---         -- padding from the left if max_len_align is true
---         max_len_align_padding = 1,
---         -- whether to align to the extreme right or not
---         right_align = false,
---         -- padding from the right if right_align is true
---         right_align_padding = 7,
---         -- The color of the hints
---         highlight = "Comment",
---         -- The highlight group priority for extmark
---         priority = 100,
---     },
---     ast = {
---         -- These are unicode, should be available in any font
---         role_icons = {
---             type = "🄣",
---             declaration = "🄓",
---             expression = "🄔",
---             statement = ";",
---             specifier = "🄢",
---             ["template argument"] = "🆃",
---         },
---         kind_icons = {
---             Compound = "🄲",
---             Recovery = "🅁",
---             TranslationUnit = "🅄",
---             PackExpansion = "🄿",
---             TemplateTypeParm = "🅃",
---             TemplateTemplateParm = "🅃",
---             TemplateParamObject = "🅃",
---         },
---         --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
---             role_icons = {
---                 type = "",
---                 declaration = "",
---                 expression = "",
---                 specifier = "",
---                 statement = "",
---                 ["template argument"] = "",
---             },
---
---             kind_icons = {
---                 Compound = "",
---                 Recovery = "",
---                 TranslationUnit = "",
---                 PackExpansion = "",
---                 TemplateTypeParm = "",
---                 TemplateTemplateParm = "",
---                 TemplateParamObject = "",
---             }, ]]
---
---         highlights = {
---             detail = "Comment",
---         },
---     },
---     memory_usage = {
---         border = "none",
---     },
---     symbol_info = {
---         border = "none",
---     },
--- })
 
-
-
--- local pid = vim.fn.getpid()
-
--- local config = {
---     on_attach  = function (client, bufnr)
---         local wk = require("which-key")
---         wk.register({
---             g = {
---                 name = "lsp/go", -- optional group name
---                 d = { "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", "Go definition" }, -- create a binding with label
---             },
---         })
-
---         --vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", {noremap=false})
-
---         on_attach(client, bufnr)
---     end,
---   handlers = {
---     ["textDocument/definition"] = require('omnisharp_extended').handler,
---   },
---   cmd = { "omnisharp", '--languageserver' , '--hostPID', tostring(pid) },
---   -- rest of your settings
---     -- Enables support for reading code style, naming convention and analyzer
---   -- settings from .editorconfig.
---   enable_editorconfig_support = true,
-
---   -- If true, MSBuild project system will only load projects for files that
---   -- were opened in the editor. This setting is useful for big C# codebases
---   -- and allows for faster initialization of code navigation features only
---   -- for projects that are relevant to code that is being edited. With this
---   -- setting enabled OmniSharp may load fewer projects and may thus display
---   -- incomplete reference lists for symbols.
---   enable_ms_build_load_projects_on_demand = false,
-
---   -- Enables support for roslyn analyz:ers, code fixes and rulesets.
---   enable_roslyn_analyzers = false,
-
---   -- Specifies whether 'using' directives should be grouped and sorted during
---   -- document formatting.
---   organize_imports_on_format = false,
-
---   -- Enables support for showing unimported types and unimported extension
---   -- methods in completion lists. When committed, the appropriate using
---   -- directive will be added at the top of the current file. This option can
---   -- have a negative impact on initial completion responsiveness,
---   -- particularly for the first few completion sessions after opening a
---   -- solution.
---   enable_import_completion = false,
-
---   -- Specifies whether to include preview versions of the .NET SDK when
---   -- determining which version to use for project loading.
---   sdk_include_prereleases = true,
-
---   -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
---   -- true
---   analyze_open_documents_only = false,
--- }
-
--- require'lspconfig'.omnisharp.setup(config)
+ -- local pid = vim.fn.getpid()
+ --
+ -- local config = {
+ --     on_attach  = function (client, bufnr)
+ --         local wk = require("which-key")
+ --         wk.register({
+ --             g = {
+ --                 name = "lsp/go", -- optional group name
+ --                 d = { "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", "Go definition" }, -- create a binding with label
+ --             },
+ --         })
+ --
+ --         --vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definitions()<cr>", {noremap=false})
+ --
+ --         on_attach(client, bufnr)
+ --     end,
+ --   handlers = {
+ --     ["textDocument/definition"] = require('omnisharp_extended').handler,
+ --   },
+ --   cmd = { "omnisharp", '--languageserver' , '--hostPID', tostring(pid) },
+ --   -- rest of your settings
+ --     -- Enables support for reading code style, naming convention and analyzer
+ --   -- settings from .editorconfig.
+ --   enable_editorconfig_support = true,
+ --
+ --   -- If true, MSBuild project system will only load projects for files that
+ --   -- were opened in the editor. This setting is useful for big C# codebases
+ --   -- and allows for faster initialization of code navigation features only
+ --   -- for projects that are relevant to code that is being edited. With this
+ --   -- setting enabled OmniSharp may load fewer projects and may thus display
+ --   -- incomplete reference lists for symbols.
+ --   enable_ms_build_load_projects_on_demand = false,
+ --
+ --   -- Enables support for roslyn analyz:ers, code fixes and rulesets.
+ --   enable_roslyn_analyzers = true,
+ --
+ --   -- Specifies whether 'using' directives should be grouped and sorted during
+ --   -- document formatting.
+ --   organize_imports_on_format = false,
+ --
+ --   -- Enables support for showing unimported types and unimported extension
+ --   -- methods in completion lists. When committed, the appropriate using
+ --   -- directive will be added at the top of the current file. This option can
+ --   -- have a negative impact on initial completion responsiveness,
+ --   -- particularly for the first few completion sessions after opening a
+ --   -- solution.
+ --   enable_import_completion = false,
+ --
+ --   -- Specifies whether to include preview versions of the .NET SDK when
+ --   -- determining which version to use for project loading.
+ --   sdk_include_prereleases = true,
+ --
+ --   -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+ --   -- true
+ --   analyze_open_documents_only = false,
+ -- }
+ --
+ -- require'lspconfig'.omnisharp.setup(config)
 
 
 --require'lspconfig'.roslyn.setup()
+-- local cap = capabilities
+-- cap.completion = {
+--   completionItem = {
+--     commitCharactersSupport = true,
+--     deprecatedSupport = true,
+--     documentationFormat = { "markdown", "plaintext" },
+--     insertReplaceSupport = true,
+--     insertTextModeSupport = {
+--       valueSet = { 1, 2 }
+--     },
+--     labelDetailsSupport = true,
+--     preselectSupport = true,
+--     resolveSupport = {
+--       properties = { "documentation", "detail", "additionalTextEdits", "sortText", "filterText", "insertText", "textEdit", "insertTextFormat", "insertTextMode" },
+--     },
+--     snippetSupport = true,
+--     tagSupport = {
+--       valueSet = { 1 }
+--     }
+--   },
+--   completionItemKind = {
+--     valueSet = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 }
+--   },
+--   completionList = {
+--     itemDefaults = { "commitCharacters", "editRange", "insertTextFormat", "insertTextMode", "data" }
+--   },
+--   contextSupport = true,
+--   dynamicRegistration = false,
+--   insertTextMode = 1
+-- };
 
+-- local capa = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+require("roslyn").setup({
+    on_attach = on_attach, -- required
+    capabilities = capabilities, -- required
+    handlers = {
+     ["textdocument/definition"] = require('omnisharp_extended').handler,
+  }
+})
 
-
--- require("roslyn").setup({
---     dotnet_cmd = "dotnet", -- this is the default
---     roslyn_version = "4.8.0-3.23475.7", -- this is the default
---     on_attach = on_attach, -- required
---     capabilities = capabilities, -- required
+-- lspconfig["csharp_ls"].setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   handlers = {
+--      ["textdocument/definition"] = require('csharpls_extended').handler,
+--   }
 -- })
+--
+-- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+-- vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+
+-- vim.lsp.handlers['textDocument/definition'] = require('omnisharp_extended').handler
+
+--
+--
+-- https://github.com/Hoffs/omnisharp-extended-lsp.nvim
