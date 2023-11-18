@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 #ln -sf ~/.dot_files/linux/gemrc ~/.gemrc
 #ln -sf ~/.dot_files/linux/gtkrc-2.0.mine ~/.gtkrc-2.0.mine
@@ -29,6 +29,19 @@
 #mkdir ~/.tmux
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+if fc-list | grep -q -i "FiraCode"; then
+    echo "FiraCode font found!"
+else
+    echo "FiraCode font not found"
+    echo "[-] Download fonts [-]"
+    echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
+    unzip FiraCode.zip -d ~/.fonts
+    fc-cache -fv
+    echo "done!"
+fi
+
+
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
-ln -sf ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
+ln -sf ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua
