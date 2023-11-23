@@ -29,6 +29,8 @@ M.mason = {
     -- lua stuff
     "lua-language-server",
     "stylua",
+    
+    "lemminx",
 
     "rust-analyzer",
 
