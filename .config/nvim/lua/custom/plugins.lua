@@ -346,7 +346,8 @@ local plugins = {
 
 
   {
-    dir= "D:\\Dev\\avalonia_preview.nvim",
+    dir = "/mnt/d/Dev/avalonia_preview.nvim/"
+    -- dir= "D:\\Dev\\avalonia_preview.nvim",
   },
 
 }

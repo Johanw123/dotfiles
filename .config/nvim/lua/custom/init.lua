@@ -228,9 +228,21 @@ vim.api.nvim_set_hl(0, 'FlashLabel', { bg ="#82ccdd", fg = "#000000", standout=t
 --
 --
 
+if vim.fn.has("wsl") then
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/magick/init.lua;"
 
+<<<<<<< HEAD
 
 if vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
+=======
+  
+  -- vim.opt.shell = "kitty"
+  -- vim.opt.shellcmdflag = "--detach"
+  vim.opt.shell = "zsh"
+elseif vim.fn.has('win32') then
+>>>>>>> 24466c0 (ye)
 	local powershell_options = {
 		shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
 		shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
@@ -249,6 +261,9 @@ if vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
 else
   package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
   package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
+
+
+
 end
 
 
