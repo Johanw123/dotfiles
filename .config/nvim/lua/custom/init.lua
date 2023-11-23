@@ -230,7 +230,7 @@ vim.api.nvim_set_hl(0, 'FlashLabel', { bg ="#82ccdd", fg = "#000000", standout=t
 
 
 
-if vim.fn.has('win32') and not vim.fn.has("wsl") then
+if vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
 	local powershell_options = {
 		shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
 		shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",

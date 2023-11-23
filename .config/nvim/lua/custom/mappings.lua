@@ -112,6 +112,20 @@ M.general = {
     },
 
 
+    -- Windows
+    ["<leader><leader>o"] = {
+      function()
+        local path = vim.fn.fnamemodify(vim.fn.expand("%:h"), ":p")
+        -- vim.print(path)
+        vim.fn.system { 'cmd', '/c', 'explorer', path }
+      end,
+
+      -- "<Cmd>lua vim.fn.system {'cmd', '/c', 'explorer', 'G:/dev/susrepo1_2':gsub('/', '\\')' }<CR>",
+      "Explore file location"
+    },
+
+
+
   }, -- n
 
 } -- M.general
