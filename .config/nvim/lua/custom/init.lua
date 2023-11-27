@@ -252,5 +252,61 @@ else
 end
 
 
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, command = "setf xml" })
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.xaml"}, command = "setf xml" })
+-- vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.nvim"}, command = "setf markdown" })
+
+-- vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, command = "setf xml" })
+-- vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.xaml"}, command = "setf xml" })
+-- vim.filetype.add({extensions = {axaml = "xml"}})
+-- local bin = "/mnt/c/Users/Johan/.vscode/extensions/avaloniateam.vscode-avalonia-0.0.24/avaloniaServer/AvaloniaLanguageServer.dll"
+-- local bin = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.24\\avaloniaServer\\AvaloniaLanguageServer.dll";
+--D:\Dev\avalonia_preview.nvim\Avalonia.AxamlAutoCompletion\Avalonia.AXAML.LanguageServer\Avalonia.AXAML.LanguageServer\bin\Debug\net6.0\\Avalonia.AXAML.LanguageServer.exe
+  local bin = "D:\\Dev\\avalonia_preview.nvim\\Avalonia.AxamlAutoCompletion\\Avalonia.AXAML.LanguageServer\\Avalonia.AXAML.LanguageServer\\bin\\Debug\\net6.0\\Avalonia.AXAML.LanguageServer.exe"
+  local arg = "D:\\Dev\\avalonia_preview.nvim\\Avalonia.AxamlAutoCompletion\\Avalonia.AXAML.LanguageServer\\Avalonia.AXAML.LanguageServer\\bin\\Debug\\net6.0\\Avalonia.AXAML.LanguageServer.dll"
+  
+
+  local bin2 = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.24\\avaloniaServer\\AvaloniaLanguageServer.dll"
+
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
+  function()
+    vim.cmd.setfiletype("xml")
+    vim.lsp.start({
+      name = "Avalonia LSP",
+      cmd = { "dotnet", bin2 },
+      root_dir = vim.fn.getcwd(), -- Use PWD as project root dir.
+    })
+  end})
+
+-- vim.g.markdown_fenced_languages = { 'c++=cpp', 'csharp=cs' }
+-- vim.g.markdown_syntax_conceal = 2
+
+vim.defer_fn(function()
+  require('gen').prompts['Elaborate_Text'] = {
+  prompt = "Elaborate the following text:\n$text",
+  replace = true
+}
+require('gen').prompts['Fix_Code'] = {
+  prompt = "Fix the following code. Only ouput the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```",
+  replace = true,
+  extract = "```$filetype\n(.-)```"
+}
+require('gen').prompts['Explain_Text'] = {
+  prompt = "Explain the following text:\n$text",
+  replace = false
+}
+
+-- require('gen').prompts['Explain_Cpp'] = {
+--   prompt = "Can you exaplin the following C++ code using examples:\n$text",
+--   replace = false,
+--   extract = "```$filetype\n(.-)```"
+-- }
+
+require('gen').prompts['Explain_Cpp'] = {
+  prompt = "Generate a response in markdown using codeblocks with $filetype tags and explain the following code:\n$text",
+  replace = false,
+  extract = "```$filetype\n(.-)```"
+}
+
+end, 1000)
+-- vim.treesitterlanguage.register('xml', 'axaml')
+
+
