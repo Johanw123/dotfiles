@@ -344,9 +344,8 @@ local plugins = {
 		requires = { "mfussenegger/nvim-dap" },
 	},
 
-
   {
-    dir= "D:\\Dev\\avalonia_preview.nvim",
+    dir= "D:\\Dev\\avalonia.nvim",
   },
   {
     "ixru/nvim-markdown",
