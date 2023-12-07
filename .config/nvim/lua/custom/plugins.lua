@@ -147,10 +147,14 @@ local plugins = {
             directories = {
                 'G:\\dev\\susrepo1_2',
                  '~/dotfiles',
+
+                -- Home PC
                  'D:\\Dev\\DungeonRun',
                  'D:\\Dev\\SurgicalScience\\susrepo1_2',
                  'D:\\Dev\\SurgicalScience\\experimental\\SusrepoHelper\\BuildCLI\\BuildCLI',
                  'D:\\Dev\\Projects\\RustStuff\\AoC2022',
+                 'D:\\Dev\\avalonia.nvim',
+                 'C:\\Users\\Johan\\source\\repos\\AvaloniaApplication3'
                 -- '~/dev/repos/advent-of-code',
             },
         })

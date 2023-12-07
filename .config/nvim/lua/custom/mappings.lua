@@ -124,7 +124,18 @@ M.general = {
       "Explore file location"
     },
 
-
+    ["<leader>fr"] = {
+      function()
+        require('telescope.builtin').lsp_references()
+      end,
+      "LSP find references",
+    },
+    ["<leader>fs"] = {
+      function()
+        require('telescope.builtin').grep_string()
+      end,
+      "Find string (grep string)",
+    },
 
   }, -- n
 
