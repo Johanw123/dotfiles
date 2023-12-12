@@ -44,4 +44,4 @@ fi
 
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
-ln -sf ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua
+ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom

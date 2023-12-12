@@ -350,20 +350,14 @@ local plugins = {
 
   {
     dir= "D:\\Dev\\avalonia.nvim",
-    cond = vim.loop.get_uname().sysname != "Linux",
+    enabled = function() return jit.os == "Linux" end
   },
   {
     dir= "/mnt/d/Dev/avalonia.nvim",
-    cond = vim.loop.get_uname().sysname == "Linux",
+    enabled = function() return jit.os == "Linux" end
   },
-
-
 
   {
-    dir = "/mnt/d/Dev/avalonia_preview.nvim/"
-    -- dir= "D:\\Dev\\avalonia_preview.nvim",
-  },
-{
     "David-Kunz/gen.nvim",
     opts = {
         model = "codellama", -- The default model to use.
