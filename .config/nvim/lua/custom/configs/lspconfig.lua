@@ -5,7 +5,7 @@ local lspconfig = require "lspconfig"
 
 
 -- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "lua_ls", "tsserver", "glsl_analyzer", "rust_analyzer", "lemminx" }
+local servers = { "html", "cssls", "lua_ls", "tsserver", "glsl_analyzer", "rust_analyzer", "lemminx", "marksman" }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -150,3 +150,38 @@ require("roslyn").setup({
 --
 --
 -- https://github.com/Hoffs/omnisharp-extended-lsp.nvim
+
+
+
+  local bin = "D:\\Dev\\avalonia_preview.nvim\\Avalonia.AxamlAutoCompletion\\Avalonia.AXAML.LanguageServer\\Avalonia.AXAML.LanguageServer\\bin\\Debug\\net6.0\\Avalonia.AXAML.LanguageServer.exe"
+  local arg = "D:\\Dev\\avalonia_preview.nvim\\Avalonia.AxamlAutoCompletion\\Avalonia.AXAML.LanguageServer\\Avalonia.AXAML.LanguageServer\\bin\\Debug\\net6.0\\Avalonia.AXAML.LanguageServer.dll"
+  
+-- vim.lsp.start({
+--   cmd = { bin, arg },
+--   root_dir = vim.fn.getcwd(), -- Use PWD as project root dir.
+-- })
+
+
+-- local lsp = require 'lspconfig'
+--
+-- vim.tbl_deep_extend('keep', lsp, {
+-- 	lsp_name = {
+-- 		cmd = { bin, arg },
+-- 		filetypes = 'axaml',
+-- 		name = 'Avalonia LSP',
+-- 	}
+-- })
+-- require('lspconfig.configs').templ = {
+--   default_config = {
+--     cmd = {bin, arg},
+--     filetypes = {'axaml', 'xml'},
+--     root_dir = vim.fn.getcwd(),
+--     settings = {},
+--   };
+-- }
+
+-- lspconfig["Avalonia LSP"].setup{
+--   on_attach = function(client, buffer)
+--   end,
+--   capabilities = testCap,
+-- }

@@ -255,6 +255,43 @@ elseif vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
 
 end
 
+  local bin2 = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.25\\avaloniaServer\\AvaloniaLanguageServer.dll"
 
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, command = "setf xml" })
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.xaml"}, command = "setf xml" })
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
+  function()
+    vim.cmd.setfiletype("xml")
+    vim.lsp.start({
+      name = "Avalonia LSP",
+      cmd = { "dotnet", bin2 },
+      root_dir = vim.fn.getcwd(),
+    })
+  end})
+
+vim.defer_fn(function()
+  require('gen').prompts['Elaborate_Text'] = {
+  prompt = "Elaborate the following text:\n$text",
+  replace = true
+}
+require('gen').prompts['Fix_Code'] = {
+  prompt = "Fix the following code. Only ouput the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```",
+  replace = true,
+  extract = "```$filetype\n(.-)```"
+}
+require('gen').prompts['Explain_Text'] = {
+  prompt = "Explain the following text:\n$text",
+  replace = false
+}
+
+-- require('gen').prompts['Explain_Cpp'] = {
+--   prompt = "Can you exaplin the following C++ code using examples:\n$text",
+--   replace = false,
+--   extract = "```$filetype\n(.-)```"
+-- }
+
+require('gen').prompts['Explain_Cpp'] = {
+  prompt = "Generate a response in markdown using codeblocks with $filetype tags and explain the following code:\n$text",
+  replace = false,
+  extract = "```$filetype\n(.-)```"
+}
+
+end, 1000)

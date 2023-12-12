@@ -14,6 +14,7 @@ M.treesitter = {
     "c_sharp",
     "markdown",
     "markdown_inline",
+    "xml",
     "glsl",
     "rust",
   },
@@ -31,6 +32,7 @@ M.mason = {
     "stylua",
     
     "lemminx",
+    "marksman",
 
     "rust-analyzer",
 
