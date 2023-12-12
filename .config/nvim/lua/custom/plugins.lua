@@ -350,7 +350,15 @@ local plugins = {
 
   {
     dir= "D:\\Dev\\avalonia.nvim",
+    cond = vim.loop.get_uname().sysname != "Linux",
   },
+  {
+    dir= "/mnt/d/Dev/avalonia.nvim",
+    cond = vim.loop.get_uname().sysname == "Linux",
+  },
+
+
+
   {
     "ixru/nvim-markdown",
     lazy = false

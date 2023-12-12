@@ -8,6 +8,7 @@
 #Powershell
 #Install-Module PSUtil # https://github.com/PowershellFrameworkCollective/PSUtil
 #choco install starship
+#choco install sysinternals
 
 # Dotfiles
 #git clone https://github.com/NvChad/NvChad $HOME\AppData\Local\nvim --depth 1

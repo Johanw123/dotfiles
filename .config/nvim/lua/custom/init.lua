@@ -251,7 +251,7 @@ else
   package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
 end
 
-local bin2 = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.24\\avaloniaServer\\AvaloniaLanguageServer.dll"
+  local bin2 = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.25\\avaloniaServer\\AvaloniaLanguageServer.dll"
 
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
   function()
@@ -259,7 +259,7 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, c
     vim.lsp.start({
       name = "Avalonia LSP",
       cmd = { "dotnet", bin2 },
-      root_dir = vim.fn.getcwd(), -- Use PWD as project root dir.
+      root_dir = vim.fn.getcwd(),
     })
   end})
 

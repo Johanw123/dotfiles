@@ -1,11 +1,15 @@
 {
     "formattingOptions": {
         "tabSize": 2,
-		"IndentationSize": 2
+		    "IndentationSize": 2,
+        "EnableEditorConfigSupport": true,
+        "OrganizeImports": true
     },
     "RoslynExtensionsOptions": {
         "enableDecompilationSupport": true,
         "inlayHintsOptions": {
+          "enableAnalyzersSupport": false,
+          "enableImportCompletion": true,
           "enableForParameters": true,
           "forLiteralParameters": true,
           "forIndexerParameters": true,
