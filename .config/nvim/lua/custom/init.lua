@@ -228,7 +228,7 @@ vim.api.nvim_set_hl(0, 'FlashLabel', { bg ="#82ccdd", fg = "#000000", standout=t
 --
 --
 
-if vim.fn.has("wsl") then
+if vim.fn.has("wsl") == 1 then
   package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
   package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
   package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/magick/init.lua;"
@@ -253,19 +253,19 @@ elseif vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
   package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?\\init.lua;"
   package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?.lua;"
 
-end
 
   local bin2 = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.25\\avaloniaServer\\AvaloniaLanguageServer.dll"
 
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
-  function()
-    vim.cmd.setfiletype("xml")
-    vim.lsp.start({
-      name = "Avalonia LSP",
-      cmd = { "dotnet", bin2 },
-      root_dir = vim.fn.getcwd(),
-    })
-  end})
+  vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
+    function()
+      vim.cmd.setfiletype("xml")
+      vim.lsp.start({
+        name = "Avalonia LSP",
+        cmd = { "dotnet", bin2 },
+        root_dir = vim.fn.getcwd(),
+      })
+    end})
+end
 
 vim.defer_fn(function()
   require('gen').prompts['Elaborate_Text'] = {

@@ -350,7 +350,7 @@ local plugins = {
 
   {
     dir= "D:\\Dev\\avalonia.nvim",
-    enabled = function() return jit.os == "Linux" end
+    enabled = function() return jit.os ~= "Linux" end
   },
   {
     dir= "/mnt/d/Dev/avalonia.nvim",
