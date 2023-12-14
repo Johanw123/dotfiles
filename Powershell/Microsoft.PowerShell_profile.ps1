@@ -5,6 +5,7 @@ function Invoke-Starship-PreCommand {
 }
 
 Invoke-Expression (&starship init powershell)
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 Import-Module PSReadLine
 
@@ -97,7 +98,8 @@ Set-PSReadLineOption @options
 Set-Alias -Name np -Value C:\Windows\notepad.exe
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name vim -Value nvim
-
+#Set-Alias -Name cd -Value zoxide
+#Set-Alias -Name z -Value zoxide
 
 function cd-susrepo1 { set-location "G:\dev\susrepo1" }
 new-alias cd-sus gotosusrepo1
@@ -121,8 +123,9 @@ function cd-dr { set-location D:\Dev\DungeonRun\DungeonRun }
 
 
 
-function ls_alias_detailed { Get-ChildItem $args -Exclude .* }
-Set-Alias -Name lsd -Value ls_alias_detailed -Option AllScope
+#function ls_alias_detailed { bls }
+#function ls_alias_detailed { Get-ChildItem $args -Exclude .* }
+#Set-Alias -Name lsd -Value ls_alias_detailed -Option AllScope
 
 function ls_alias_c1 { Get-ChildItem $args -Exclude .*  | Format-Wide -Column 1 -Property Name }
 Set-Alias -Name ls1 -Value ls_alias_c1 -Option AllScope
@@ -142,15 +145,16 @@ Set-Alias -Name ls5 -Value ls_alias_c5 -Option AllScope
 function ls_alias_unix { wsl ls --color=auto -hF $args }
 Set-Alias -Name lsu -Value ls_alias_unix -Option AllScope
 
-function lse_alias_unix { wsl exa --icons -F -H --group-directories-first --git -1 }
+function lse_alias_unix { eza --icons -F -H --group-directories-first --git -1 }
 Set-Alias -Name lse -Value lse_alias_unix -Option AllScope
 
-function ll_alias_unix { wsl exa --icons -F -H --group-directories-first --git -1 -alF }
+function ll_alias_unix { eza --icons -F -H --group-directories-first --git -1 -alF }
 Set-Alias -Name ll -Value ll_alias_unix -Option AllScope
 
-function ls_alias { lse }
-Set-Alias -Name ls -Value ls_alias_detailed -Option AllScope
+#function ls_alias { eza }
+#Set-Alias -Name ls -Value ls_alias -Option AllScope
 
+Set-Alias -Name ls -Value eza
 
 function drives {Get-PsDrive -PSProvider 'FileSystem'}
 Set-Alias ds drives
