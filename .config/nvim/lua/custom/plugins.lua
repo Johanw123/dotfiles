@@ -350,12 +350,14 @@ local plugins = {
 
   {
     dir= "D:\\Dev\\avalonia.nvim",
+    enabled = function() return jit.os ~= "Linux" end
   },
   {
-    "ixru/nvim-markdown",
-    lazy = false
+    dir= "/mnt/d/Dev/avalonia.nvim",
+    enabled = function() return jit.os == "Linux" end
   },
-{
+
+  {
     "David-Kunz/gen.nvim",
     opts = {
         model = "codellama", -- The default model to use.

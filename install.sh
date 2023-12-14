@@ -41,7 +41,9 @@ else
     echo "done!"
 fi
 
+#https://github.com/wslutilities/wslu?tab=readme-ov-file
+# sudo apt install wslu
 
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
-ln -sf ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua
+ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom

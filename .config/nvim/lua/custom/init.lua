@@ -228,9 +228,15 @@ vim.api.nvim_set_hl(0, 'FlashLabel', { bg ="#82ccdd", fg = "#000000", standout=t
 --
 --
 
+if vim.fn.has("wsl") == 1 then
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
+  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/magick/init.lua;"
 
-
-if vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
+  -- vim.opt.shell = "kitty"
+  -- vim.opt.shellcmdflag = "--detach"
+  vim.opt.shell = "zsh"
+elseif vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
 	local powershell_options = {
 		shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
 		shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
@@ -246,22 +252,20 @@ if vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
 
   package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?\\init.lua;"
   package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?.lua;"
-else
-  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
-  package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
+
+
+  local bin2 = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.25\\avaloniaServer\\AvaloniaLanguageServer.dll"
+
+  vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
+    function()
+      vim.cmd.setfiletype("xml")
+      vim.lsp.start({
+        name = "Avalonia LSP",
+        cmd = { "dotnet", bin2 },
+        root_dir = vim.fn.getcwd(),
+      })
+    end})
 end
-
-local bin2 = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.24\\avaloniaServer\\AvaloniaLanguageServer.dll"
-
-vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
-  function()
-    vim.cmd.setfiletype("xml")
-    vim.lsp.start({
-      name = "Avalonia LSP",
-      cmd = { "dotnet", bin2 },
-      root_dir = vim.fn.getcwd(), -- Use PWD as project root dir.
-    })
-  end})
 
 vim.defer_fn(function()
   require('gen').prompts['Elaborate_Text'] = {
