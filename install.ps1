@@ -8,8 +8,15 @@
 #pip install --upgrade betterls
 #dotnet tool install --global csharp-ls
 
+#set env variable "editor" to "nvim
+
 #Powershell
 #Install-Module PSUtil # https://github.com/PowershellFrameworkCollective/PSUtil
+#Install-Module -Name PSFzf
+#Install-Module PSReadLine
+
+#Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+
 #choco install starship
 #choco install sysinternals
 

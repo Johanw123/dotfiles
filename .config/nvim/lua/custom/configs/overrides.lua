@@ -17,6 +17,7 @@ M.treesitter = {
     "xml",
     "glsl",
     "rust",
+    "python"
   },
   indent = {
     enable = true,
@@ -35,7 +36,8 @@ M.mason = {
     "marksman",
 
     "rust-analyzer",
-
+    "python-lsp-server",
+    -- "pylsp",
     -- web dev stuff
     "css-lsp",
     "html-lsp",
