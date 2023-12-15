@@ -5,6 +5,7 @@
 #choco install fzf
 #choco install bat
 #choco install zoxide
+#winget install eza-community.eza
 #pip install --upgrade betterls
 #dotnet tool install --global csharp-ls
 

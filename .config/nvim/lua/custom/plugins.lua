@@ -350,10 +350,16 @@ local plugins = {
 
   {
     dir= "D:\\Dev\\avalonia.nvim",
+    config = function()
+      require("avalonia.nvim").setup()
+    end,
     enabled = function() return jit.os ~= "Linux" end
   },
   {
     dir= "/mnt/d/Dev/avalonia.nvim",
+    config = function()
+      require("avalonia.nvim").setup()
+    end,
     enabled = function() return jit.os == "Linux" end
   },
 
