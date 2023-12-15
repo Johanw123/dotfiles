@@ -174,6 +174,19 @@ function which ($command) {
 } 
 
 
+#https://github.com/kelleyma49/PSFzf?tab=readme-ov-file#helper-functions
+function RipGrepFunc([string] $s) {Invoke-PsFzfRipgrep $s}
+Set-Alias -Name rgf -Value RipGrepFunc
+
+Set-Alias -Name fd -Value Invoke-FuzzySetLocation
+Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
+Set-Alias -Name fkill -Value Invoke-FuzzyKillProcess
+
+function FuzzyEditFunc() {
+vim $(fzf --preview='bat --color=always --theme=gruvbox-dark --style=numbers {}')
+}
+Set-Alias -Name fe -Value FuzzyEditFunc
+
 
 # From https://github.com/nickmhankins/Handle
 function Test-AcceptedEula {
