@@ -173,6 +173,19 @@ function which ($command) {
         Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
 } 
 
+function sudo!
+{
+    $commandLine = (Get-History | Select-Object -Last 1).CommandLine
+    Start-Process -FilePath powershell.exe -ArgumentList $commandLine -Verb runas
+}
+
+function sudo ($scriptblock)
+{
+  # TODO: make -NoExit a parameter
+  # TODO: just open PS (no -Command parameter) if $scriptblock -eq ''
+  $sh = new-object -com 'Shell.Application'
+  $sh.ShellExecute('powershell', "-NoExit -Command $scriptblock", '', 'runas')
+}
 
 #https://github.com/kelleyma49/PSFzf?tab=readme-ov-file#helper-functions
 function RipGrepFunc([string] $s) {Invoke-PsFzfRipgrep $s}
@@ -186,6 +199,9 @@ function FuzzyEditFunc() {
 vim $(fzf --preview='bat --color=always --theme=gruvbox-dark --style=numbers {}')
 }
 Set-Alias -Name fe -Value FuzzyEditFunc
+
+function Wsl-Ollama { wsl ollama }
+Set-Alias -Name ollama -Value Wsl-Ollama 
 
 
 # From https://github.com/nickmhankins/Handle

@@ -119,10 +119,22 @@ M.general = {
         -- vim.print(path)
         vim.fn.system { 'cmd', '/c', 'explorer', path }
       end,
-
-      -- "<Cmd>lua vim.fn.system {'cmd', '/c', 'explorer', 'G:/dev/susrepo1_2':gsub('/', '\\')' }<CR>",
       "Explore file location"
     },
+    
+    -- ["<leader><leader>a"] = {
+    --   function()
+    --     cmp.mapping(
+    --           cmp.mapping.complete({
+    --             config = {
+    --               sources = cmp.config.sources({
+    --                 { name = 'cmp_ai' },
+    --               }),
+    --             },
+    --           }))
+    --   end,
+    --   "ollama AI code completion"
+    -- },
 
     ["<leader>fr"] = {
       function()

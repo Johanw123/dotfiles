@@ -112,41 +112,32 @@ T = true
 --
 -- vim.api.nvim_set_hl(0, "CmpItemKindText", {bg = "white", fg = "black"})
 
+local cmp = require("cmp")
+
 M.cmp = {
   view = {
-
+  },
+  -- sources = {
+  --   { name = 'cmp_ai' },
+  -- },
+  mapping = {
+    ['<C-a>'] = cmp.mapping(
+      cmp.mapping.complete({
+        config = {
+          sources = cmp.config.sources({
+            { name = 'cmp_ai' },
+          }),
+        },
+      }),
+      { 'i' }
+    ),
   },
 	formatting = {
     fields = {"kind", "abbr", "menu" },
 		format = function(entry, vim_item)
 			local icons = require("nvchad.icons.lspkind")
-      -- vim.print(entry:get_completion_item())
-      -- log.debug(entry:get_completion_item())
-      -- log.debug(vim_item)
-      --
-
-
       local item = entry:get_completion_item()
-      -- local doc = entry:get_documentation()
 
-        -- if T then
-        --
-      --  T = false
-      --
-      --   local fp = io.open("C:\\Users\\Johan\\dotfiles\\.config\\nvim\\lua\\custom\\test.log", "a")
-      --  fp:write(vim.inspect(entry))
-      --   fp:write("----------------------------------------------")
-      --   -- fp:write(vim.inspect(entry.context))
-      --  fp:write(vim.inspect(vim_item))
-      --   fp:write("----------------------------------------------")
-      --   fp:write(vim.inspect(item))
-      --   fp:write("----------------------------------------------")
-      --   fp:write(vim.inspect(doc))
-      --   -- fp:write(vim.inspect(icons))
-      --   fp:close()
-      -- end
-
-      -- vim.print(doc)
       function trim(text, len)
         local max = len
         if text and text:len() > max then
@@ -183,6 +174,8 @@ M.cmp = {
         end
       end
 
+
+
       vim_item.abbr = trim(vim_item.abbr, 60)
 
 			vim_item.kind = string.format("%s%s", icons[vim_item.kind], type)
@@ -191,8 +184,22 @@ M.cmp = {
 				nvim_lsp = "[LSP]",
 				buffer = "[BUF]",
 				nvim_lua = "[Lua]",
+        cmp_ai = '[AI]',
 				path = "[PTH]",
 			})[entry.source.name], from)
+
+
+      if entry.source.name == 'cmp_ai' then
+        local detail = (entry.completion_item.labelDetails or {}).detail
+        vim_item.kind = ''
+        if detail and detail:find('.*%%.*') then
+          vim_item.kind = vim_item.kind .. ' ' .. detail
+        end
+
+        if (entry.completion_item.data or {}).multiline then
+          vim_item.kind = vim_item.kind .. ' ' .. '[ML]'
+        end
+      end
 
 			return vim_item
 		end,

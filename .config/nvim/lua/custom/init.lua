@@ -6,12 +6,11 @@ opt.relativenumber = true
 opt.wrap = false
 
 vim.keymap.set('n', '<Leader>pf', 'i<C-r><C-o>+<ESC>l=`[`]$', { desc = 'Paste block and indent'})
-
 -- Helper function for transparency formatting
 local alpha = function()
 	return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
   end
-
+  print("H")
   -- Neovide settings
 if vim.g.neovide then
 	--vim.g.neovide_transparency = 0.9
@@ -25,7 +24,7 @@ if vim.g.neovide then
 	vim.g.neovide_floating_blur_amount_y = 2
 
 	vim.g.neovide_refresh_rate = 165
-
+  vim.
 	vim.g.neovide_cursor_animation_length = 0
 end
 
@@ -202,6 +201,33 @@ vim.api.nvim_create_autocmd("LspTokenUpdate", {
 	end,
   })
 
+  vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function ()
+     local cmp_ai = require('cmp_ai.config')
+    
+    cmp_ai:setup({
+      max_lines = 200,
+      provider = 'Ollama',
+      provider_options = {
+        model = 'codellama:6b-code',
+      },
+      notify = false,
+      notify_callback = function(msg)
+        require('notify').notify(msg, vim.log.levels.INFO, {
+          title = 'OpenAI',
+          render = 'compact',
+        })
+      end,
+      run_on_every_keystroke = false,
+      ignored_file_types = {
+        -- default is not to ignore
+        -- uncomment to ignore in lua:
+        -- lua = true
+      },
+    })
+  end
+})
+
   vim.api.nvim_set_hl(0, 'MyMutableGlobalHL', {  fg = "#6ab04c", })
   vim.api.nvim_set_hl(0, 'DefaultClassType', {  fg = "#009432", })
   vim.api.nvim_set_hl(0, 'DefaultClassType', {  fg = "#009432", })
@@ -294,3 +320,4 @@ require('gen').prompts['Explain_Cpp'] = {
 }
 
 end, 1000)
+

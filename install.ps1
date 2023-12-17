@@ -5,11 +5,14 @@
 #choco install fzf
 #choco install bat
 #choco install zoxide
+#choco install highlight
+#choco install vifm
 #winget install eza-community.eza
 #pip install --upgrade betterls
 #dotnet tool install --global csharp-ls
 
 #set env variable "editor" to "nvim
+#add C:\Program Files\Highlight to path
 
 #Powershell
 #Install-Module PSUtil # https://github.com/PowershellFrameworkCollective/PSUtil
@@ -81,3 +84,10 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
+# link Vifm configuration
+$localConfiguration = Join-Path $env:APPDATA "Vifm"
+$dotfilesConfiguration = Join-Path $dotFilesRoot "Vifm"
+
+if (!(Test-Path $localConfiguration -PathType Container)) { 
+    Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
+}

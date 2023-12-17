@@ -371,8 +371,8 @@ local plugins = {
         show_prompt = false, -- Shows the Prompt submitted to Ollama.
         show_model = false, -- Displays which model you are using at the beginning of your chat session.
         no_auto_close = false, -- Never closes the window automatically.
-        init = 
-        function(options) 
+        init =
+        function(options)
           pcall(io.popen, "wsl ollama serve > /dev/null 2>&1 &")  
         end,
         -- Function to initialize Ollama
@@ -384,8 +384,16 @@ local plugins = {
         list_models = '<function>', -- Retrieves a list of model names
         debug = false -- Prints errors and the command which is run.
     }
-},
+  },
 
+  {
+    "tzachar/cmp-ai",
+    dependencies = 'nvim-lua/plenary.nvim'
+  },
+
+  {
+    "rcarriga/nvim-notify"
+  },
 
 
 
