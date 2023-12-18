@@ -209,7 +209,7 @@ vim.api.nvim_create_autocmd("LspTokenUpdate", {
       max_lines = 200,
       provider = 'Ollama',
       provider_options = {
-        model = 'codellama:6b-code',
+        model = 'codellama:7b-code',
       },
       notify = false,
       notify_callback = function(msg)
