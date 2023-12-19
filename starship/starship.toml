@@ -10,9 +10,9 @@ continuation_prompt = '▶▶ '
 format = 'via [$name $version]($style)'
 
 [character]
-success_symbol = '[➜](bold green) '
-error_symbol = '[✗](bold red) '
-vimcmd_symbol = '[V](bold green) '
+success_symbol = '[➜](bold green)'
+error_symbol = '[✗](bold red)'
+vimcmd_symbol = '[V](bold green)'
 
 [shell]
 fish_indicator = '󰈺'
