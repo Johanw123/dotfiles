@@ -47,3 +47,4 @@ fi
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
+ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
