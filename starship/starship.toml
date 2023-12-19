@@ -14,5 +14,9 @@ success_symbol = '[➜](bold green) '
 error_symbol = '[✗](bold red) '
 vimcmd_symbol = '[V](bold green) '
 
-[container]
-format = '[$symbol \[$name\]]($style) '
+[shell]
+fish_indicator = '󰈺 '
+powershell_indicator = '_'
+unknown_indicator = 'mystery shell'
+style = 'cyan bold'
+disabled = false

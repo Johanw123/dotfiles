@@ -1,5 +1,3 @@
-$ENV:STARSHIP_CONFIG = "$HOME\dotfiles\Powershell\starship.toml"
-
 function Invoke-Starship-PreCommand {
   $host.ui.Write("`e]0; terminal `a")
 }
