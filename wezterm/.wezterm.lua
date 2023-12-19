@@ -48,6 +48,24 @@ return {
   force_reverse_video_cursor = true,
   hide_mouse_cursor_when_typing = true,
   hide_tab_bar_if_only_one_tab = true,
+  -- timeout_milliseconds defaults to 1000 and can be omitted
+  -- for this example use `setxkbmap -option caps:none` in your terminal.
+  leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 },
+  mouse_bindings = {
+    -- Scrolling up while holding CTRL increases the font size
+    {
+      event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+      mods = 'CTRL',
+      action = act.IncreaseFontSize,
+    },
+
+    -- Scrolling down while holding CTRL decreases the font size
+    {
+      event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+      mods = 'CTRL',
+      action = act.DecreaseFontSize,
+    },
+  },
   keys = {
     { action = wezterm.action.ActivateCommandPalette, mods = 'CTRL|SHIFT', key =     'P' },
     { action = wezterm.action.CopyTo    'Clipboard' , mods = 'CTRL|SHIFT', key =     'C' },
@@ -57,6 +75,9 @@ return {
     { action = wezterm.action.PasteFrom 'Clipboard' , mods = 'CTRL|SHIFT', key =     'V' },
     { action = wezterm.action.ResetFontSize         , mods =       'CTRL', key =     '0' },
     { action = wezterm.action.ToggleFullScreen      ,                      key =   'F11' },
+
+    { action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' }        , mods =       'LEADER', key =     'h' },
+    { action = wezterm.action.SplitVertical   { domain = 'CurrentPaneDomain' }        , mods =       'LEADER', key =     'v' },
   },
   scrollback_lines = 10000,
   show_update_window = true,
@@ -73,38 +94,4 @@ return {
   },
   wsl_domains = wsl_domains,
   default_prog = {"C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo"},
-
-
--- timeout_milliseconds defaults to 1000 and can be omitted
--- for this example use `setxkbmap -option caps:none` in your terminal.
-leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 },
-keys = {
-  {
-    key = 'h',
-    mods = 'LEADER',
-    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
-  },
-  {
-    key = 'v',
-    mods = 'LEADER',
-    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
-  },
-},
-
-mouse_bindings = {
-  -- Scrolling up while holding CTRL increases the font size
-  {
-    event = { Down = { streak = 1, button = { WheelUp = 1 } } },
-    mods = 'CTRL',
-    action = act.IncreaseFontSize,
-  },
-
-  -- Scrolling down while holding CTRL decreases the font size
-  {
-    event = { Down = { streak = 1, button = { WheelDown = 1 } } },
-    mods = 'CTRL',
-    action = act.DecreaseFontSize,
-  },
-},
-
 }
