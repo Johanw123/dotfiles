@@ -406,6 +406,10 @@ local plugins = {
     ft = { "markdown" },
   },
 
+  {
+    "vim-scripts/NSIS-syntax-highlighting"
+  },
+
 }
 
 
