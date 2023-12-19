@@ -1,5 +1,5 @@
 local wezterm = require 'wezterm'
-
+local act = wezterm.action
 local wsl_domains = wezterm.default_wsl_domains()
 
 wezterm.on("gui-startup", function(cmd)
@@ -73,4 +73,38 @@ return {
   },
   wsl_domains = wsl_domains,
   default_prog = {"C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo"},
+
+
+-- timeout_milliseconds defaults to 1000 and can be omitted
+-- for this example use `setxkbmap -option caps:none` in your terminal.
+leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 },
+keys = {
+  {
+    key = 'h',
+    mods = 'LEADER',
+    action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+  },
+  {
+    key = 'v',
+    mods = 'LEADER',
+    action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+  },
+},
+
+mouse_bindings = {
+  -- Scrolling up while holding CTRL increases the font size
+  {
+    event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+    mods = 'CTRL',
+    action = act.IncreaseFontSize,
+  },
+
+  -- Scrolling down while holding CTRL decreases the font size
+  {
+    event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+    mods = 'CTRL',
+    action = act.DecreaseFontSize,
+  },
+},
+
 }
