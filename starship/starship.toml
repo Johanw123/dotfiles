@@ -13,3 +13,6 @@ format = 'via [$name $version]($style)'
 success_symbol = '[➜](bold green) '
 error_symbol = '[✗](bold red) '
 vimcmd_symbol = '[V](bold green) '
+
+[container]
+format = '[$symbol \[$name\]]($style) '

@@ -91,3 +91,11 @@ $dotfilesConfiguration = Join-Path $dotFilesRoot "Vifm"
 if (!(Test-Path $localConfiguration -PathType Container)) { 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
+
+# link starship configuration
+$localConfiguration = Join-Path $HOME ".config" | Join-Path -ChildPath "starship.toml"
+$dotfilesConfiguration = Join-Path $dotFilesRoot "starship" | Join-Path -ChildPath "starship.toml"
+
+if (!(Test-Path $localConfiguration -PathType Container)) { 
+    Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
+}
