@@ -3,10 +3,6 @@
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": 
     [
-        // {
-        //     "command": "paste",
-        //     "keys": "ctrl+v"
-        // },
         {
             "command": 
             {
@@ -14,14 +10,10 @@
             },
             "keys": "ctrl+t"
         },
-        // {
-        //     "command": 
-        //     {
-        //         "action": "copy",
-        //         "singleLine": false
-        //     },
-        //     "keys": "ctrl+c"
-        // },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
         {
             "command": 
             {
@@ -30,10 +22,6 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
         }
     ],
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
@@ -154,6 +142,12 @@
                 "hidden": false,
                 "name": "Ubuntu 22.04.3 LTS",
                 "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
+            },
+            {
+                "guid": "{17bf3de4-5353-5709-bcf9-835bd952a95e}",
+                "hidden": true,
+                "name": "Ubuntu-22.04",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },

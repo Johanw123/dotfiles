@@ -44,6 +44,28 @@ fi
 #https://github.com/wslutilities/wslu?tab=readme-ov-file
 # sudo apt install wslu
 
+sudo apt install fzf
+sudo apt-get install ripgrep
+sudo apt-get install fuse libfuse2
+
+# curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+# chmod u+x nvim.appimage
+# ./nvim.appimage
+
+sudo apt install fish
+
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+sudo apt update
+sudo apt install neovim
+
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+
+curl -sS https://starship.rs/install.sh | sh
+
+sudo rm -r ~/.config/nvim/lua/custom
+sudo rm ~/.config/fish/config.fish
+sudo rm ~/.config/starship.toml
+sudo rm -r ~/.omnisharp
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
