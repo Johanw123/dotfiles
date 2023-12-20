@@ -58,6 +58,7 @@ sudo apt-get install fuse libfuse2
 # ./nvim.appimage
 
 sudo apt install fish
+sudo apt install zoxide
 
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt update
