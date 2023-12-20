@@ -44,7 +44,12 @@ fi
 #https://github.com/wslutilities/wslu?tab=readme-ov-file
 # sudo apt install wslu
 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 sudo apt install fzf
+sudo apt install exa
 sudo apt-get install ripgrep
 sudo apt-get install fuse libfuse2
 
