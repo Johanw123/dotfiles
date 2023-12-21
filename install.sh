@@ -50,6 +50,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 sudo apt install fzf
 sudo apt install exa
+sudo apt install bat
 sudo apt-get install ripgrep
 sudo apt-get install fuse libfuse2
 
@@ -77,6 +78,10 @@ ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
 ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
+ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 
-
+#fish
 chsh -s $(which fish)
+
+#zsh
+#zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
