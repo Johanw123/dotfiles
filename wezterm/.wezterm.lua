@@ -11,12 +11,27 @@ for _, domain in ipairs(wsl_domains) do
   domain.default_cwd = "~"
 end
 
+local function is_unix()
+	return package.config:sub(1,1) == '/'
+end
+
+local shell = {"C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo"}
+local font_name = "FiraCode NF"
+
+if is_unix() then
+  shell = { '/usr/local/bin/fish', '-l' }
+end
+
+if wezterm.target_triple == 'x86_64-apple-darwin' then
+ font_name = "FiraCode Nerd Font"
+end
+
 return {
   adjust_window_size_when_changing_font_size = false,
   audible_bell = 'Disabled',
   background = {
     {
-      source = { File = os.getenv("UserProfile") .. "/dotfiles/assets/background_0.png" },
+      source = { File = os.getenv("UserProfile") or os.getenv('HOME')  .. "/dotfiles/assets/background_0.png" },
        --opacity = 0.1
     },
     -- {
@@ -38,7 +53,7 @@ return {
   disable_default_key_bindings = true,
   exit_behavior = 'Close',
   font = wezterm.font {
-    family = 'FiraCode NF',
+    family = font_name,
     weight = 'Regular',
     stretch = 'Normal',
     style = 'Normal',
@@ -50,7 +65,6 @@ return {
   use_fancy_tab_bar = false,
   tab_bar_at_bottom  = true,
   hide_tab_bar_if_only_one_tab = true,
-  
   -- timeout_milliseconds defaults to 1000 and can be omitted
   -- for this example use `setxkbmap -option caps:none` in your terminal.
   leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 1000 },
@@ -96,5 +110,5 @@ return {
     bottom = 0,
   },
   wsl_domains = wsl_domains,
-  default_prog = {"C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo"},
+  default_prog = shell,
 }

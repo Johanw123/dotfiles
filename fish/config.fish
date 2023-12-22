@@ -9,4 +9,9 @@ if status is-interactive
     starship init fish | source
 end
 
-eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+switch (uname)
+  case Darwin
+  case Linux
+    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  case '*'
+end

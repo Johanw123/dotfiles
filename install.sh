@@ -79,6 +79,7 @@ ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
 ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
+ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
 
 #fish
 chsh -s $(which fish)
