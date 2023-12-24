@@ -34,7 +34,7 @@ vim.g.OmniSharp_server_use_net6 = 1
 vim.g.OmniSharp_selector_ui = 'fzf' 
 
 -- https://github.com/OmniSharp/omnisharp-vim/wiki/Highlighting-configuration
--- https://github.com/dotnet/roslyn/blob/main/src/Workspaces/Core/Portable/Classification/ClassificationTypeNames.cs
+-- https://github.com/dotnet/roslyn/blob/mBuild on linux/mac:ain/src/Workspaces/Core/Portable/Classification/ClassificationTypeNames.cs
 
 vim.g.OmniSharp_highlight_groups = {
 	PropertyName = "PropertyName",
