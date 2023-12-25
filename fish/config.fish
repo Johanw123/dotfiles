@@ -15,6 +15,7 @@ if status is-interactive
     alias egrep='egrep --color=auto'
     alias fgrep='fgrep --color=auto'
 
+    alias ..='cd ..'
 
     # git
     alias addup='git add -u'
@@ -28,8 +29,15 @@ if status is-interactive
     alias push='git push origin'
     alias tag='git tag'
     alias newtag='git tag -a'
+    alias gs = 'git statu'
+    alias glog='git log --graph --decorate --oneline'
 
+    alias cp='cp -i'
+    alias df='df -h'
+
+    # programs
     alias z="zoxide"
+    alias vim="nvim"
     
     set TERM "xterm-256color"
     set fish_greeting

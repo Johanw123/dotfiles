@@ -45,25 +45,26 @@ fi
 # sudo apt install wslu
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-(echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-sudo apt install fzf
-sudo apt install eza
-sudo apt install bat
-sudo apt-get install ripgrep
-sudo apt-get install fuse libfuse2
+brew install fzf
+brew install eza
+brew install bat
+brew install ripgrep
+brew install fuse libfuse2
 
 # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 # chmod u+x nvim.appimage
 # ./nvim.appimage
 
-sudo apt install fish
-sudo apt install zoxide
+brew install fish
+brew install zoxide
 
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-sudo apt update
-sudo apt install neovim
+brew tap jason0x43/homebrew-neovim-nightly
+brew cask install neovim-nightly
 
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 
