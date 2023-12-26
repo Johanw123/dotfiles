@@ -410,6 +410,10 @@ local plugins = {
     "vim-scripts/NSIS-syntax-highlighting"
   },
 
+  {
+    "jvgrootveld/telescope-zoxide"
+  },
+
 }
 
 

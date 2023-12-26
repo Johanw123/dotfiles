@@ -1,13 +1,13 @@
-if status is-interactive
+# if status is-interactive
     # Commands to run in interactive sessions can go here
     cd $HOME    
  
     # Changing "ls" to "eza"
-    alias ls='eza --color=always --group-directories-first' # my preferred listing
-    alias la='eza -a --color=always --group-directories-first'  # all files and dirs
-    alias ll='eza -l --color=always --group-directories-first'  # long format
-    alias lla='eza -la --color=always --group-directories-first'  # all files and dirs
-    alias lt='eza -aT --color=always --group-directories-first' # tree listing
+    alias ls='eza --color=always --group-directories-first'
+    alias la='eza -a --color=always --group-directories-first'
+    alias ll='eza -l --color=always --group-directories-first'
+    alias lla='eza -la --color=always --group-directories-first'
+    alias lt='eza -aT --color=always --group-directories-first'
     alias l.='eza -a | egrep "^\."'
 
     # Colorize grep output (good for log files)
@@ -29,15 +29,15 @@ if status is-interactive
     alias push='git push origin'
     alias tag='git tag'
     alias newtag='git tag -a'
-    alias gs = 'git statu'
+    alias gs='git status'
     alias glog='git log --graph --decorate --oneline'
 
     alias cp='cp -i'
     alias df='df -h'
 
     # programs
-    alias z="zoxide"
-    alias vim="nvim"
+    alias z='zoxide'
+    alias vim='nvim'
     
     set TERM "xterm-256color"
     set fish_greeting
@@ -75,7 +75,7 @@ if status is-interactive
 
     zoxide init fish | source
     starship init fish | source
-end
+# end
 
 switch (uname)
   case Darwin
