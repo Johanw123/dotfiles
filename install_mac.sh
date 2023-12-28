@@ -33,14 +33,16 @@
 #https://github.com/wslutilities/wslu?tab=readme-ov-file
 # sudo apt install wslu
 
-zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+if ! command -v zap &> /dev/null
+then
+  zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+fi
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-#
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
+if ! command -v brew &> /dev/null
+then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 brew install --cask wezterm
 brew install fzf
@@ -58,7 +60,7 @@ brew install fish
 brew install zoxide
 
 brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
-    brew install neovim-nightly
+brew install neovim-nightly
 
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 
@@ -78,8 +80,12 @@ ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
 
-#fish
-chsh -s $(which fish)
+if ! command -v dscl . -read ~/ UserShell | grep "fish" &> /dev/null
+then
+  #fish
+  sudo echo $(which fish) >> /etc/shells
+  chsh -s $(which fish)
+fi
 
 #zsh
 #zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
