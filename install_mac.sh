@@ -58,13 +58,12 @@ brew install wget
 
 brew install fish
 brew install zoxide
+brew install starship
 
 brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
 brew install neovim-nightly
 
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-
-curl -sS https://starship.rs/install.sh | sh
 
 sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish
