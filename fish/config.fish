@@ -42,6 +42,7 @@
     set TERM "xterm-256color"
     set fish_greeting
 
+eval (/opt/homebrew/bin/brew shellenv)
 
 # Functions needed for !! and !$
     function __history_previous_command
