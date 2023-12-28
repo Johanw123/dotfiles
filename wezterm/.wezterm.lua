@@ -28,6 +28,7 @@ end
 
 if wezterm.target_triple == 'aarch64-apple-darwin' then
  font_name = "FiraCode Nerd Font"
+ shell = { '/usr/local/bin/fish', '-l' }
 end
 
 return {
