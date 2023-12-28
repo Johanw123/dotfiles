@@ -50,6 +50,7 @@ fi
 #
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+brew install zplug
 brew install --cask wezterm
 brew install fzf
 brew install eza
@@ -64,8 +65,8 @@ brew install fuse libfuse2
 brew install fish
 brew install zoxide
 
-brew tap jason0x43/homebrew-neovim-nightly
-brew cask install neovim-nightly
+brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
+    brew install neovim-nightly
 
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 
