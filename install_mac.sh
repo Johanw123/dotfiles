@@ -29,17 +29,6 @@
 #mkdir ~/.tmux
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-if fc-list | grep -q -i "FiraCode"; then
-    echo "FiraCode font found!"
-else
-    echo "FiraCode font not found"
-    echo "[-] Download fonts [-]"
-    echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
-    unzip FiraCode.zip -d ~/.fonts
-    fc-cache -fv
-    echo "done!"
-fi
 
 #https://github.com/wslutilities/wslu?tab=readme-ov-file
 # sudo apt install wslu
@@ -59,6 +48,7 @@ brew install eza
 brew install bat
 brew install ripgrep
 brew install fuse libfuse2
+brew install wget
 
 # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 # chmod u+x nvim.appimage
@@ -93,3 +83,16 @@ chsh -s $(which fish)
 
 #zsh
 #zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+
+if fc-list | grep -q -i "FiraCode"; then
+    echo "FiraCode font found!"
+else
+    echo "FiraCode font not found"
+    echo "[-] Download fonts [-]"
+    echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
+    unzip FiraCode.zip -d ~/.fonts
+    fc-cache -fv
+    echo "done!"
+fi
+
