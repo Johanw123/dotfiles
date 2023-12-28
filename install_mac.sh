@@ -84,7 +84,7 @@ chsh -s $(which fish)
 #zsh
 #zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
 
-if fc-list | grep -q -i "FiraCode"; then
+if atsutil fonts -list | grep -q -i "FiraCode"; then
     echo "FiraCode font found!"
 else
     echo "FiraCode font not found"
