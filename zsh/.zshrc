@@ -23,6 +23,7 @@ plug "zap-zsh/exa"
 plug "zsh-users/zsh-syntax-highlighting"
 #
 eval "$(starship init zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # plug "spaceship-prompt/spaceship-prompt"
 
