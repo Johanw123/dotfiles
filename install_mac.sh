@@ -91,7 +91,7 @@ else
     echo "[-] Download fonts [-]"
     echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
     wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
-    unzip FiraCode.zip -d ~/.fonts
+    unzip FiraCode.zip -d /Library/Fonts/
     fc-cache -fv
     echo "done!"
 fi
