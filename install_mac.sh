@@ -83,7 +83,7 @@ ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
 if ! command -v dscl . -read ~/ UserShell | grep "fish" &> /dev/null
 then
   #fish
-  sudo echo $(which fish) >> /etc/shells
+  sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
   chsh -s $(which fish)
 fi
 
