@@ -50,6 +50,7 @@ fi
 #
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+brew install --cask wezterm
 brew install fzf
 brew install eza
 brew install bat
