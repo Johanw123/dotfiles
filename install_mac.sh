@@ -44,13 +44,15 @@ fi
 #https://github.com/wslutilities/wslu?tab=readme-ov-file
 # sudo apt install wslu
 
+zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 #
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-brew install zplug
+
 brew install --cask wezterm
 brew install fzf
 brew install eza
