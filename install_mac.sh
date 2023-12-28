@@ -78,6 +78,8 @@ sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish
 sudo rm ~/.config/starship.toml
 sudo rm -r ~/.omnisharp
+sudo rm ~/.zshrc
+sudo rm ~/.wezterm.lua
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
