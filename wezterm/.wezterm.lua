@@ -26,6 +26,10 @@ if wezterm.target_triple == 'x86_64-apple-darwin' then
  font_name = "FiraCode Nerd Font"
 end
 
+if wezterm.target_triple == 'aarch64-apple-darwin' then
+ font_name = "FiraCode Nerd Font"
+end
+
 return {
   adjust_window_size_when_changing_font_size = false,
   audible_bell = 'Disabled',
