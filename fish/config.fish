@@ -42,7 +42,6 @@
     set TERM "xterm-256color"
     set fish_greeting
 
-
 # Functions needed for !! and !$
     function __history_previous_command
       switch (commandline -t)
@@ -71,11 +70,12 @@
       bind ! __history_previous_command
       bind '$' __history_previous_command_arguments
     end
-
-
-    zoxide init fish | source
-    starship init fish | source
 # end
+
+eval (/opt/homebrew/bin/brew shellenv)
+
+zoxide init fish | source
+starship init fish | source
 
 switch (uname)
   case Darwin

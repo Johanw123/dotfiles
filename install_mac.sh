@@ -29,32 +29,28 @@
 #mkdir ~/.tmux
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-if fc-list | grep -q -i "FiraCode"; then
-    echo "FiraCode font found!"
-else
-    echo "FiraCode font not found"
-    echo "[-] Download fonts [-]"
-    echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
-    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
-    unzip FiraCode.zip -d ~/.fonts
-    fc-cache -fv
-    echo "done!"
-fi
 
 #https://github.com/wslutilities/wslu?tab=readme-ov-file
 # sudo apt install wslu
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-#
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if ! command -v zap &> /dev/null
+then
+  zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+fi
 
+if ! command -v brew &> /dev/null
+then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+brew install --cask wezterm
 brew install fzf
 brew install eza
 brew install bat
 brew install ripgrep
 brew install fuse libfuse2
+brew install wget
 
 # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 # chmod u+x nvim.appimage
@@ -62,18 +58,19 @@ brew install fuse libfuse2
 
 brew install fish
 brew install zoxide
+brew install starship
 
-brew tap jason0x43/homebrew-neovim-nightly
-brew cask install neovim-nightly
+brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
+brew install neovim-nightly
 
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-
-curl -sS https://starship.rs/install.sh | sh
 
 sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish
 sudo rm ~/.config/starship.toml
 sudo rm -r ~/.omnisharp
+sudo rm ~/.zshrc
+sudo rm ~/.wezterm.lua
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
@@ -82,8 +79,25 @@ ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
 
-#fish
-chsh -s $(which fish)
+if ! command -v dscl . -read ~/ UserShell | grep "fish" &> /dev/null
+then
+  #fish
+  sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
+  chsh -s $(which fish)
+fi
 
 #zsh
 #zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+
+if atsutil fonts -list | grep -q -i "FiraCode"; then
+    echo "FiraCode font found!"
+else
+    echo "FiraCode font not found"
+    echo "[-] Download fonts [-]"
+    echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
+    unzip FiraCode.zip -d /Library/Fonts/
+    fc-cache -fv
+    echo "done!"
+fi
+

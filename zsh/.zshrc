@@ -23,11 +23,15 @@ plug "zap-zsh/exa"
 plug "zsh-users/zsh-syntax-highlighting"
 #
 eval "$(starship init zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # plug "spaceship-prompt/spaceship-prompt"
 
 # keybinds
 #bindkey '^ ' autosuggest-accept
+
+
+
 
 export PATH="$HOME/.local/bin":$PATH
 
@@ -35,3 +39,7 @@ if command -v bat &> /dev/null; then
   alias cat="bat -pp --theme \"Visual Studio Dark+\"" 
   alias catt="bat --theme \"Visual Studio Dark+\"" 
 fi
+
+# Load and initialise completion system
+autoload -Uz compinit
+compinit
