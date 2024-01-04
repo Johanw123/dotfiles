@@ -38,6 +38,9 @@
     # programs
     alias z='zoxide'
     alias vim='nvim'
+
+    # alias wine64='whisky'
+    # alias wine='whisky'
     
     set TERM "xterm-256color"
     set fish_greeting
@@ -79,7 +82,7 @@ starship init fish | source
 
 switch (uname)
   case Darwin
-    export MGFXC_WINE_PATH=/Users/johan/.winemonogame
+    export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
   case Linux
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   case '*'

@@ -100,6 +100,10 @@ return {
 
     { action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' }        , mods =       'LEADER', key =     'h' },
     { action = wezterm.action.SplitVertical   { domain = 'CurrentPaneDomain' }        , mods =       'LEADER', key =     'v' },
+
+
+
+    { action = wezterm.action.CloseCurrentTab { confirm = true }    ,             mods = 'LEADER',         key =   'x' },
   },
   scrollback_lines = 10000,
   show_update_window = true,
