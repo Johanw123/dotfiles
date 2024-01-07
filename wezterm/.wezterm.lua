@@ -51,7 +51,11 @@ if wezterm.target_triple == 'x86_64-apple-darwin' then
  font_name = "FiraCode Nerd Font"
 end
 
-<<<<<<< HEAD
+if wezterm.target_triple == 'aarch64-apple-darwin' then
+ font_name = "FiraCode Nerd Font"
+ shell = { '/opt/homebrew/bin/fish', '-l' }
+end
+
 wezterm.on(
   'format-tab-title',
   function(tab, tabs, panes, config, hover, max_width)
@@ -177,12 +181,7 @@ wezterm.on("update-right-status", function(window, pane)
 
   window:set_right_status(wezterm.format(elements));
 end);
-=======
-if wezterm.target_triple == 'aarch64-apple-darwin' then
- font_name = "FiraCode Nerd Font"
- shell = { '/opt/homebrew/bin/fish', '-l' }
-end
->>>>>>> 7804b22aeebc94422ab07a1a47cf0f822749e406
+
 
 return {
   adjust_window_size_when_changing_font_size = false,
