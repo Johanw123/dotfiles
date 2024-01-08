@@ -71,22 +71,23 @@ wezterm.on(
   end
 
   local colors = {
-    "#3c1361", 
+    "#3c1361",
     "#3c1361",
     "#52307c",
     "#663a82",
     "#7c5295",
-    "#b491c8",
   };
 
-
+ 
 
     background = colors[tab.tab_index + 2]
     
-    local index = " (" .. tab.tab_index+1 .. ") "
+    local index = " (" .. tab.tab_index + 1 .. ") "
     local title = tab_title(tab) .. " "
 
-    return {
+    --TODO: reduce title to tab_max_width - 1 for fitting the ending arrow on last tab
+
+    rtn = {
       { Background = { Color = background } },
       { Foreground = { Color = colors[tab.tab_index + 1] } },
       { Text = SOLID_RIGHT_ARROW },
@@ -99,6 +100,14 @@ wezterm.on(
       { Foreground = { Color = foreground } },
       { Text = title },
     }
+
+    if tab.tab_index == #tabs - 1 then
+      table.insert(rtn, {Background = {Color = "#333333"}})
+      table.insert(rtn, {Foreground = {Color = background}})
+      table.insert(rtn, {Text = SOLID_RIGHT_ARROW})
+    end
+
+    return rtn
 
   end
 )
@@ -152,7 +161,6 @@ wezterm.on("update-right-status", function(window, pane)
     "#52307c",
     "#663a82",
     "#7c5295",
-    "#b491c8",
   };
 
   -- Foreground color for the text across the fade
@@ -164,21 +172,32 @@ wezterm.on("update-right-status", function(window, pane)
   local num_cells = 0;
 
   -- Translate a cell into elements
-  function push(text, is_last)
+  function push(text, is_last, is_first)
     local cell_no = num_cells + 1
+
+    if is_first then
+      table.insert(elements, {Background = {Color = "#333333"}})
+      table.insert(elements, {Foreground = {Color = colors[cell_no]}})
+      table.insert(elements, {Text = SOLID_LEFT_ARROW})
+    end
+
     table.insert(elements, {Foreground={Color=text_fg}})
     table.insert(elements, {Background={Color=colors[cell_no]}})
     table.insert(elements, {Text=" "..text.." "})
+
     if not is_last then
       table.insert(elements, {Foreground={Color=colors[cell_no+1]}})
       table.insert(elements, {Text=SOLID_LEFT_ARROW})
     end
+    
     num_cells = num_cells + 1
   end
 
   while #cells > 0 do
     local cell = table.remove(cells, 1)
-    push(cell, #cells == 0)
+    push(cell, #cells == 0, #elements == 0)
+
+
   end
 
   window:set_right_status(wezterm.format(elements));
@@ -226,6 +245,7 @@ config = {
       },
   },
   font_size = 16,
+  tab_max_width = 30,
   force_reverse_video_cursor = true,
   hide_mouse_cursor_when_typing = true,
   use_fancy_tab_bar = false,
