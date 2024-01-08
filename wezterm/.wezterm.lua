@@ -48,29 +48,27 @@ if is_unix() then
 end
 
 if wezterm.target_triple == 'x86_64-apple-darwin' then
- font_name = "FiraCode Nerd Font"
+  font_name = "FiraCode Nerd Font"
+  shell = { '/opt/homebrew/bin/fish', '-l' }
 end
 
-<<<<<<< HEAD
+if wezterm.target_triple == 'aarch64-apple-darwin' then
+  font_name = "FiraCode Nerd Font"
+  shell = { '/opt/homebrew/bin/fish', '-l' }
+end
+
 wezterm.on(
   'format-tab-title',
   function(tab, tabs, panes, config, hover, max_width)
-    local edge_background = '#1e222a'
-    local background = '#1b1032'
-    local foreground = '#1e222a'
 
-    -- if tab.is_active then
-    --   background = '#2b2042'
-    --   foreground = '#c0c0c0'
-    -- elseif hover then
-    --   background = '#3b3052'
-    --   foreground = '#909090'
-    -- end
-    --
-    --
+  local background = '#2b2042'
+  local foreground = '#909090'
+  local index_foreground = '#909090'
 
-        background = '#2b2042'
-       foreground = '#c0c0c0'
+  if tab.is_active then
+      foreground = 'white'
+      index_foreground = '#D3A588'
+  end
 
   local colors = {
     "#3c1361", 
@@ -81,14 +79,22 @@ wezterm.on(
     "#b491c8",
   };
 
-    background = colors[tab.tab_index + 2]
 
-    local title = " " .. tab.tab_index .. tab_title(tab)
+
+    background = colors[tab.tab_index + 2]
+    
+    local index = " (" .. tab.tab_index+1 .. ") "
+    local title = tab_title(tab) .. " "
 
     return {
       { Background = { Color = background } },
       { Foreground = { Color = colors[tab.tab_index + 1] } },
       { Text = SOLID_RIGHT_ARROW },
+      { Attribute = { Intensity = tab.is_active and "Bold" or "Normal" } },
+      { Background = { Color = background } },
+      { Foreground = { Color = index_foreground } },
+      { Text = index },
+      { Attribute = { Intensity = tab.is_active and "Bold" or "Normal" } },
       { Background = { Color = background } },
       { Foreground = { Color = foreground } },
       { Text = title },
@@ -177,14 +183,9 @@ wezterm.on("update-right-status", function(window, pane)
 
   window:set_right_status(wezterm.format(elements));
 end);
-=======
-if wezterm.target_triple == 'aarch64-apple-darwin' then
- font_name = "FiraCode Nerd Font"
- shell = { '/opt/homebrew/bin/fish', '-l' }
-end
->>>>>>> 7804b22aeebc94422ab07a1a47cf0f822749e406
 
-return {
+
+config = {
   adjust_window_size_when_changing_font_size = false,
   audible_bell = 'Disabled',
   background = {
@@ -221,7 +222,8 @@ return {
     tab_bar = {
         -- The color of the strip that goes along the top of the window
         -- (does not apply when fancy tab bar is in use)
-        background = '#1e222a',
+        -- background = '#1e222a',
+        -- background = '#',
       },
   },
   font_size = 16,
@@ -229,6 +231,7 @@ return {
   hide_mouse_cursor_when_typing = true,
   use_fancy_tab_bar = false,
   tab_bar_at_bottom  = true,
+  show_new_tab_button_in_tab_bar = false,
   hide_tab_bar_if_only_one_tab = false,
   -- timeout_milliseconds defaults to 1000 and can be omitted
   -- for this example use `setxkbmap -option caps:none` in your terminal.
@@ -264,6 +267,7 @@ return {
 
 
     { action = wezterm.action.CloseCurrentTab { confirm = true }    ,             mods = 'LEADER',         key =   'x' },
+    { action = act.SpawnTab 'CurrentPaneDomain'   ,             mods = 'LEADER',         key =   'n' },
   },
   scrollback_lines = 10000,
   show_update_window = true,
@@ -281,3 +285,15 @@ return {
   wsl_domains = wsl_domains,
   default_prog = shell,
 }
+
+for i = 1, 8 do
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'LEADER',
+    action = act.ActivateTab(i - 1),
+  })
+end
+
+
+
+return config

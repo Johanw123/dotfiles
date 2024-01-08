@@ -4,13 +4,9 @@ local opt = vim.opt
 opt.cindent = true
 opt.relativenumber = true
 opt.wrap = false
+opt.cmdheight = 0
 
 vim.keymap.set('n', '<Leader>pf', 'i<C-r><C-o>+<ESC>l=`[`]$', { desc = 'Paste block and indent'})
--- Helper function for transparency formatting
-local alpha = function()
-	return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
-  end
-  print("H")
   -- Neovide settings
 if vim.g.neovide then
 	--vim.g.neovide_transparency = 0.9
@@ -47,10 +43,6 @@ vim.g.OmniSharp_highlight_groups = {
 	LocalName = "LocalName",
 
 }
--- Structure is pink, change
-
---vim.api.nvim_set_hl(0, 'Structure', { bg ="#82ccdd", fg = "#000000", standout=true, bold=true, })
-
 
 local links = {
 	['@lsp.type.namespace'] = '@namespace',
@@ -73,10 +65,6 @@ for newgroup, oldgroup in pairs(links) do
   vim.api.nvim_set_hl(0, newgroup, { link = oldgroup, default = true })
 end
 
-
---vim.api.nvim_set_hl(0, 'PropertyName', { fg = "#dfe6e9",  })
-
-
 --- C Sharp ---
 vim.api.nvim_set_hl(0, 'PropertyName', { fg = "#9B59B6",  })
 vim.api.nvim_set_hl(0, '@type.builtin.c_sharp', {  fg = "#6ab04c", })
@@ -84,12 +72,7 @@ vim.api.nvim_set_hl(0, '@keyword.c_sharp', {  fg = "#6ab04c", })
 vim.api.nvim_set_hl(0, '@type.qualifier.c_sharp', {  fg = "#6ab04c", })
 vim.api.nvim_set_hl(0, 'ParameterName', {  fg = "#C57626", })
 
---ParameterName
---FieldName
---LocalName (variable)
-
 --- C++ ----
-
 local keywords = "#6ab04c"
 
 vim.api.nvim_set_hl(0, '@type.builtin.cpp', {  fg = keywords, })
@@ -106,39 +89,6 @@ vim.api.nvim_set_hl(0, '@lsp.type.property.cpp', {  fg = "#9B59B6", })
 vim.api.nvim_set_hl(0, '@lsp.type.macro.cpp', {  fg = "#7ed6df", })
 
 vim.api.nvim_set_hl(0, '@lsp.type.class.cpp', {  fg = "#eccc68", })
-
-
-
---local functionColor = "#eccc68"
---
---vim.api.nvim_set_hl(0, '@lsp.type.method.cpp', {  fg = functionColor, })
---vim.api.nvim_set_hl(0, '@function', {  fg = functionColor, })
---vim.api.nvim_set_hl(0, '@method', {  fg = functionColor, })
-
--- function tprint (tbl, indent)
--- 	if not indent then indent = 0 end
--- 	local toprint = string.rep(" ", indent) .. "{\r\n"
--- 	indent = indent + 2 
--- 	for k, v in pairs(tbl) do
--- 	  toprint = toprint .. string.rep(" ", indent)
--- 	  if (type(k) == "number") then
--- 		toprint = toprint .. "[" .. k .. "] = "
--- 	  elseif (type(k) == "string") then
--- 		toprint = toprint  .. k ..  "= "   
--- 	  end
--- 	  if (type(v) == "number") then
--- 		toprint = toprint .. v .. ",\r\n"
--- 	  elseif (type(v) == "string") then
--- 		toprint = toprint .. "\"" .. v .. "\",\r\n"
--- 	  elseif (type(v) == "table") then
--- 		toprint = toprint .. tprint(v, indent + 2) .. ",\r\n"
--- 	  else
--- 		toprint = toprint .. "\"" .. tostring(v) .. "\",\r\n"
--- 	  end
--- 	end
--- 	toprint = toprint .. string.rep(" ", indent-2) .. "}"
--- 	return toprint
---   end
 
 vim.api.nvim_create_autocmd("LspTokenUpdate", {
 	callback = function(args)
@@ -228,31 +178,12 @@ vim.api.nvim_create_autocmd("LspTokenUpdate", {
   end
 })
 
-  vim.api.nvim_set_hl(0, 'MyMutableGlobalHL', {  fg = "#6ab04c", })
-  vim.api.nvim_set_hl(0, 'DefaultClassType', {  fg = "#009432", })
-  vim.api.nvim_set_hl(0, 'DefaultClassType', {  fg = "#009432", })
+vim.api.nvim_set_hl(0, 'MyMutableGlobalHL', {  fg = "#6ab04c", })
+vim.api.nvim_set_hl(0, 'DefaultClassType', {  fg = "#009432", })
+vim.api.nvim_set_hl(0, 'DefaultClassType', {  fg = "#009432", })
 
---vim.api.nvim_set_hl(0, 'Include', { bg ="#82ccdd", fg = "#000000",  })
---vim.api.nvim_set_hl(0, 'Function', { bg ="#82ccdd", fg = "#000000",  })
-
-
---Include
---Function
-
---vim.api.nvim_set_hl(0, 'Typedef', { bg ="#82ccdd", fg = "#000000", standout=true, bold=true, })
-
-
---@type.builtin - yellow
---@keyword.operator - pink
-
--- flash settings
 vim.api.nvim_set_hl(0, 'FlashLabel', { bg ="#82ccdd", fg = "#000000", standout=true, bold=true, })
 
---vim.filetype.add({ extension = { frag = "frag" } })
-
--- Setup powershell as shell on window
---
---
 
 if vim.fn.has("wsl") == 1 then
   package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
