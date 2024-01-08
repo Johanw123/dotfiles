@@ -184,7 +184,6 @@ wezterm.on("update-right-status", function(window, pane)
   window:set_right_status(wezterm.format(elements));
 end);
 
-
 config = {
   adjust_window_size_when_changing_font_size = false,
   audible_bell = 'Disabled',
