@@ -2,6 +2,8 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local wsl_domains = wezterm.default_wsl_domains()
 
+local background_color = '#22262e'
+
 wezterm.on("gui-startup", function(cmd)
   local _, _, window = wezterm.mux.spawn_window(cmd or {})
   window:gui_window():toggle_fullscreen()
@@ -102,7 +104,7 @@ wezterm.on(
     }
 
     if tab.tab_index == #tabs - 1 then
-      table.insert(rtn, {Background = {Color = "#333333"}})
+      table.insert(rtn, {Background = {Color = background_color}})
       table.insert(rtn, {Foreground = {Color = background}})
       table.insert(rtn, {Text = SOLID_RIGHT_ARROW})
     end
@@ -176,7 +178,7 @@ wezterm.on("update-right-status", function(window, pane)
     local cell_no = num_cells + 1
 
     if is_first then
-      table.insert(elements, {Background = {Color = "#333333"}})
+      table.insert(elements, {Background = {Color = background_color}})
       table.insert(elements, {Foreground = {Color = colors[cell_no]}})
       table.insert(elements, {Text = SOLID_LEFT_ARROW})
     end
@@ -241,7 +243,7 @@ config = {
         -- The color of the strip that goes along the top of the window
         -- (does not apply when fancy tab bar is in use)
         -- background = '#1e222a',
-        -- background = '#',
+        background = background_color,
       },
   },
   font_size = 16,
@@ -249,7 +251,7 @@ config = {
   force_reverse_video_cursor = true,
   hide_mouse_cursor_when_typing = true,
   use_fancy_tab_bar = false,
-  tab_bar_at_bottom  = true,
+  tab_bar_at_bottom = false,
   show_new_tab_button_in_tab_bar = false,
   hide_tab_bar_if_only_one_tab = false,
   -- timeout_milliseconds defaults to 1000 and can be omitted
