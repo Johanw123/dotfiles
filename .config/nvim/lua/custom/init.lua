@@ -20,7 +20,6 @@ if vim.g.neovide then
 	vim.g.neovide_floating_blur_amount_y = 2
 
 	vim.g.neovide_refresh_rate = 165
-  vim.
 	vim.g.neovide_cursor_animation_length = 0
 end
 
