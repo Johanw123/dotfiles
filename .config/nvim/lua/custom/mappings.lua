@@ -1,5 +1,9 @@
 ---@type MappingsTable
 local M = {}
+local buffers = require("custom.utils.buffers")
+local is_default_buffer = function()
+  return buffers.is_not_focused_buffer("NvimTree_1", "mind", "spectre", "gen.nvim")
+end
 
 M.disabled = {
   n = {
@@ -136,6 +140,18 @@ M.general = {
     --   "ollama AI code completion"
     -- },
 
+
+    ["<leader>ao"] = {
+     function()
+        if is_default_buffer() then
+          local menu = require("configs.ollama")
+          menu.toggle()
+        end
+      end,
+      "Toggle Ollama",
+    },
+
+
     ["<leader>fr"] = {
       function()
         require('telescope.builtin').lsp_references()
@@ -150,6 +166,18 @@ M.general = {
     },
 
   }, -- n
+
+  v ={
+    ["<leader>ao"] = {
+     function()
+        if is_default_buffer() then
+          local menu = require("configs.ollama")
+          menu.toggle()
+        end
+      end,
+      "Toggle Ollama",
+    },
+  },
 
 } -- M.general
 
