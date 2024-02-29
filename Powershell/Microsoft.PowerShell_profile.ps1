@@ -5,6 +5,9 @@ function Invoke-Starship-PreCommand {
 Invoke-Expression (&starship init powershell)
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
+Remove-Alias cd
+Set-Alias cd z
+
 Import-Module PSReadLine
 
 # Other hosts (ISE, ConEmu) don't always work as well with PSReadLine.
@@ -92,12 +95,9 @@ Set-PSReadLineOption @options
 # Set-PSReadLineKeyHandler -Chord ";" -ScriptBlock { mapTwoLetterFunc ';' 'q' -func $function:replaceWithExit }
 
 
-
 Set-Alias -Name np -Value C:\Windows\notepad.exe
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name vim -Value nvim
-#Set-Alias -Name cd -Value zoxide
-#Set-Alias -Name z -Value zoxide
 
 function cd-susrepo1 { set-location "G:\dev\susrepo1" }
 new-alias cd-sus gotosusrepo1
@@ -118,12 +118,6 @@ function cd_devd { set-location D:\Dev }
 
 function cd-smb { set-location C:\Dev\SquareManBoy }
 function cd-dr { set-location D:\Dev\DungeonRun\DungeonRun }
-
-
-
-#function ls_alias_detailed { bls }
-#function ls_alias_detailed { Get-ChildItem $args -Exclude .* }
-#Set-Alias -Name lsd -Value ls_alias_detailed -Option AllScope
 
 function ls_alias_c1 { Get-ChildItem $args -Exclude .*  | Format-Wide -Column 1 -Property Name }
 Set-Alias -Name ls1 -Value ls_alias_c1 -Option AllScope
@@ -148,9 +142,6 @@ Set-Alias -Name lse -Value lse_alias_unix -Option AllScope
 
 function ll_alias_unix { eza --icons -F -H --group-directories-first --git -1 -alF }
 Set-Alias -Name ll -Value ll_alias_unix -Option AllScope
-
-#function ls_alias { eza }
-#Set-Alias -Name ls -Value ls_alias -Option AllScope
 
 Set-Alias -Name ls -Value eza
 
@@ -192,15 +183,29 @@ Set-Alias -Name rgf -Value RipGrepFunc
 Set-Alias -Name fd -Value Invoke-FuzzySetLocation
 Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
 Set-Alias -Name fkill -Value Invoke-FuzzyKillProcess
+Set-Alias -Name fz -Value Invoke-FuzzyZoxide
+
+
+function OpenCurrentDir()
+{
+  Invoke-Item .
+}
+Set-Alias -Name e -Value OpenCurrentDir 
 
 function FuzzyEditFunc() {
-vim $(fzf --preview='bat --color=always --theme=gruvbox-dark --style=numbers {}')
+  fzf --preview='bat --color=always --theme=ansi --style=numbers {}'| % { vim $_ }
+  #Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf | % { vim $_ }
 }
+
 Set-Alias -Name fe -Value FuzzyEditFunc
 
-function Wsl-Ollama { wsl ollama }
+function Wsl-Ollama { wsl ollama run mistral }
 Set-Alias -Name ollama -Value Wsl-Ollama 
 
+function List-Commands {
+  bat --language=help -f $home\dotfiles\Powershell\list.txt
+}
+Set-Alias -Name list -Value List-Commands
 
 # From https://github.com/nickmhankins/Handle
 function Test-AcceptedEula {
@@ -281,3 +286,33 @@ Function Close-LockedFiles {
     }        
 }
 
+
+# Function to get history of saved locations
+function StupidHist {
+ $historyLocation = $(Get-PSReadLineOption).HistorySavePath
+ $all = Get-Content $historyLocation | select-string -Pattern "^cd .:" | %{ echo ($_ -replace "^cd (.*)","`$1") } | Sort-Object -Unique 
+ return $all | Where-Object { Test-Path $($_) }
+}
+# Function to change to the last visited location
+function CdLast {
+    $location = StupidHist | FZF
+    if ($location) {
+        Set-Location $location
+    }
+}
+# Create an alias for CdLast
+Set-Alias q CdLast
+
+function Invoke-FuzzyZoxide() {
+    $result = $null
+    try {
+        (zoxide query --list) | Invoke-Fzf -NoSort | ForEach-Object { $result = $_ }
+    }
+    catch {
+
+    }
+    if ($null -ne $result) {
+        # use cd in case it's aliased to something else:
+        cd $result
+    }
+}

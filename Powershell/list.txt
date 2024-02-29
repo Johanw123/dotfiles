@@ -1,0 +1,18 @@
+Aliases:
+ rgf   - RipGrepFuzzy      -   Find strings in files with a fuzzy search
+ fd    - FuzzyDirectory    -   Find directory with a fuzzy search and cd to result
+ fgs   - FuzzyGitStatus>   -   Fuzzy searchable Git status window 
+ fe    - FuzzyEdit         -   Find files with a fuzzy search and open editor with result
+ fz    - FuzzyZLocation    -   Fuzzy search visited locations and cd's to result
+ fkill - FuzzyKillProcess  -   Find processes with a fuzzy search and kill the selected process
+ e     - Invoke-Item .     -   Open current folder in explorer
+ sudo  -                   -   Run as Admin 
+ sudo! -                   -   Run last command as Admin
+ which -                   -   Find location of exe/program
+
+Other programs/tools: 
+ z     - zoxide            -   cd replacement with smart functions
+ bat   - Bat               -   cat replacement
+ fzf   - FuzzyFinder       -   Find stuff with a fuzzy search
+ rb    - RipGrep           -   Find strings in files
+ ollama                    -   AI chatbot

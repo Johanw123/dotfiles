@@ -198,6 +198,7 @@ local plugins = {
   --   lazy = false
   -- },
   {
+    --Before trying to use the language server you should install it. You can do so by running :CSInstallRoslyn which will install the configured version of the plugin in neovim's datadir.
     "jmederosalvarado/roslyn.nvim",
   },
   -- {
@@ -494,7 +495,19 @@ local plugins = {
   },
 
   {
+
     "MunifTanjim/nui.nvim"
+  },
+  {
+    "mg979/vim-visual-multi",
+    lazy = false,
+    init = function()
+      vim.g.VM_default_mappings = 0
+      vim.g.VM_maps               = {
+        ["Select Cursor Down"] = "<S-A-Down>",
+        ["Select Cursor Up"] = "<S-A-Up>",
+    }
+    end,
   },
 
 }
