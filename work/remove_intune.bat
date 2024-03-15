@@ -1,0 +1,1 @@
+powershell -File "remove_intune.ps1"

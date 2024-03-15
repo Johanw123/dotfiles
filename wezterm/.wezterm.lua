@@ -33,7 +33,7 @@ local function tab_title(tab_info)
 end
 
 local shell = {"C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo"}
-local font_name = "FiraCode NF"
+local font_name = "FiraCode Nerd Font"
 
 -- The filled in variant of the < symbol
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider

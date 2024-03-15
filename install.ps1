@@ -99,3 +99,18 @@ $dotfilesConfiguration = Join-Path $dotFilesRoot "starship" | Join-Path -ChildPa
 if (!(Test-Path $localConfiguration -PathType Container)) { 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
+
+
+
+
+
+#Fonts
+$FontFolder = "fonts"
+$FontItem = Get-Item -Path $FontFolder
+$FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon','*.otf','*.ttc','*.ttf')
+
+foreach ($Font in $FontList) {
+        Write-Host 'Installing font -' $Font.BaseName
+        Copy-Item $Font "C:\Windows\Fonts"
+        New-ItemProperty -Name $Font.BaseName -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Fonts" -PropertyType string -Value $Font.name         
+}
