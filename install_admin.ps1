@@ -61,7 +61,8 @@ Set-Location $dotFilesRoot
 winget install --id=Neovim.Neovim  -e
 
 winget install wez.wezterm
-winget upgrade wez.wezterm
+
+winget install -e --id Microsoft.WindowsTerminal
 
 winget install eza-community.eza
 
@@ -69,11 +70,14 @@ winget install -e --id dotPDNLLC.paintdotnet
 
 winget install -e --id Git.Git
 
+winget install -e --id 7zip.7zip
+
 # Work 
 winget install --id=Microsoft.VisualStudio.2022.Professional  -e
 winget install Microsoft.VisualStudio.2022.BuildTools
 winget install Microsoft.VCRedist.2015+.x64
 winget install Microsoft.VCRedist.2015+.x86
+winget install -e --id Nvidia.CUDA -v 12.2
 
 winget install Microsoft.DotNet.SDK.8
 winget install -e --id SlackTechnologies.Slack
