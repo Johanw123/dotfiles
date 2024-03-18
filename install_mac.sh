@@ -63,7 +63,7 @@ brew install starship
 brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
 brew install neovim-nightly
 
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+git clone https://github.com/NvChad/NvChad --branch v2.0 ~/.config/nvim --depth 1
 
 sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish

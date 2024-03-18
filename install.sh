@@ -29,6 +29,8 @@
 #mkdir ~/.tmux
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+sudo apt install -y fontconfig
+
 if fc-list | grep -q -i "FiraCode"; then
     echo "FiraCode font found!"
 else
@@ -48,24 +50,25 @@ fi
 (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-sudo apt install fzf
-sudo apt install eza
-sudo apt install bat
-sudo apt-get install ripgrep
-sudo apt-get install fuse libfuse2
+sudo apt install -y fzf
+sudo apt install -y eza
+sudo apt install -y bat
+sudo apt-get install -y ripgrep
+sudo apt-get install -y fuse libfuse2
 
 # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 # chmod u+x nvim.appimage
 # ./nvim.appimage
 
-sudo apt install fish
-sudo apt install zoxide
+sudo apt install -y fish
+sudo apt install -y zoxide
 
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt update
-sudo apt install neovim
+sudo apt install -y neovim
 
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+sudo rm -r ~/.config/nvim
+git clone https://github.com/NvChad/NvChad --branch v2.0 ~/.config/nvim --depth 1
 
 curl -sS https://starship.rs/install.sh | sh
 
