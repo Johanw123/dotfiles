@@ -52,35 +52,22 @@ Function TryAddFont($Font)
 }
  
 #Check Script is running with Elevated Privileges
-CheckRunAsAdministrator
+#CheckRunAsAdministrator
 
 $dotFilesRoot = Join-Path $HOME "dotfiles"
 
 Set-Location $dotFilesRoot
 
 winget install --id=Neovim.Neovim  -e
-
 winget install wez.wezterm
-
 winget install -e --id Microsoft.WindowsTerminal
-
 winget install eza-community.eza
-
 winget install -e --id dotPDNLLC.paintdotnet
-
-winget install -e --id Git.Git
-
 winget install -e --id 7zip.7zip
-
-# Work 
-winget install --id=Microsoft.VisualStudio.2022.Professional  -e
-winget install Microsoft.VisualStudio.2022.BuildTools
-winget install Microsoft.VCRedist.2015+.x64
-winget install Microsoft.VCRedist.2015+.x86
-winget install -e --id Nvidia.CUDA -v 12.2
 
 winget install Microsoft.DotNet.SDK.8
 winget install -e --id SlackTechnologies.Slack
+winget install -e --id Microsoft.VisualStudioCode
 
 # Command line programs
 choco install ripgrep -y
@@ -113,7 +100,6 @@ if (-not (Get-Module PSFzf -ListAvailable)){
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
 # real vnc
-
 winget install --id=RealVNC.VNCServer  -e
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
@@ -152,10 +138,26 @@ foreach ($Font in $FontList) {
     TryAddFont $Font        
 }
 
+
+# Work 
+winget install --id=Microsoft.VisualStudio.2022.Professional  -e
+winget install Microsoft.VisualStudio.2022.BuildTools
+winget install Microsoft.VCRedist.2015+.x64
+winget install Microsoft.VCRedist.2015+.x86
+winget install --id=Nvidia.CUDA -v "12.2.2" -e
+
+
+# Windows 11 Settings
+New-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl" -Value 0 -Force
+New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Value "" -Force
+
+& ".\install_nvidia_drivers.ps1"
+
+
 # WSL
 # Enable Needed Virtualization
 #dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 #dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 #Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 
-wsl.exe --install --d Ubuntu-22.04
+#wsl.exe --install --d Ubuntu-22.04
