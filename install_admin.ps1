@@ -117,11 +117,16 @@ if (Test-Path -Path "$HOME\AppData\Local\nvim\lua\custom" -PathType Container) {
     rm $HOME\AppData\Local\nvim\lua\custom -r -force
 }
 
+if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" -PathType Container) {
+    # We link our own powershell local state
+    rm $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -r -force
+}
+
 TryCreateLink "$env:LOCALAPPDATA\nvim\lua\custom" "$dotFilesRoot\.config\nvim\lua\custom"
 TryCreateLink "$HOME\.omnisharp" "$dotFilesRoot\.omnisharp"
 TryCreateLink "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
 TryCreateLink "$env:APPDATA\lsd" "$dotFilesRoot\lsd"
-#TryCreateLink "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" "$dotFilesRoot\windows_terminal\LocalState"
+TryCreateLink "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" "$dotFilesRoot\windows_terminal\LocalState"
 TryCreateLink "$HOME\.wezterm.lua" "$dotFilesRoot\wezterm\.wezterm.lua"
 TryCreateLink "$env:APPDATA\Vifm" "$dotFilesRoot\Vifm"
 TryCreateLink "$HOME\.config\starship.toml" "$dotFilesRoot\starship\starship.toml"

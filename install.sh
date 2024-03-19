@@ -30,6 +30,7 @@
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 sudo apt install -y fontconfig
+sudo apt install unzip
 
 if fc-list | grep -q -i "FiraCode"; then
     echo "FiraCode font found!"
@@ -51,7 +52,8 @@ fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 sudo apt install -y fzf
-sudo apt install -y eza
+#sudo apt install -y eza
+brew install eza
 sudo apt install -y bat
 sudo apt-get install -y ripgrep
 sudo apt-get install -y fuse libfuse2
@@ -70,7 +72,7 @@ sudo apt install -y neovim
 sudo rm -r ~/.config/nvim
 git clone https://github.com/NvChad/NvChad --branch v2.0 ~/.config/nvim --depth 1
 
-curl -sS https://starship.rs/install.sh | sh
+curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
 
 sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish
