@@ -185,6 +185,12 @@ Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
 Set-Alias -Name fkill -Value Invoke-FuzzyKillProcess
 Set-Alias -Name fz -Value Invoke-FuzzyZoxide
 
+Set-Alias -Name ff -Value FindFile
+
+function FindFile()
+{
+    Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf | Invoke-Item
+}
 
 function OpenCurrentDir()
 {

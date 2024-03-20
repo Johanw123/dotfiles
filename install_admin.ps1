@@ -69,6 +69,10 @@ winget install Microsoft.DotNet.SDK.8
 winget install -e --id SlackTechnologies.Slack
 winget install -e --id Microsoft.VisualStudioCode
 
+winget install -e --id Rustlang.Rust.MSVC
+winget install -e --id Python.Python.3.10
+winget install -e --id OpenJS.NodeJS
+
 # Command line programs
 choco install ripgrep -y
 choco install fzf -y

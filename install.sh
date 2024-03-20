@@ -69,10 +69,19 @@ sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt update
 sudo apt install -y neovim
 
+sudo apt install -y nodejs
+sudo apt-get install npm -y
+sudo apt install python3 -y
+sudo apt install python3.10-venv -y
+
 sudo rm -r ~/.config/nvim
 git clone https://github.com/NvChad/NvChad --branch v2.0 ~/.config/nvim --depth 1
 
 curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
+
+. "$HOME/.cargo/env"
+#source "$HOME/.cargo/env.fish"
 
 sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish

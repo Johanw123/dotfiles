@@ -25,7 +25,7 @@ sudo apt install -y cmake
 
 # conan
 sudo apt install -y pip
-sudo pip install conan
+pip install conan
 
 ./install_cuda_12.2.sh
 

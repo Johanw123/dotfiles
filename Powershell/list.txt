@@ -4,6 +4,7 @@ Aliases:
  fgs   - FuzzyGitStatus>   -   Fuzzy searchable Git status window 
  fe    - FuzzyEdit         -   Find files with a fuzzy search and open editor with result
  fz    - FuzzyZLocation    -   Fuzzy search visited locations and cd's to result
+ ff    - FindFile          -   Fuzzy finds a file and opens it with the default application
  fkill - FuzzyKillProcess  -   Find processes with a fuzzy search and kill the selected process
  e     - Invoke-Item .     -   Open current folder in explorer
  sudo  -                   -   Run as Admin 
