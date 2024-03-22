@@ -205,8 +205,8 @@ function FuzzyEditFunc() {
 
 Set-Alias -Name fe -Value FuzzyEditFunc
 
-function Wsl-Ollama { wsl ollama run mistral }
-Set-Alias -Name ollama -Value Wsl-Ollama 
+#function Wsl-Ollama { wsl ollama run mistral }
+#Set-Alias -Name ollama -Value Wsl-Ollama 
 
 function List-Commands {
   bat --language=help -f $home\dotfiles\Powershell\list.txt

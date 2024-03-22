@@ -65,6 +65,9 @@ winget install eza-community.eza
 winget install -e --id dotPDNLLC.paintdotnet
 winget install -e --id 7zip.7zip
 
+winget install --id=Microsoft.DotNet.Runtime.7  -e
+winget install --id=Microsoft.DotNet.Runtime.8  -e
+winget install Microsoft.DotNet.SDK.7
 winget install Microsoft.DotNet.SDK.8
 winget install -e --id SlackTechnologies.Slack
 winget install -e --id Microsoft.VisualStudioCode
@@ -72,6 +75,12 @@ winget install -e --id Microsoft.VisualStudioCode
 winget install -e --id Rustlang.Rust.MSVC
 winget install -e --id Python.Python.3.10
 winget install -e --id OpenJS.NodeJS
+
+winget install -e --id LLVM.LLVM
+
+$Path = "C:\Program Files\LLVM\bin"
+$Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
+[Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
 
 # Command line programs
 choco install ripgrep -y
