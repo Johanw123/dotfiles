@@ -7,9 +7,13 @@ Aliases:
  ff    - FindFile          -   Fuzzy finds a file and opens it with the default application
  fkill - FuzzyKillProcess  -   Find processes with a fuzzy search and kill the selected process
  e     - Invoke-Item .     -   Open current folder in explorer
+ q     -                   -   Fuzzy find among previously visited "full" paths like "C:\dev"
  sudo  -                   -   Run as Admin 
  sudo! -                   -   Run last command as Admin
  which -                   -   Find location of exe/program
+
+ lfd   - ListFilesSortedDate - List file names recursively in a folder and sort them by Last modified date
+ fsb   - FuzzySwitchBranch -   Fuzzy find all branches (Plastic) and switches to the selected one
 
 Other programs/tools: 
  z     - zoxide            -   cd replacement with smart functions

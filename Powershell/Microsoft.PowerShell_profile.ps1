@@ -9,6 +9,7 @@ Remove-Alias cd
 Set-Alias cd z
 
 Import-Module PSReadLine
+Import-Module -Name CompletionPredictor
 
 # Other hosts (ISE, ConEmu) don't always work as well with PSReadLine.
 # Also, if PS is run with -Command, PSRL loading is suppressed.
@@ -42,7 +43,7 @@ $options = @{
 
 # Need >= 2.1
 if ($psrlMod.Version.Minor -ge 1) {
-    $options['PredictionSource'] = 'History'
+    $options['PredictionSource'] = 'HistoryAndPlugin'
 }
 
 # Need >= 2.2
@@ -51,6 +52,8 @@ if ($psrlMod.Version.Minor -ge 2) {
 }
 
 Set-PSReadLineOption @options
+
+#Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 
 
 # VIM STUFF??
@@ -187,9 +190,16 @@ Set-Alias -Name fz -Value Invoke-FuzzyZoxide
 
 Set-Alias -Name ff -Value FindFile
 
+Set-Alias -Name lfd -Value ListFilesSortedDate
+
 function FindFile()
 {
     Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf | Invoke-Item
+}
+
+function ListFilesSortedDate()
+{
+    Get-ChildItem $dir -Recurse -File | Select-Object LastWriteTime, FullName | Sort-Object LastWriteTime
 }
 
 function OpenCurrentDir()
@@ -322,3 +332,20 @@ function Invoke-FuzzyZoxide() {
         cd $result
     }
 }
+
+
+function WingetInstallPackage()
+{
+    $package_id = winget search --query "" | Invoke-Fzf -Height 100% | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() }
+    winget install -e --id $package_id
+}
+
+Set-Alias -Name wip -Value WingetInstallPackage
+
+# Plastic stuff
+function FuzzySwitchBranch(){
+    $branch = cm find branches --format="{name}" --nototal | fzf
+    cm switch $branch
+}
+
+Set-Alias -Name fsb -Value FuzzySwitchBranch

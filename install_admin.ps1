@@ -58,6 +58,8 @@ $dotFilesRoot = Join-Path $HOME "dotfiles"
 
 Set-Location $dotFilesRoot
 
+winget install --id GitHub.cli
+
 winget install --id=Neovim.Neovim  -e
 winget install wez.wezterm
 winget install -e --id Microsoft.WindowsTerminal
@@ -107,6 +109,10 @@ if (-not (Get-Module PSReadLine -ListAvailable)){
 
 if (-not (Get-Module PSFzf -ListAvailable)){
     Install-Module PSFzf -Force
+}
+
+if (-not (Get-Module CompletionPredictor -ListAvailable)){
+    Install-Module -Name CompletionPredictor -Repository PSGallery -Force
 }
 
 
