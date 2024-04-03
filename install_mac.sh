@@ -52,6 +52,10 @@ brew install ripgrep
 brew install fuse libfuse2
 brew install wget
 
+
+#dev 
+brew install --cask tiled
+
 # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 # chmod u+x nvim.appimage
 # ./nvim.appimage
