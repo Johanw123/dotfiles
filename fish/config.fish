@@ -39,10 +39,10 @@
     alias z='zoxide'
     alias vim='nvim'
 
-    function fdg
-      preview="git diff $@ --color=always -- {-1}"
-      git diff $@ --name-only | fzf -m --ansi --preview $preview
-    end
+    # function fdg
+      # preview="git diff $@ --color=always -- {-1}"
+      # git diff $@ --name-only | fzf -m --ansi --preview $preview
+    # end
 
     # alias wine64='whisky'
     # alias wine='whisky'
