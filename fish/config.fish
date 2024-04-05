@@ -92,3 +92,6 @@ switch (uname)
     eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   case '*'
 end
+
+set PATH $HOME/.local/bin/ $PATH
+set PATH $HOME/dotfiles/bash/bin/ $PATH

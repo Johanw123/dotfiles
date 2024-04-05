@@ -289,6 +289,24 @@ config = {
 
     { action = wezterm.action.CloseCurrentTab { confirm = true }    ,             mods = 'LEADER',         key =   'x' },
     { action = act.SpawnTab 'CurrentPaneDomain'   ,             mods = 'LEADER',         key =   'n' },
+
+    {
+      key = 'r',
+      mods = 'LEADER',
+      action = act.PromptInputLine {
+        description = 'Enter new name for tab',
+        action = wezterm.action_callback(function(window, pane, line)
+          -- line will be `nil` if they hit escape without entering anything
+          -- An empty string if they just hit enter
+          -- Or the actual line of text they wrote
+          if line then
+            window:active_tab():set_title(line)
+          end
+        end),
+      },
+    },
+
+
   },
   scrollback_lines = 10000,
   show_update_window = true,
