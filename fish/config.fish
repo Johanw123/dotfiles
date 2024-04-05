@@ -1,6 +1,6 @@
 # if status is-interactive
     # Commands to run in interactive sessions can go here
-    cd $HOME    
+    # cd $HOME    
  
     # Changing "ls" to "eza"
     alias ls='eza --color=always --group-directories-first'
@@ -39,11 +39,6 @@
     alias z='zoxide'
     alias vim='nvim'
 
-    # function fdg
-      # preview="git diff $@ --color=always -- {-1}"
-      # git diff $@ --name-only | fzf -m --ansi --preview $preview
-    # end
-
     # alias wine64='whisky'
     # alias wine='whisky'
     
@@ -80,7 +75,9 @@
     end
 # end
 
-eval (/opt/homebrew/bin/brew shellenv)
+# eval (/opt/homebrew/bin/brew shellenv)
+
+# /home/linuxbrew/.linuxbrew/bin/brew
 
 zoxide init fish | source
 starship init fish | source
@@ -95,3 +92,7 @@ end
 
 set PATH $HOME/.local/bin/ $PATH
 set PATH $HOME/dotfiles/bash/bin/ $PATH
+
+
+# source ~/dotfiles/bash/.bash_aliases
+set -x PATH "$HOME/git-fuzzy/bin:$PATH"

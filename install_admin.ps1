@@ -80,6 +80,8 @@ winget install -e --id OpenJS.NodeJS
 
 winget install -e --id LLVM.LLVM
 
+winget install dandavison.delta
+
 $Path = "C:\Program Files\LLVM\bin"
 $Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
 [Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
