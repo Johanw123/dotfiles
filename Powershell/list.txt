@@ -12,8 +12,11 @@ Aliases:
  sudo! -                   -   Run last command as Admin
  which -                   -   Find location of exe/program
 
- lfd   - ListFilesSortedDate - List file names recursively in a folder and sort them by Last modified date
- fsb   - FuzzySwitchBranch -   Fuzzy find all branches (Plastic) and switches to the selected one
+ lfd   - ListFilesSortedDate  - List file names recursively in a folder and sort them by Last modified date
+ fsb   - FuzzySwitchBranch    -   Fuzzy find all branches (Plastic) and switches to the selected one
+ fgd   - FuzzyGitDiff         -   Fuzzy find all files in git and shows the diff of the selected file
+ wip   - WingetInstallPackage - Install a package with winget searched with a fuzzy search
+
 
 Other programs/tools: 
  z     - zoxide            -   cd replacement with smart functions
