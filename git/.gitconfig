@@ -22,12 +22,12 @@
 	enabled = true
 [interactive]
 	diffFilter = delta --color-only
-[delta]
-	navigate = true
-	line-numbers = true
-	side-by-side = true
-	true-color = always
-	syntax-theme = base16
+; [delta]
+; 	navigate = true
+; 	line-numbers = true
+; 	side-by-side = true
+; 	true-color = always
+; 	syntax-theme = base16
 	; file-modified-label = 🥑
 	; line-numbers-left-style = black
 	; line-numbers-right-style = black
@@ -41,7 +41,27 @@
 	; plus-style = syntax "#272734"
 	; line-numbers-plus-style = green
 	; plus-emph-style = black green
-[merge]
-	conflictStyle = zdiff3
+; [merge]
+	; conflictStyle = zdiff3
+; [diff]
+; 	colorMoved = default
+
 [diff]
-	colorMoved = default
+  tool = semanticdiff
+
+[difftool "semanticdiff"]
+  cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -s=\"$LOCAL\" -d=\"$PWD/$REMOTE\" i=eol
+
+[difftool]
+  prompt = false
+
+[merge]
+  tool = semanticmerge
+
+[mergetool "semanticmerge"]
+  cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -d=\"$LOCAL\" -s=\"$REMOTE\" -b=\"$BASE\" -r=\"$MERGED\" 
+  trustExitCode = true
+
+[mergetool]
+  prompt = false
+  keepBackup = false
