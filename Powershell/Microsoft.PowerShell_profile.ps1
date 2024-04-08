@@ -352,14 +352,7 @@ Set-Alias -Name fsb -Value FuzzySwitchBranch
 
 function FuzzyGitDiff()
 {
-    git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
+    git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
 }
 
-function FuzzyGitDiff2()
-{
-    git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
-}
-
-Set-Alias -Name fgd FuzzyGitDiff2
-
-#git diff --name-only | fzf -m --ansi --preview 'bat {-1} --color=always'
+Set-Alias -Name fgd -Value FuzzyGitDiff

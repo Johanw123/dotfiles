@@ -187,3 +187,14 @@ New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2
 #Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 
 #wsl.exe --install --d Ubuntu-22.04
+
+# git settings
+git config --global diff.tool plasticdiff
+git config --global difftool.plasticdiff.cmd "C:/'Program Files'/PlasticSCM5/client/mergetool.exe -s=`"`$LOCAL`" -d=`"`$PWD/`$REMOTE`" i=eol"
+git config --global difftool.prompt false
+
+git config --global merge.tool plasticmerge
+git config --global mergetool.plasticmerge.cmd "C:/'Program Files'/PlasticSCM5/client/mergetool.exe -d=`"`$LOCAL`" -s=`"`$REMOTE`" -b=`"`$BASE' -r=`"`$MERGED`""
+git config --global mergetool.plasticmerge.trustExitCode true
+git config --global mergetool.prompt false
+git config --global mergetool.keepBackup false
