@@ -187,9 +187,7 @@ Set-Alias -Name fd -Value Invoke-FuzzySetLocation
 Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
 Set-Alias -Name fkill -Value Invoke-FuzzyKillProcess
 Set-Alias -Name fz -Value Invoke-FuzzyZoxide
-
 Set-Alias -Name ff -Value FindFile
-
 Set-Alias -Name lfd -Value ListFilesSortedDate
 
 function FindFile()
@@ -356,3 +354,57 @@ function FuzzyGitDiff()
 }
 
 Set-Alias -Name fgd -Value FuzzyGitDiff
+
+function RipTest() {
+    # this function is adapted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
+    param([Parameter(Mandatory)]$SearchString, [string]$filter)
+
+    $RG_PREFIX = "rg --column --line-number --no-heading --color=always --smart-case" 
+    $INITIAL_QUERY = $SearchString
+
+    try {
+            $sleepCmd = ''
+            $trueCmd = 'cd .'
+            $rgfilter = ''
+
+            if (-not [string]::IsNullOrEmpty($filter)) {
+                $rgfilter = " -g $filter"
+            }
+
+        # Perhaps parse from search string a -f "*.cpp" etc to have it in the initial query?
+
+        $env:FZF_DEFAULT_COMMAND = "$RG_PREFIX ""$INITIAL_QUERY""$rgfilter"
+
+        fzf --ansi --color "hl:-1:underline,hl+:-1:underline:reverse" --disabled --query "$INITIAL_QUERY" --bind "change:reload:$sleepCmd $RG_PREFIX {q}$rgfilter || $trueCmd" --prompt '🔎 ripgrep> ' --delimiter : --preview 'bat --color=always {1} --highlight-line {2}' --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' | ForEach-Object { $results += $_ }
+
+        if (-not [string]::IsNullOrEmpty($results)) {
+            $split = $results.Split(':')
+            $fileList = $split[0]
+            $lineNum = $split[1]
+         
+            $cmd = '';
+            $editorOptions = ''
+            $editor = 'nvim'
+
+            if ($fileList -is [array] -and $fileList.length -gt 1) {
+                for ($i = 0; $i -lt $fileList.Count; $i++) {
+                    $fileList[$i] = '"{0}"' -f $(Resolve-Path $fileList[$i].Trim('"'))
+                }
+                $cmd = "$editor$editorOptions {0}" -f ($fileList -join ' ')
+            }
+            else {
+                $cmd = "$editor$editorOptions ""{0}"" +{1}" -f $(Resolve-Path $fileList.Trim('"')), $LineNum
+            }
+
+            Write-Host "Executing '$cmd'..."
+            Invoke-Expression -Command $cmd
+        }
+    }
+    catch {
+        Write-Error "Error occurred: $_"
+    }
+    finally {
+    }
+}
+
+Set-Alias -Name rt -Value RipTest
