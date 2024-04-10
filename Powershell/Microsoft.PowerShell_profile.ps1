@@ -366,16 +366,19 @@ function RipTest() {
             $sleepCmd = ''
             $trueCmd = 'cd .'
             $rgfilter = ''
+            $promt = "🔎 ripgrep> "
 
             if (-not [string]::IsNullOrEmpty($filter)) {
                 $rgfilter = " -g $filter"
+                $promt = "🔎 ripgrep (filter: $filter)> "
             }
 
         # Perhaps parse from search string a -f "*.cpp" etc to have it in the initial query?
 
-        $env:FZF_DEFAULT_COMMAND = "$RG_PREFIX ""$INITIAL_QUERY""$rgfilter"
+        $env:FZF_DEFAULT_COMMAND = "$RG_PREFIX ""$INITIAL_QUERY""$rgfilter || $trueCmd"
+        
 
-        fzf --ansi --color "hl:-1:underline,hl+:-1:underline:reverse" --disabled --query "$INITIAL_QUERY" --bind "change:reload:$sleepCmd $RG_PREFIX {q}$rgfilter || $trueCmd" --prompt '🔎 ripgrep> ' --delimiter : --preview 'bat --color=always {1} --highlight-line {2}' --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' | ForEach-Object { $results += $_ }
+        fzf --ansi --color "hl:-1:underline,hl+:-1:underline:reverse" --disabled --query "$INITIAL_QUERY" --bind "change:reload:$sleepCmd $RG_PREFIX {q}$rgfilter || $trueCmd" --prompt $promt --delimiter : --preview 'bat --color=always {1} --highlight-line {2}' --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' | ForEach-Object { $results += $_ }
 
         if (-not [string]::IsNullOrEmpty($results)) {
             $split = $results.Split(':')
