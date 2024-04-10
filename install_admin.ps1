@@ -146,6 +146,7 @@ if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb
 TryCreateLink "$env:LOCALAPPDATA\nvim\lua\custom" "$dotFilesRoot\.config\nvim\lua\custom"
 TryCreateLink "$HOME\.omnisharp" "$dotFilesRoot\.omnisharp"
 TryCreateLink "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
+#TryCreateLink "$HOME\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
 TryCreateLink "$env:APPDATA\lsd" "$dotFilesRoot\lsd"
 TryCreateLink "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" "$dotFilesRoot\windows_terminal\LocalState"
 TryCreateLink "$HOME\.wezterm.lua" "$dotFilesRoot\wezterm\.wezterm.lua"
@@ -154,6 +155,8 @@ TryCreateLink "$HOME\.config\starship.toml" "$dotFilesRoot\starship\starship.tom
 TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\keep_wsl_alive.vbs" "$dotFilesRoot\keep_wsl_alive.vbs"
 TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\remove_intune.bat" "$dotFilesRoot\work/remove_intune.bat"
 TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\remove_intune.ps1" "$dotFilesRoot\work/remove_intune.ps1"
+
+#New-ItemProperty 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders' Personal -Value '$env:userprofile\dotfiles\Powershell\Microsoft.PowerShell_profile.ps1' -Type ExpandString -Force
 
 #Fonts
 $FontFolder = "fonts"
