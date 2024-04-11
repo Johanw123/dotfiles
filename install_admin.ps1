@@ -117,6 +117,9 @@ if (-not (Get-Module CompletionPredictor -ListAvailable)){
     Install-Module -Name CompletionPredictor -Repository PSGallery -Force
 }
 
+if (-not (Get-Module PowerShellRun -ListAvailable)){
+    Install-Module -Name PowerShellRun -Scope CurrentUser
+}
 
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
