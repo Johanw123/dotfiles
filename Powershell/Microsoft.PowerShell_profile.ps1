@@ -161,7 +161,7 @@ function FuzzyEditFunc() {
 }
 
 function List-Commands {
-  bat --language=help -f $home\dotfiles\Powershell\list.txt
+  bat --language=help --paging=never -f $home\dotfiles\Powershell\list.txt
 }
 
 
@@ -268,7 +268,6 @@ function Invoke-FuzzyZoxide() {
     }
 }
 
-
 function WingetInstallPackage() {
     $package_id = winget search --query "" | Invoke-Fzf -Height 100% | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() }
     winget install -e --id $package_id
@@ -304,7 +303,7 @@ function RipTest() {
         # Perhaps parse from search string a -f "*.cpp" etc to have it in the initial query?
         $env:FZF_DEFAULT_COMMAND = "$RG_PREFIX ""$INITIAL_QUERY""$rgfilter || $trueCmd"
 
-        fzf --ansi --color "hl:-1:underline,hl+:-1:underline:reverse" --disabled --query "$INITIAL_QUERY" --bind "change:reload:$sleepCmd $RG_PREFIX {q}$rgfilter || $trueCmd" --prompt $promt --delimiter : --preview 'bat --color=always {1} --highlight-line {2} --theme=base16' --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' | ForEach-Object { $results += $_ }
+        fzf --ansi --color "hl:-1:underline,hl+:-1:underline:reverse" --disabled --query "$INITIAL_QUERY" --bind "change:reload:$sleepCmd $RG_PREFIX {q}$rgfilter || $trueCmd" --prompt $promt --delimiter : --preview 'bat --color=always {1} --highlight-line {2} --theme=TwoDark' --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' | ForEach-Object { $results += $_ }
 
         if (-not [string]::IsNullOrEmpty($results)) {
             $split = $results.Split(':')
@@ -397,6 +396,10 @@ function LaunchBoth() {
    # (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select FileName, ProductName
 }
 
+function LaunchRecent(){
+    (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | select fullname,lastaccesstime | sort -Property lastaccesstime -Descending |  Select-Object -ExpandProperty FullName | fzf | Invoke-Item
+}
+
 #| Format-Table -HideTableHeaders
 
 # Aliases   
@@ -453,3 +456,4 @@ new-alias cd-sus gotosusrepo1
 Set-Alias -Name lp -Value LaunchProgram
 Set-Alias -Name la -Value LaunchApp
 Set-Alias -Name lb -Value LaunchBoth
+Set-Alias -Name lr -Value LaunchRecent

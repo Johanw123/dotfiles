@@ -13,6 +13,11 @@ Aliases:
  sudo! -                   -   Run last command as Admin
  which -                   -   Find location of exe/program
 
+ la    -  LaunchApp        -   Find installed apps ('Get-StartApps') and fuzzy select one to start
+ lp    -  LaunchProgram    -   Find all programs and fuzzy select one to start
+ lb    -  LaunchBoth       -   Find Apps and Programs and fuzzy select one to start
+ lr    -  LaunchRecent     -   List ordered exe files based on lastaccesstime, select one to launch it
+
  lfd   - ListFilesSortedDate  - List file names recursively in a folder and sort them by Last modified date
  fsb   - FuzzySwitchBranch    -   Fuzzy find all branches (Plastic) and switches to the selected one
  fgd   - FuzzyGitDiff         -   Fuzzy find all files in git and shows the diff of the selected file
