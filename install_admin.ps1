@@ -74,27 +74,35 @@ winget install Microsoft.DotNet.SDK.8
 winget install -e --id SlackTechnologies.Slack
 winget install -e --id Microsoft.VisualStudioCode
 
+winget install -e --id sharkdp.bat
+winget install -e --id BurntSushi.ripgrep.MSVC
+winget install -e --id junegunn.fzf
+
 winget install -e --id Rustlang.Rust.MSVC
 winget install -e --id Python.Python.3.10
 winget install -e --id OpenJS.NodeJS
 
-winget install -e --id LLVM.LLVM
-
 winget install dandavison.delta
 
-$Path = "C:\Program Files\LLVM\bin"
-$Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
-[Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
+winget install -e --id LLVM.LLVM
+
+if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin") {
+    Write-Host "LLVM is in path" -ForegroundColor Green
+}
+else {
+    $Path = "C:\Program Files\LLVM\bin"
+    $Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
+    [Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
+}
 
 # Command line programs
-choco install ripgrep -y
-choco install fzf -y
-choco install bat -y
-choco install zoxide -y
+#choco install ripgrep -y
+#choco install fzf -y
+#choco install zoxide -y
 choco install highlight -y
 choco install vifm -y
 
-choco install starship -y
+#choco install starship -y
 choco install sysinternals -y
 
 #Powershell Plugins
@@ -124,7 +132,7 @@ if (-not (Get-Module PowerShellRun -ListAvailable)){
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
 # real vnc
-winget install --id=RealVNC.VNCServer  -e
+winget install --id=RealVNC.VNCServer -e
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
@@ -167,9 +175,8 @@ $FontItem = Get-Item -Path $FontFolder
 $FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon','*.otf','*.ttc','*.ttf')
 
 foreach ($Font in $FontList) {
-    TryAddFont $Font        
+    TryAddFont $Font
 }
-
 
 # Work 
 winget install --id=Microsoft.VisualStudio.2022.Professional  -e

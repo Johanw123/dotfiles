@@ -1,11 +1,12 @@
 Aliases:
  rgf   - RipGrepFuzzy      -   Find strings in files with a fuzzy search
- rt    -                   -   Basically same as rgf but with a different name, but second parameter is a filter example "*.cpp"
+ rfs   - RipgrepFindString -   Basically same as rgf with a different name, but second parameter is a filter example "*.cpp"
+ rff   - RipgrepFindFile   -   Search and find files based on filename input
  fd    - FuzzyDirectory    -   Find directory with a fuzzy search and cd to result
  fgs   - FuzzyGitStatus>   -   Fuzzy searchable Git status window 
  fe    - FuzzyEdit         -   Find files with a fuzzy search and open editor with result
  fz    - FuzzyZLocation    -   Fuzzy search visited locations and cd's to result
- ff    - FindFile          -   Fuzzy finds a file and opens it with the default application
+ fff   - FuzzyFindFile          -   Fuzzy finds a file and opens it with the default application
  fkill - FuzzyKillProcess  -   Find processes with a fuzzy search and kill the selected process
  e     - Invoke-Item .     -   Open current folder in explorer
  q     -                   -   Fuzzy find among previously visited "full" paths like "C:\dev"

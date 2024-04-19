@@ -209,7 +209,7 @@ elseif vim.fn.has('win32') == 1 and vim.fn.has("wsl") == 0 then
   package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?\\init.lua;"
   package.path = package.path .. ";" .. vim.fn.expand("$APPDATA") .. "\\LuaRocks\\share\\lua\\5.1\\?.lua;"
 
-  local avalonia_lsp_bin = "C:\\Users\\Johan\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.25\\avaloniaServer\\AvaloniaLanguageServer.dll"
+  local avalonia_lsp_bin = "C:\\Users\\johanw\\.vscode\\extensions\\avaloniateam.vscode-avalonia-0.0.31\\avaloniaServer\\AvaloniaLanguageServer.dll"
 
   vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},{ pattern = {"*.axaml"}, callback =
     function()

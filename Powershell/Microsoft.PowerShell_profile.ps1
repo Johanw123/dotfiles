@@ -40,6 +40,7 @@ $options = @{
 
 # Need >= 2.1
 if ($psrlMod.Version.Minor -ge 1) {
+    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
     $options['PredictionSource'] = 'HistoryAndPlugin'
 }
 
@@ -50,7 +51,10 @@ if ($psrlMod.Version.Minor -ge 2) {
 
 Set-PSReadLineOption @options
 
-#Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+# Includes
+. "$home\dotfiles\Powershell\scripts\Tail-Log.ps1"
+
+
 
 
 # VIM STUFF??
@@ -144,8 +148,14 @@ function sudo ($scriptblock) {
 #https://github.com/kelleyma49/PSFzf?tab=readme-ov-file#helper-functions
 function RipGrepFunc([string] $s) {Invoke-PsFzfRipgrep $s}
 
-function FindFile() {
-    Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf | Invoke-Item
+function FuzzyFindFile() {
+    param(
+        [string]$target = '',
+        [string]$filter = ''
+        )
+
+    #Get-ChildItem . -Recurse -Attributes !Directory | Invoke-Fzf -Height 100% | Invoke-Item
+    rff $target $filter | fzf -m --ansi | Invoke-Item
 }
 
 function ListFilesSortedDate() {
@@ -258,7 +268,7 @@ function CdLast {
 function Invoke-FuzzyZoxide() {
     $result = $null
     try {
-        (zoxide query --list) | Invoke-Fzf -NoSort | ForEach-Object { $result = $_ }
+        (zoxide query --list) | Invoke-Fzf -NoSort -Height 80% | ForEach-Object { $result = $_ }
     }
     catch {
 
@@ -282,7 +292,7 @@ function FuzzyGitDiff() {
     git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
 }
 
-function RipTest() {
+function RipgrepFindString() {
     # this function is adapted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
     param([Parameter(Mandatory)]$SearchString, [string]$filter)
 
@@ -377,12 +387,11 @@ function Get-InstalledApps {
 function LaunchProgram() {
     #--no-sort
     #(Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | select fullname,lastaccesstime | sort -Property lastaccesstime -Descending |  Select-Object -ExpandProperty FullName | fzf | Invoke-Item
-    (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select ProductName,FileName | Format-Table -HideTableHeaders | fzf | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
-}
+    (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select ProductName,FileName | Format-Table -HideTableHeaders | fzf | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item}
 
 function LaunchApp() {
     #--no-sort
-    Get-StartApps | Where-Object { $_.AppID -like "*.exe" } | Format-Table -HideTableHeaders | fzf | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
+    Get-StartApps | Where-Object { $_.AppID -like "*.exe" } | Format-Table -HideTableHeaders | fzf --ansi -m | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
 
    # (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select FileName, ProductName
 }
@@ -392,12 +401,33 @@ function LaunchBoth() {
     $apps = Get-StartApps | Where-Object { $_.AppID -like "*.exe" } | Select-Object @{Name="Name";Expression={$_.Name}},@{Name="Path";Expression={$_.AppID}}
     $programs = (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select ProductName,FileName | Select-Object @{Name="Name";Expression={$_.ProductName}},@{Name="Path";Expression={$_.FileName}}
     $all = @($apps) + $programs
-    $all | Format-Table -HideTableHeaders | fzf | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
+    $all | Format-Table -HideTableHeaders | fzf --ansi -m | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
    # (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select FileName, ProductName
 }
 
 function LaunchRecent(){
     (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | select fullname,lastaccesstime | sort -Property lastaccesstime -Descending |  Select-Object -ExpandProperty FullName | fzf | Invoke-Item
+}
+
+function MentorLearnLog {
+    #winget install sharkdp.bat
+    #Get-Content $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -Wait -Tail 1 | ForEach-Object { bat $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -l log --paging=never --style=plain -f -r $_.Length}
+
+    # Get-Content $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -Wait -Tail 1 | ForEach-Object { if($_ -like ""){Write-Output $_ -ForegroundColor Red } else {bat $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -l log --paging=never --style=plain -f -r $_.Length}}
+
+    # #Get-Content $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -Wait -Tail 1 | bat -l log --paging=never --style=plain -f
+    # Get-Content $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -Wait | bat -l log --paging=never --style=plain -f
+
+    Tail-Log $env:LOCALAPPDATA\Temp\EnvelopeLog.txt
+}
+
+function RipgrepFindFile {
+    param(
+        [string]$target,
+        [string]$filter = ''
+        )
+
+    rg --files -g $filter | rg $target --color=always --smart-case
 }
 
 #| Format-Table -HideTableHeaders
@@ -416,11 +446,14 @@ Set-Alias -Name fd -Value Invoke-FuzzySetLocation
 Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
 Set-Alias -Name fkill -Value Invoke-FuzzyKillProcess
 Set-Alias -Name fz -Value Invoke-FuzzyZoxide
-Set-Alias -Name ff -Value FindFile
+Set-Alias -Name fff -Value FuzzyFindFile
+
 Set-Alias -Name lfd -Value ListFilesSortedDate
 
 Set-Alias -Name fgd -Value FuzzyGitDiff
-Set-Alias -Name rt -Value RipTest
+
+Set-Alias -Name rff -Value RipgrepFindFile
+Set-Alias -Name rfs -Value RipgrepFindString
 
 Set-Alias q CdLast
 Set-Alias -Name wip -Value WingetInstallPackage
@@ -457,3 +490,6 @@ Set-Alias -Name lp -Value LaunchProgram
 Set-Alias -Name la -Value LaunchApp
 Set-Alias -Name lb -Value LaunchBoth
 Set-Alias -Name lr -Value LaunchRecent
+
+Set-Alias -Name mll -Value MentorLearnLog
+Set-Alias -Name tl -Value Tail-Log

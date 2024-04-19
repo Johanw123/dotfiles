@@ -153,8 +153,9 @@ require("roslyn").setup({
 
 
 
-  local bin = "D:\\Dev\\avalonia_preview.nvim\\Avalonia.AxamlAutoCompletion\\Avalonia.AXAML.LanguageServer\\Avalonia.AXAML.LanguageServer\\bin\\Debug\\net6.0\\Avalonia.AXAML.LanguageServer.exe"
-  local arg = "D:\\Dev\\avalonia_preview.nvim\\Avalonia.AxamlAutoCompletion\\Avalonia.AXAML.LanguageServer\\Avalonia.AXAML.LanguageServer\\bin\\Debug\\net6.0\\Avalonia.AXAML.LanguageServer.dll"
+  local bin = "C:\\Users\\johanw\\AvaloniaVSCode\\src\\AvaloniaLSP\\AvaloniaLanguageServer\\bin\\Debug\\net8.0\\Avalonia.AXAML.LanguageServer.exe"
+  local arg = "C:\\Users\\johanw\\AvaloniaVSCode\\src\\AvaloniaLSP\\AvaloniaLanguageServer\\bin\\Debug\\net8.0\\Avalonia.AXAML.LanguageServer.dll"
+
   
 -- vim.lsp.start({
 --   cmd = { bin, arg },
