@@ -288,8 +288,22 @@ function FuzzySwitchBranch() {
     cm switch $branch
 }
 
+function FuzzyGitBranch() {
+    $cur_branch= git symbolic-ref HEAD
+    $cur_branch = $cur_branch.split('/')[-1]
+    $default_branch = git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+    $branch = & {git branch --sort=-committerdate; git branch --sort=-committerdate --remote} | rg -v HEAD |  sed 's/^[ \*]*//' | fzf -m --ansi --preview="git diff --stat=80,50 --merge-base ${default_branch} --color=always {}" --preview="git log {} -1 && echo: && echo: && git diff --stat=80,50 --color=always {} --merge-base ${cur_branch}" 
+    $branch = $branch.Replace("origin/", "")
+    git switch $branch
+}
+
 function FuzzyGitDiff() {
     git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
+}
+
+function GitFuzzy()
+{
+    wsl git fuzzy
 }
 
 function RipgrepFindString() {
@@ -451,6 +465,7 @@ Set-Alias -Name fff -Value FuzzyFindFile
 Set-Alias -Name lfd -Value ListFilesSortedDate
 
 Set-Alias -Name fgd -Value FuzzyGitDiff
+Set-Alias -Name fgb -Value FuzzyGitBranch
 
 Set-Alias -Name rff -Value RipgrepFindFile
 Set-Alias -Name rfs -Value RipgrepFindString
@@ -493,3 +508,7 @@ Set-Alias -Name lr -Value LaunchRecent
 
 Set-Alias -Name mll -Value MentorLearnLog
 Set-Alias -Name tl -Value Tail-Log
+
+
+#https://keyneston.com/posts/fgit/
+Set-Alias -Name gf -Value GitFuzzy

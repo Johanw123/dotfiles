@@ -77,6 +77,7 @@ winget install -e --id Microsoft.VisualStudioCode
 winget install -e --id sharkdp.bat
 winget install -e --id BurntSushi.ripgrep.MSVC
 winget install -e --id junegunn.fzf
+winget install -e --id=mbuilov.sed
 
 winget install -e --id Rustlang.Rust.MSVC
 winget install -e --id Python.Python.3.10
@@ -207,7 +208,7 @@ git config --global difftool.plasticdiff.cmd "C:/'Program Files'/PlasticSCM5/cli
 git config --global difftool.prompt false
 
 git config --global merge.tool plasticmerge
-git config --global mergetool.plasticmerge.cmd "C:/'Program Files'/PlasticSCM5/client/mergetool.exe -d=`"`$LOCAL`" -s=`"`$REMOTE`" -b=`"`$BASE' -r=`"`$MERGED`""
+git config --global mergetool.plasticmerge.cmd "C:/'Program Files'/PlasticSCM5/client/mergetool.exe -d=`"`$LOCAL`" -s=`"`$REMOTE`" -b=`"`$BASE`" -r=`"`$MERGED`""
 git config --global mergetool.plasticmerge.trustExitCode true
 git config --global mergetool.prompt false
 git config --global mergetool.keepBackup false
