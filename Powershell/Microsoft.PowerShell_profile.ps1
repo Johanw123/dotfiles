@@ -145,6 +145,10 @@ function sudo ($scriptblock) {
   $sh.ShellExecute('powershell', "-NoExit -Command $scriptblock", '', 'runas')
 }
 
+function su () {    
+    Start-Process pwsh -Verb runAs
+}
+
 #https://github.com/kelleyma49/PSFzf?tab=readme-ov-file#helper-functions
 function RipGrepFunc([string] $s) {Invoke-PsFzfRipgrep $s}
 
@@ -171,9 +175,8 @@ function FuzzyEditFunc() {
 }
 
 function List-Commands {
-  bat --language=help --paging=never -f $home\dotfiles\Powershell\list.txt
+    bat --language=help --style=plain --paging=never -f $home\dotfiles\Powershell\list.txt
 }
-
 
 # From https://github.com/nickmhankins/Handle
 function Test-AcceptedEula {
@@ -284,21 +287,44 @@ function WingetInstallPackage() {
 }
 
 function FuzzySwitchBranch() {
-    $branch = cm find branches --format="{name}" --nototal | fzf
-    cm switch $branch
+    $is_git = git rev-parse --is-inside-work-tree
+    if($is_git -eq $true ) {
+        $branch = cm find branches --format="{name}" --nototal | fzf
+        cm switch $branch
+    }
+    else {
+        Write-Output "Fail!"
+    }
 }
 
 function FuzzyGitBranch() {
-    $cur_branch= git symbolic-ref HEAD
-    $cur_branch = $cur_branch.split('/')[-1]
-    $default_branch = git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
-    $branch = & {git branch --sort=-committerdate; git branch --sort=-committerdate --remote} | rg -v HEAD |  sed 's/^[ \*]*//' | fzf -m --ansi --preview="git diff --stat=80,50 --merge-base ${default_branch} --color=always {}" --preview="git log {} -1 && echo: && echo: && git diff --stat=80,50 --color=always {} --merge-base ${cur_branch}" 
-    $branch = $branch.Replace("origin/", "")
-    git switch $branch
+    $is_git = git rev-parse --is-inside-work-tree
+    if($is_git -eq $true ) {
+        $cur_branch= git symbolic-ref HEAD
+        $cur_branch = $cur_branch.split('/')[-1]
+        $default_branch = git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+        $branch = & {git branch --sort=-committerdate; git branch --sort=-committerdate --remote} | rg -v HEAD |  sed 's/^[ \*]*//' | fzf -m --ansi --preview="git diff --stat=80,50 --merge-base ${default_branch} --color=always {}" --preview="git log {} -1 && echo: && echo: && git diff --stat=80,50 --color=always {} --merge-base ${cur_branch}" 
+        if ($branch) { 
+            $branch = $branch.Replace("origin/", "")
+            git switch $branch
+        }
+    }
+    else {
+        Write-Output "Fail!"
+    }
 }
 
 function FuzzyGitDiff() {
-    git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
+    $is_git = git rev-parse --is-inside-work-tree
+    if($is_git -eq $true ){
+        $root=git rev-parse --show-toplevel
+        Push-Location $root
+        git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
+        Pop-Location
+    }
+    else {
+        Write-Output "Fail!"
+    }
 }
 
 function GitFuzzy()
@@ -444,6 +470,12 @@ function RipgrepFindFile {
     rg --files -g $filter | rg $target --color=always --smart-case
 }
 
+function NvimKickstart{
+    #alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
+    $env:NVIM_APPNAME = 'nvim-kickstart'
+    nvim
+}
+
 #| Format-Table -HideTableHeaders
 
 # Aliases   
@@ -455,15 +487,15 @@ Set-Alias -Name vi -Value nvim
 Set-Alias -Name vim -Value nvim
 
 Set-Alias -Name rgf -Value RipGrepFunc
-
 Set-Alias -Name fd -Value Invoke-FuzzySetLocation
-Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
+
 Set-Alias -Name fkill -Value Invoke-FuzzyKillProcess
 Set-Alias -Name fz -Value Invoke-FuzzyZoxide
 Set-Alias -Name fff -Value FuzzyFindFile
 
 Set-Alias -Name lfd -Value ListFilesSortedDate
 
+Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
 Set-Alias -Name fgd -Value FuzzyGitDiff
 Set-Alias -Name fgb -Value FuzzyGitBranch
 
@@ -512,3 +544,5 @@ Set-Alias -Name tl -Value Tail-Log
 
 #https://keyneston.com/posts/fgit/
 Set-Alias -Name gf -Value GitFuzzy
+
+Set-Alias -Name nvim-kickstart -Value NvimKickstart

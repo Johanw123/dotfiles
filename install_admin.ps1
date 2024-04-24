@@ -155,6 +155,7 @@ if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb
     rm $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -r -force
 }
 
+TryCreateLink "$env:LOCALAPPDATA\nvim-kickstart" "$dotFilesRoot\kickstart.nvim"
 TryCreateLink "$env:LOCALAPPDATA\nvim\lua\custom" "$dotFilesRoot\.config\nvim\lua\custom"
 TryCreateLink "$HOME\.omnisharp" "$dotFilesRoot\.omnisharp"
 TryCreateLink "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"

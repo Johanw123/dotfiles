@@ -2,7 +2,7 @@ local M = {}
 
 M.adapter = {
 	type = "executable",
-	command = "lldb-vscode",
+	command = "lldb-dap",
 	name = "lldb",
 }
 
@@ -26,7 +26,7 @@ M.config = {
 		type = "lldb",
 		request = "launch",
 		program = "",
-		cwd = "${workspaceFolder}\\Runtime\\LapSim\\bin_debug\\quickSim.exe",
+		cwd = "${workspaceFolder}\\Runtime\\LapSim\\bin_unopt\\quickSim.exe",
 		stopOnEntry = false,
 		args = {}
 	},

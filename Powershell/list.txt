@@ -3,15 +3,17 @@ Aliases:
  rfs   - RipgrepFindString -   Basically same as rgf with a different name, but second parameter is a filter example "*.cpp"
  rff   - RipgrepFindFile   -   Search and find files based on filename input
  fd    - FuzzyDirectory    -   Find directory with a fuzzy search and cd to result
- fgs   - FuzzyGitStatus>   -   Fuzzy searchable Git status window 
+
  fe    - FuzzyEdit         -   Find files with a fuzzy search and open editor with result
  fz    - FuzzyZLocation    -   Fuzzy search visited locations and cd's to result
  fff   - FuzzyFindFile          -   Fuzzy finds a file and opens it with the default application
  fkill - FuzzyKillProcess  -   Find processes with a fuzzy search and kill the selected process
+
  e     - Invoke-Item .     -   Open current folder in explorer
  q     -                   -   Fuzzy find among previously visited "full" paths like "C:\dev"
  sudo  -                   -   Run as Admin 
  sudo! -                   -   Run last command as Admin
+ su    -                   -   Open new admin shell
  which -                   -   Find location of exe/program
 
  la    -  LaunchApp        -   Find installed apps ('Get-StartApps') and fuzzy select one to start
@@ -19,11 +21,14 @@ Aliases:
  lb    -  LaunchBoth       -   Find Apps and Programs and fuzzy select one to start
  lr    -  LaunchRecent     -   List ordered exe files based on lastaccesstime, select one to launch it
 
- lfd   - ListFilesSortedDate  - List file names recursively in a folder and sort them by Last modified date
- fsb   - FuzzySwitchBranch    -   Fuzzy find all branches (Plastic) and switches to the selected one
- fgd   - FuzzyGitDiff         -   Fuzzy find all files in git and shows the diff of the selected file
- wip   - WingetInstallPackage - Install a package with winget searched with a fuzzy search
+ fgs   - FuzzyGitStatus    -   Fuzzy searchable Git status window 
+ fgd   - FuzzyGitDiff      -   Fuzzy find all files in git and shows the diff of the selected file
+ fgb   - FuzzyGitBranch    -   Fuzzy find a branch from current git repo
 
+ lfd   - ListFilesSortedDate  - List file names recursively in a folder and sort them by Last modified date
+ fsb   - FuzzySwitchBranch    - Fuzzy find all branches (Plastic) and switches to the selected one
+ 
+ wip   - WingetInstallPackage - Install a package with winget searched with a fuzzy search
 
 Other programs/tools: 
  z     - zoxide            -   cd replacement with smart functions
