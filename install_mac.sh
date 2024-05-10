@@ -51,6 +51,8 @@ brew install bat
 brew install ripgrep
 brew install fuse libfuse2
 brew install wget
+brew install node
+
 
 
 #dev 
@@ -63,6 +65,8 @@ brew install --cask tiled
 brew install fish
 brew install zoxide
 brew install starship
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
 
 brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
 brew install neovim-nightly
