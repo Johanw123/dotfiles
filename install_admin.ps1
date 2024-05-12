@@ -74,25 +74,36 @@ winget install Microsoft.DotNet.SDK.8
 winget install -e --id SlackTechnologies.Slack
 winget install -e --id Microsoft.VisualStudioCode
 
+winget install -e --id sharkdp.bat
+winget install -e --id BurntSushi.ripgrep.MSVC
+winget install -e --id junegunn.fzf
+winget install -e --id=mbuilov.sed
+
 winget install -e --id Rustlang.Rust.MSVC
 winget install -e --id Python.Python.3.10
 winget install -e --id OpenJS.NodeJS
 
+winget install dandavison.delta
+
 winget install -e --id LLVM.LLVM
 
-$Path = "C:\Program Files\LLVM\bin"
-$Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
-[Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
+if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin") {
+    Write-Host "LLVM is in path" -ForegroundColor Green
+}
+else {
+    $Path = "C:\Program Files\LLVM\bin"
+    $Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
+    [Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
+}
 
 # Command line programs
-choco install ripgrep -y
-choco install fzf -y
-choco install bat -y
-choco install zoxide -y
+#choco install ripgrep -y
+#choco install fzf -y
+#choco install zoxide -y
 choco install highlight -y
 choco install vifm -y
 
-choco install starship -y
+#choco install starship -y
 choco install sysinternals -y
 
 #Powershell Plugins
@@ -115,11 +126,14 @@ if (-not (Get-Module CompletionPredictor -ListAvailable)){
     Install-Module -Name CompletionPredictor -Repository PSGallery -Force
 }
 
+if (-not (Get-Module PowerShellRun -ListAvailable)){
+    Install-Module -Name PowerShellRun -Scope CurrentUser
+}
 
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
 # real vnc
-winget install --id=RealVNC.VNCServer  -e
+winget install --id=RealVNC.VNCServer -e
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
@@ -141,9 +155,11 @@ if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb
     rm $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -r -force
 }
 
+TryCreateLink "$env:LOCALAPPDATA\nvim-kickstart" "$dotFilesRoot\kickstart.nvim"
 TryCreateLink "$env:LOCALAPPDATA\nvim\lua\custom" "$dotFilesRoot\.config\nvim\lua\custom"
 TryCreateLink "$HOME\.omnisharp" "$dotFilesRoot\.omnisharp"
 TryCreateLink "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
+#TryCreateLink "$HOME\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
 TryCreateLink "$env:APPDATA\lsd" "$dotFilesRoot\lsd"
 TryCreateLink "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" "$dotFilesRoot\windows_terminal\LocalState"
 TryCreateLink "$HOME\.wezterm.lua" "$dotFilesRoot\wezterm\.wezterm.lua"
@@ -153,15 +169,16 @@ TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\keep_w
 TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\remove_intune.bat" "$dotFilesRoot\work/remove_intune.bat"
 TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\remove_intune.ps1" "$dotFilesRoot\work/remove_intune.ps1"
 
+#New-ItemProperty 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders' Personal -Value '$env:userprofile\dotfiles\Powershell\Microsoft.PowerShell_profile.ps1' -Type ExpandString -Force
+
 #Fonts
 $FontFolder = "fonts"
 $FontItem = Get-Item -Path $FontFolder
 $FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon','*.otf','*.ttc','*.ttf')
 
 foreach ($Font in $FontList) {
-    TryAddFont $Font        
+    TryAddFont $Font
 }
-
 
 # Work 
 winget install --id=Microsoft.VisualStudio.2022.Professional  -e
@@ -185,3 +202,14 @@ New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2
 #Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 
 #wsl.exe --install --d Ubuntu-22.04
+
+# git settings
+git config --global diff.tool plasticdiff
+git config --global difftool.plasticdiff.cmd "C:/'Program Files'/PlasticSCM5/client/mergetool.exe -s=`"`$LOCAL`" -d=`"`$PWD/`$REMOTE`" i=eol"
+git config --global difftool.prompt false
+
+git config --global merge.tool plasticmerge
+git config --global mergetool.plasticmerge.cmd "C:/'Program Files'/PlasticSCM5/client/mergetool.exe -d=`"`$LOCAL`" -s=`"`$REMOTE`" -b=`"`$BASE`" -r=`"`$MERGED`""
+git config --global mergetool.plasticmerge.trustExitCode true
+git config --global mergetool.prompt false
+git config --global mergetool.keepBackup false

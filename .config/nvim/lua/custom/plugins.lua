@@ -37,6 +37,26 @@ local plugins = {
   },
 
   {
+    'cameron-wags/rainbow_csv.nvim',
+    config = true,
+    ft = {
+        -- 'csv',
+        -- 'tsv',
+        'csv_semicolon',
+        'csv_whitespace',
+        'csv_pipe',
+        -- 'rfc_csv',
+        -- 'rfc_semicolon'
+    },
+    cmd = {
+        'RainbowDelim',
+        'RainbowDelimSimple',
+        'RainbowDelimQuoted',
+        'RainbowMultiDelim'
+    }
+},
+
+  {
     "libvips/lua-vips",
   },
   {
@@ -47,7 +67,6 @@ local plugins = {
 
     rocks = { "magick" },
   },
-
 
   {
   "simrat39/rust-tools.nvim"
@@ -333,14 +352,14 @@ local plugins = {
 		end,
 	},
 
-	{
-		"rcarriga/nvim-dap-ui",
-		config = function()
-			require("dapui").setup()
-		end,
-		requires = { "mfussenegger/nvim-dap" },
-	},
-
+	-- {
+	-- 	"rcarriga/nvim-dap-ui",
+	-- 	config = function()
+	-- 		require("dapui").setup()
+	-- 	end,
+	-- 	requires = { "mfussenegger/nvim-dap" },
+	-- },
+  { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
 	{
 		"theHamsta/nvim-dap-virtual-text",
 		config = function()
@@ -465,6 +484,26 @@ local plugins = {
     lazy = false
   },
 
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "sindrets/diffview.nvim",        -- optional - Diff integration
+
+      -- Only one of these is needed, not both.
+      "nvim-telescope/telescope.nvim", -- optional
+      "ibhagwan/fzf-lua",              -- optional
+    },
+    config = true,
+    lazy = false
+  },
+  {
+    "FabijanZulj/blame.nvim",
+    config = function()
+      require("blame").setup()
+    end,
+    lazy = false
+  },
 
   {
     "tzachar/cmp-ai",

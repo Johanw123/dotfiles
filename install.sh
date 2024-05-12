@@ -28,6 +28,7 @@
 #ln -sf ~/.dot_files/linux/nvm_default_packages ~/.nvm/default-packages
 #mkdir ~/.tmux
 #git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#test
 
 sudo apt install -y fontconfig
 sudo apt install unzip
@@ -51,12 +52,13 @@ fi
 (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-sudo apt install -y fzf
-#sudo apt install -y eza
 brew install eza
-sudo apt install -y bat
+brew install fzf
+brew install bat
 sudo apt-get install -y ripgrep
 sudo apt-get install -y fuse libfuse2
+brew install git-delta
+
 
 # curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 # chmod u+x nvim.appimage
@@ -87,6 +89,7 @@ sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish
 sudo rm ~/.config/starship.toml
 sudo rm -r ~/.omnisharp
+sudo rm ~/.gitconfig
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
@@ -94,6 +97,7 @@ ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
+ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
 
 #fish
 chsh -s $(which fish)

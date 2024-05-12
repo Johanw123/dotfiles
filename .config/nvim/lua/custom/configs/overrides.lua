@@ -11,6 +11,7 @@ M.treesitter = {
     "tsx",
     "c",
     "cpp",
+    "csv",
     "c_sharp",
     "markdown",
     "markdown_inline",
