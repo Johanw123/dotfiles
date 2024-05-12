@@ -41,6 +41,15 @@
 
     # alias wine64='whisky'
     # alias wine='whisky'
+
+    switch (uname)
+      case Darwin
+        export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      case Linux
+        eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+      case '*'
+    end
     
     set TERM "xterm-256color"
     set fish_greeting
@@ -82,17 +91,5 @@
 zoxide init fish | source
 starship init fish | source
 
-switch (uname)
-  case Darwin
-    export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
-  case Linux
-    eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-  case '*'
-end
-
 set PATH $HOME/.local/bin/ $PATH
 set PATH $HOME/dotfiles/bash/bin/ $PATH
-
-
-# source ~/dotfiles/bash/.bash_aliases
-set -x PATH "$HOME/git-fuzzy/bin:$PATH"
