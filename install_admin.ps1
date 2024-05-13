@@ -60,7 +60,7 @@ Set-Location $dotFilesRoot
 
 winget install --id GitHub.cli
 
-winget install --id=Neovim.Neovim  -e
+#winget install --id=Neovim.Neovim  -e
 winget install wez.wezterm
 winget install -e --id Microsoft.WindowsTerminal
 winget install eza-community.eza
@@ -105,6 +105,8 @@ choco install vifm -y
 
 #choco install starship -y
 choco install sysinternals -y
+
+choco install neovim --pre -y --force
 
 #Powershell Plugins
 #https://github.com/PowershellFrameworkCollective/PSUtil

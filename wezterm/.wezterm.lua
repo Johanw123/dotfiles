@@ -306,6 +306,15 @@ config = {
       },
     },
 
+    { -- Allows Ctrl-Space keybindings in neovim
+      key = ' ',
+      mods = 'CTRL',
+      action = act.SendKey {
+        key = ' ',
+        mods = 'CTRL',
+      },
+    },
+
 
   },
   scrollback_lines = 10000,
