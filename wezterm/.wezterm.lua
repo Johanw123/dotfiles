@@ -318,6 +318,7 @@ config = {
 
   },
   scrollback_lines = 10000,
+  status_update_interval = 100,
   show_update_window = true,
   use_dead_keys = false,
   unicode_version = 15,
