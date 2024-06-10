@@ -51,7 +51,9 @@ brew install bat
 brew install ripgrep
 brew install fuse libfuse2
 brew install wget
-brew install git-delta
+brew install node
+
+
 
 #dev 
 brew install --cask tiled
@@ -64,6 +66,8 @@ brew install fish
 brew install zoxide
 brew install starship
 
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
+
 brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
 brew install neovim-nightly
 
@@ -75,7 +79,6 @@ sudo rm ~/.config/starship.toml
 sudo rm -r ~/.omnisharp
 sudo rm ~/.zshrc
 sudo rm ~/.wezterm.lua
-sudo rm ~/.gitconfig
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
@@ -83,7 +86,6 @@ ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
-ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
 
 if ! command -v dscl . -read ~/ UserShell | grep "fish" &> /dev/null
 then

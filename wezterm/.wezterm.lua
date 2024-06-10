@@ -122,7 +122,7 @@ wezterm.on("update-right-status", function(window, pane)
   -- Figure out the cwd and host of the current pane.
   -- This will pick up the hostname for the remote host if your
   -- shell is using OSC 7 on the remote host.
-  local cwd_uri = pane:get_current_working_dir()
+  local cwd_uri = pane:get_current_working_dir().file_path
   if cwd_uri then
     cwd_uri = cwd_uri:sub(8);
     local slash = cwd_uri:find("/")
@@ -306,9 +306,19 @@ config = {
       },
     },
 
+    { -- Allows Ctrl-Space keybindings in neovim
+      key = ' ',
+      mods = 'CTRL',
+      action = act.SendKey {
+        key = ' ',
+        mods = 'CTRL',
+      },
+    },
+
 
   },
   scrollback_lines = 10000,
+  status_update_interval = 100,
   show_update_window = true,
   use_dead_keys = false,
   unicode_version = 15,

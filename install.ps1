@@ -31,7 +31,8 @@
 # Clone dotfiles repo
 $dotFilesRoot = Join-Path $HOME "dotfiles"
 
-if (!(Test-Path $dotFilesRoot -PathType Container)) {
+if (!(Test-Path $dotFilesRoot -PathType Container))
+{
     git clone https://github.com/Johanw123/dotfiles.git $dotFilesRoot
 }
 
@@ -40,7 +41,8 @@ if (!(Test-Path $dotFilesRoot -PathType Container)) {
 $localConfiguration = Join-Path "$env:LOCALAPPDATA" -ChildPath "nvim" | Join-Path -ChildPath "lua" | Join-Path -ChildPath "custom"
 $dotfilesConfiguration = Join-Path "$dotFilesRoot" -ChildPath ".config" | Join-Path -ChildPath "nvim" | Join-Path -ChildPath "lua" | Join-Path -ChildPath "custom"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -48,7 +50,8 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
 $localConfiguration = Join-Path $HOME ".omnisharp"
 $dotfilesConfiguration = Join-Path $dotFilesRoot ".omnisharp"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -56,7 +59,8 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
 $localConfiguration = Join-Path $HOME "Documents" | Join-Path -ChildPath "PowerShell" | Join-Path -ChildPath "Microsoft.PowerShell_profile.ps1"
 $dotfilesConfiguration = Join-Path $dotFilesRoot "Powershell" | Join-Path -ChildPath "Microsoft.PowerShell_profile.ps1"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -64,7 +68,8 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
 $localConfiguration = Join-Path $env:APPDATA "lsd"
 $dotfilesConfiguration = Join-Path $dotFilesRoot "lsd"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -72,7 +77,8 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
 $localConfiguration = Join-Path $env:LOCALAPPDATA "Packages" | Join-Path -ChildPath "Microsoft.WindowsTerminal_8wekyb3d8bbwe" | Join-Path -ChildPath "LocalState"
 $dotfilesConfiguration = Join-Path $dotFilesRoot "windows_terminal" | Join-Path -ChildPath "LocalState"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -80,7 +86,8 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
 $localConfiguration = Join-Path $HOME ".wezterm.lua"
 $dotfilesConfiguration = Join-Path $dotFilesRoot "wezterm" | Join-Path -ChildPath ".wezterm.lua"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -88,7 +95,8 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
 $localConfiguration = Join-Path $env:APPDATA "Vifm"
 $dotfilesConfiguration = Join-Path $dotFilesRoot "Vifm"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -96,7 +104,8 @@ if (!(Test-Path $localConfiguration -PathType Container)) {
 $localConfiguration = Join-Path $HOME ".config" | Join-Path -ChildPath "starship.toml"
 $dotfilesConfiguration = Join-Path $dotFilesRoot "starship" | Join-Path -ChildPath "starship.toml"
 
-if (!(Test-Path $localConfiguration -PathType Container)) { 
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
@@ -109,8 +118,9 @@ $FontFolder = "fonts"
 $FontItem = Get-Item -Path $FontFolder
 $FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon','*.otf','*.ttc','*.ttf')
 
-foreach ($Font in $FontList) {
-        Write-Host 'Installing font -' $Font.BaseName
-        Copy-Item $Font "C:\Windows\Fonts"
-        New-ItemProperty -Name $Font.BaseName -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Fonts" -PropertyType string -Value $Font.name         
+foreach ($Font in $FontList)
+{
+    Write-Host 'Installing font -' $Font.BaseName
+    Copy-Item $Font "C:\Windows\Fonts"
+    New-ItemProperty -Name $Font.BaseName -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Fonts" -PropertyType string -Value $Font.name         
 }
