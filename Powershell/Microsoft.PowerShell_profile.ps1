@@ -471,10 +471,20 @@ function RipgrepFindFile {
     rg --files -g $filter | rg $target --color=always --smart-case
 }
 
-function NvimKickstart{
+function NvimKickstart {
     #alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
     $env:NVIM_APPNAME = 'nvim-kickstart'
     nvim
+}
+
+
+#git 
+function GitStatus {
+    git status
+}
+
+function GitDiff {
+    git difftool --dir-diff
 }
 
 #| Format-Table -HideTableHeaders
@@ -484,8 +494,9 @@ Remove-Alias cd
 Set-Alias cd z
 
 Set-Alias -Name np -Value C:\Windows\notepad.exe
-Set-Alias -Name vi -Value nvim
-Set-Alias -Name vim -Value nvim
+Set-Alias -Name vi -Value nvim-kickstart
+Set-Alias -Name vim -Value nvim-kickstart
+Set-Alias -Name nvim -Value nvim-kickstart
 
 Set-Alias -Name rgf -Value RipGrepFunc
 Set-Alias -Name fd -Value Invoke-FuzzySetLocation
@@ -510,6 +521,9 @@ Set-Alias -Name fsb -Value FuzzySwitchBranch
 Set-Alias -Name e -Value OpenCurrentDir 
 Set-Alias -Name fe -Value FuzzyEditFunc
 Set-Alias -Name list -Value List-Commands
+
+Set-Alias -Name gs -Value GitStatus
+Set-Alias -Name gd -Value GitDiff
 
 Set-Alias ds drives
 
