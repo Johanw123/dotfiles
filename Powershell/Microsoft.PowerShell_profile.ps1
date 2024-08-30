@@ -7,6 +7,7 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 Import-Module PSReadLine
 Import-Module -Name CompletionPredictor
+Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
 
 # Other hosts (ISE, ConEmu) don't always work as well with PSReadLine.
 # Also, if PS is run with -Command, PSRL loading is suppressed.
