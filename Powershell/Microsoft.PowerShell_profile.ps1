@@ -496,7 +496,7 @@ Set-Alias cd z
 Set-Alias -Name np -Value C:\Windows\notepad.exe
 Set-Alias -Name vi -Value nvim-kickstart
 Set-Alias -Name vim -Value nvim-kickstart
-Set-Alias -Name nvim -Value nvim-kickstart
+#Set-Alias -Name nvim -Value nvim-kickstart
 
 Set-Alias -Name rgf -Value RipGrepFunc
 Set-Alias -Name fd -Value Invoke-FuzzySetLocation
