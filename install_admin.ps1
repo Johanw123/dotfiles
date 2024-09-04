@@ -83,6 +83,8 @@ winget install -e --id Rustlang.Rust.MSVC
 winget install -e --id Python.Python.3.10
 winget install -e --id OpenJS.NodeJS
 
+winget install -e --id Kitware.CMake
+
 winget install dandavison.delta
 
 winget install -e --id LLVM.LLVM
