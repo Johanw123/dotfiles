@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Script to open the GitHub page of the current repository in the default browser
+
+fetch_url=$(git config --get remote.origin.url)
+# outputs 'git@github.com:some-name/some-repo-name.git' or 'https://github.com/some-name/some-repo-name.git'
+
+
+if [[ $fetch_url == *"https"* ]]; then
+    github_url="${fetch_url%.git}"
+else
+    # Split the URL on ':' and get the 2nd portion
+    url_portion="$(echo "$fetch_url" | awk -F':' '{print $2}')"
+
+    # Remove the .git from the end of the URL
+    url_portion="${url_portion%.git}"
+
+    # Construct the final GitHub URL
+    github_url="https://github.com/"$url_portion
+fi
+
+xdg-open "$github_url"

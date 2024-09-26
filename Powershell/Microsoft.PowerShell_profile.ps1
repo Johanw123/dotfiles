@@ -129,6 +129,41 @@ function drives {Get-PsDrive -PSProvider 'FileSystem'}
 function ssh_truls { ssh johanw@172.31.232.86 }
 function ssh_linbox { ssh root@172.31.231.5 }
 
+function Open-GitHub
+{
+    $is_git = git rev-parse --is-inside-work-tree
+    if($is_git -eq $true )
+    {
+        $fetch_url = (git config --get remote.origin.url)
+        $github_url = ""
+        
+        if ($fetch_url -like "*https*") {
+            $github_url = $fetch_url
+        } else {
+            $url_split = $fetch_url.Split(":")
+            if($url_split.Count -gt 1)
+            {
+                $url_portion = $url_split[1]
+                $github_url="https://github.com/" + $url_portion
+            }
+            else {
+                Write-Host "Could not parse Github Path"
+            }
+        }
+
+        if ($github_url)
+        {
+        firefox $github_url
+        }  
+        else {
+            Write-Host "Not a valid Url!" -ForegroundColor red
+        }
+    }
+    else {
+        Write-Host "Not in a git repo!" -ForegroundColor red
+    }
+}
+
 function which ($command) {
     Get-Command -Name $command -ErrorAction SilentlyContinue |
         Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
@@ -561,3 +596,5 @@ Set-Alias -Name tl -Value Tail-Log
 Set-Alias -Name gf -Value GitFuzzy
 
 Set-Alias -Name nvim-kickstart -Value NvimKickstart
+
+Set-Alias -Name gho -Value Open-GitHub
