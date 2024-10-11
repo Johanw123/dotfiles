@@ -30,6 +30,8 @@ Aliases:
  
  wip   - WingetInstallPackage - Install a package with winget searched with a fuzzy search
 
+ gho   - GitHubOpen        -  Opens the webpage for the current git repo in github (if it is a github repo).
+
 Other programs/tools: 
  z     - zoxide            -   cd replacement with smart functions
  bat   - Bat               -   cat replacement

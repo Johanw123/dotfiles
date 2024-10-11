@@ -41,7 +41,16 @@
 	; plus-style = syntax "#272734"
 	; line-numbers-plus-style = green
 	; plus-emph-style = black green
-[merge]
-	conflictStyle = zdiff3
+
 [diff]
-	colorMoved = default
+ 	tool = plasticdiff
+ [difftool "plasticdiff"]
+ 	#cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -s=\"$LOCAL\" -d=\"$PWD/$REMOTE\" i=eol
+ 	cmd = C:/Users/johanw/source/repos/AvaloniaDiff/bin/Debug/net8.0/AvaloniaDiff.exe $PWD $LOCAL $REMOTE
+ [difftool]
+ 	prompt = false
+ [merge]
+ 	tool = plasticmerge
+ [mergetool "plasticmerge"]
+ 	cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -d=\"$LOCAL\" -s=\"$REMOTE\" -b=\"$BASE\" -r=\"$MERGED\"
+ 	trustExitCode = true
