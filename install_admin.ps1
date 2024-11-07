@@ -82,6 +82,7 @@ winget install -e --id=mbuilov.sed
 winget install -e --id Rustlang.Rust.MSVC
 winget install -e --id Python.Python.3.10
 winget install -e --id OpenJS.NodeJS
+#winget install -e --id zig.zig # takes a long time
 
 winget install -e --id Kitware.CMake
 
@@ -190,6 +191,11 @@ winget install Microsoft.VisualStudio.2022.BuildTools
 winget install Microsoft.VCRedist.2015+.x64
 winget install Microsoft.VCRedist.2015+.x86
 winget install --id=Nvidia.CUDA -v "12.2.2" -e
+winget install --id=Ccache.Ccache  -e
+
+# requires reload probably
+#ccache -M 10G
+#ccache -o compression_level=5
 
 
 # Windows 11 Settings
