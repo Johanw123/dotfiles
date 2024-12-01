@@ -55,6 +55,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install eza
 brew install fzf
 brew install bat
+brew install bat-extras
 sudo apt-get install -y ripgrep
 sudo apt-get install -y fuse libfuse2
 brew install git-delta
@@ -76,28 +77,44 @@ sudo apt-get install npm -y
 sudo apt install python3 -y
 sudo apt install python3.10-venv -y
 
-sudo rm -r ~/.config/nvim
-git clone https://github.com/NvChad/NvChad --branch v2.0 ~/.config/nvim --depth 1
-
 curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
 
 . "$HOME/.cargo/env"
 #source "$HOME/.cargo/env.fish"
 
-sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish
 sudo rm ~/.config/starship.toml
 sudo rm -r ~/.omnisharp
 sudo rm ~/.gitconfig
 
+sudo rm -r ~/.config/nvim
+sudo rm -r ~/.cache/nvim
+sudo rm -r ~/.local/share/nvim
+
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
-ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
+ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
 ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
 ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
+
+
+# Get nodejs 20
+sudo apt purge libnode-dev
+
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+
+NODE_MAJOR=20
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+sudo apt-get update
+sudo apt-get install nodejs -y
+# ------------------------------
 
 #fish
 chsh -s $(which fish)

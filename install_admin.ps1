@@ -82,6 +82,7 @@ winget install -e --id=mbuilov.sed
 winget install -e --id Rustlang.Rust.MSVC
 winget install -e --id Python.Python.3.10
 winget install -e --id OpenJS.NodeJS
+#winget install -e --id zig.zig # takes a long time
 
 winget install -e --id Kitware.CMake
 
@@ -145,13 +146,13 @@ if (!(Test-Path $dotFilesRoot -PathType Container)) {
     git clone https://github.com/Johanw123/dotfiles.git $dotFilesRoot
 }
 
-if (!(Test-Path -Path "$env:LOCALAPPDATA\nvim" -PathType Container)) {
-    git clone https://github.com/NvChad/NvChad --branch v2.0 $HOME\AppData\Local\nvim --depth 1
-} 
+# if (!(Test-Path -Path "$env:LOCALAPPDATA\nvim" -PathType Container)) {
+#     git clone https://github.com/NvChad/NvChad --branch v2.0 $HOME\AppData\Local\nvim --depth 1
+# } 
 
-if (Test-Path -Path "$HOME\AppData\Local\nvim\lua\custom" -PathType Container) {
+if (Test-Path -Path "$HOME\AppData\Local\nvim\" -PathType Container) {
     # We link our own custom lua here from dotfiles later
-    rm $HOME\AppData\Local\nvim\lua\custom -r -force
+    rm $HOME\AppData\Local\nvim -r -force
 }
 
 if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" -PathType Container) {
@@ -159,8 +160,8 @@ if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb
     rm $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -r -force
 }
 
-TryCreateLink "$env:LOCALAPPDATA\nvim-kickstart" "$dotFilesRoot\kickstart.nvim"
-TryCreateLink "$env:LOCALAPPDATA\nvim\lua\custom" "$dotFilesRoot\.config\nvim\lua\custom"
+TryCreateLink "$env:LOCALAPPDATA\nvim" "$dotFilesRoot\kickstart.nvim"
+#TryCreateLink "$env:LOCALAPPDATA\nvim\lua\custom" "$dotFilesRoot\.config\nvim\lua\custom"
 TryCreateLink "$HOME\.omnisharp" "$dotFilesRoot\.omnisharp"
 TryCreateLink "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
 #TryCreateLink "$HOME\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
@@ -190,6 +191,11 @@ winget install Microsoft.VisualStudio.2022.BuildTools
 winget install Microsoft.VCRedist.2015+.x64
 winget install Microsoft.VCRedist.2015+.x86
 winget install --id=Nvidia.CUDA -v "12.2.2" -e
+winget install --id=Ccache.Ccache  -e
+
+# requires reload probably
+#ccache -M 10G
+#ccache -o compression_level=5
 
 
 # Windows 11 Settings
