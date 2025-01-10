@@ -238,6 +238,8 @@ config = {
 	},
 	font_size = 16,
 	tab_max_width = 30,
+	max_fps = 240,
+	animation_fps = 30,
 	force_reverse_video_cursor = true,
 	hide_mouse_cursor_when_typing = true,
 	use_fancy_tab_bar = false,
