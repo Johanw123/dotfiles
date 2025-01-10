@@ -71,7 +71,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
 brew tap austinliuigi/brew-neovim-nightly https://github.com/austinliuigi/brew-neovim-nightly.git
 brew install neovim-nightly
 
-git clone https://github.com/NvChad/NvChad --branch v2.0 ~/.config/nvim --depth 1
+# git clone https://github.com/NvChad/NvChad --branch v2.0 ~/.config/nvim --depth 1
 
 sudo rm -r ~/.config/nvim/lua/custom
 sudo rm ~/.config/fish/config.fish
@@ -81,7 +81,8 @@ sudo rm ~/.zshrc
 sudo rm ~/.wezterm.lua
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
-ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
+# ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
+ln -s ~/dotfiles/kickstart.nvim/ ~/.config/nvim
 ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
