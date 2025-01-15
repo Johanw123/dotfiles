@@ -33,7 +33,7 @@ local function tab_title(tab_info)
 end
 
 local shell = { "C:/Program Files/PowerShell/7/pwsh.exe", "-NoLogo" }
-local font_name = "FiraCode Nerd Font"
+local font_name = "FiraCode Nerd Font Mono"
 
 -- The filled in variant of the < symbol
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
@@ -84,7 +84,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
 	--TODO: reduce title to tab_max_width - 1 for fitting the ending arrow on last tab
 
-	rtn = {
+	local rtn = {
 		{ Background = { Color = background } },
 		{ Foreground = { Color = colors[tab.tab_index + 1] } },
 		{ Text = SOLID_RIGHT_ARROW },
@@ -166,7 +166,7 @@ wezterm.on("update-right-status", function(window, pane)
 	local num_cells = 0
 
 	-- Translate a cell into elements
-	function push(text, is_last, is_first)
+	local function push(text, is_last, is_first)
 		local cell_no = num_cells + 1
 
 		if is_first then
@@ -195,7 +195,7 @@ wezterm.on("update-right-status", function(window, pane)
 	window:set_right_status(wezterm.format(elements))
 end)
 
-config = {
+local config = {
 	adjust_window_size_when_changing_font_size = false,
 	audible_bell = "Disabled",
 	background = {
@@ -317,7 +317,7 @@ config = {
 			}),
 		},
 	},
-	line_height = 1.03,
+	line_height = 1.0,
 	scrollback_lines = 10000,
 	status_update_interval = 100,
 	show_update_window = true,

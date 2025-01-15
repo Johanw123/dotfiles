@@ -52,6 +52,16 @@
             "font": 
             {
                 "face": "FiraCode Nerd Font"
+                // "features": {
+                //     "ss01": 1,
+                //     "ss02": 1,
+                //     "ss03": 1,
+                //     "ss04": 1,
+                //     "ss05": 1,
+                //     "ss06": 1,
+                //     "zero": 1,
+                //     "onum": 1
+                // }
             },
             "intenseTextStyle": "bright",
             "opacity": 70,
