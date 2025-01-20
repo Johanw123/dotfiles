@@ -1,4 +1,5 @@
-function Invoke-Starship-PreCommand {
+function Invoke-Starship-PreCommand
+{
     $host.ui.Write("`e]0; terminal `a")
 }
 
@@ -12,14 +13,16 @@ Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
 # Other hosts (ISE, ConEmu) don't always work as well with PSReadLine.
 # Also, if PS is run with -Command, PSRL loading is suppressed.
 $psrlMod = Get-Module PSReadLine
-if (($null -eq $psrlMod) -or ($host.Name -eq 'Windows PowerShell ISE Host')) {
+if (($null -eq $psrlMod) -or ($host.Name -eq 'Windows PowerShell ISE Host'))
+{
     return
-}
-elseif ($psrlMod.Version.Major -lt 2) {
+} elseif ($psrlMod.Version.Major -lt 2)
+{
     throw "PSReadLine 1.x installed or not imported, import PSRL or ugprade to at least 2.x."
 }
 
-if ((Get-Module PSReadLine).Version.Major -lt 2) {
+if ((Get-Module PSReadLine).Version.Major -lt 2)
+{
     throw "PSReadLine 1.x installed or not imported, import PSRL or ugprade to at least 2.x."
 }
 
@@ -40,13 +43,15 @@ $options = @{
 }
 
 # Need >= 2.1
-if ($psrlMod.Version.Minor -ge 1) {
+if ($psrlMod.Version.Minor -ge 1)
+{
     #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
     $options['PredictionSource'] = 'HistoryAndPlugin'
 }
 
 # Need >= 2.2
-if ($psrlMod.Version.Minor -ge 2) {
+if ($psrlMod.Version.Minor -ge 2)
+{
     $options['PredictionViewStyle'] = 'ListView'
 }
 
@@ -102,90 +107,150 @@ Set-PSReadLineOption @options
 
 
 # Functions
-function cd-susrepo1 { set-location "G:\dev\susrepo1" }
-function cd-susrepo1_2 { set-location "G:\dev\susrepo1_2" }
-function cd-appl { set-location "~\AppData\Local" }
-function cd-appr { set-location "~\AppData\Roaming" }
-function cd-home { set-location "~" }
-function cd-nvim { set-location "~\dotfiles\.config\nvim\lua\custom" }
-function cd-conan { set-location "~\.conan" }
-function cd-dot { set-location "~\dotfiles" }
-function cd-dsus { set-location D:\Dev\SurgicalScience }
-function cd_devc { set-location C:\Dev }
-function cd_devd { set-location D:\Dev }
-function cd-smb { set-location C:\Dev\SquareManBoy }
-function cd-dr { set-location D:\Dev\DungeonRun\DungeonRun }
+function cd-susrepo1
+{ set-location "G:\dev\susrepo1" 
+}
+function cd-susrepo1_2
+{ set-location "G:\dev\susrepo1_2" 
+}
+function cd-appl
+{ set-location "~\AppData\Local" 
+}
+function cd-appr
+{ set-location "~\AppData\Roaming" 
+}
+function cd-home
+{ set-location "~" 
+}
+function cd-nvim
+{ set-location "~\dotfiles\.config\nvim\lua\custom" 
+}
+function cd-conan
+{ set-location "~\.conan" 
+}
+function cd-dot
+{ set-location "~\dotfiles" 
+}
+function cd-dsus
+{ set-location D:\Dev\SurgicalScience 
+}
+function cd_devc
+{ set-location C:\Dev 
+}
+function cd_devd
+{ set-location D:\Dev 
+}
+function cd-smb
+{ set-location C:\Dev\SquareManBoy 
+}
+function cd-dr
+{ set-location D:\Dev\DungeonRun\DungeonRun 
+}
 
-function ls_alias_c1 { Get-ChildItem $args -Exclude .*  | Format-Wide -Column 1 -Property Name }
-function ls_alias_c2 { Get-ChildItem $args -Exclude .*  | Format-Wide -Column 2 -Property Name }
-function ls_alias_c3 { Get-ChildItem $args -Exclude .*  | Format-Wide -Column 3 -Property Name }
-function ls_alias_c4 { Get-ChildItem $args -Exclude .*  | Format-Wide -Column 4 -Property Name }
-function ls_alias_c5 { Get-ChildItem $args -Exclude .*  | Format-Wide -Column 5 -Property Name }
-function ls_alias_unix { wsl ls --color=auto -hF $args }
-function lse_alias_unix { eza --icons -F -H --group-directories-first --git -1 }
-function ll_alias_unix { eza --icons -F -H --group-directories-first --git -1 -alF }
+function ls_alias_c1
+{ Get-ChildItem $args -Exclude .*  | Format-Wide -Column 1 -Property Name 
+}
+function ls_alias_c2
+{ Get-ChildItem $args -Exclude .*  | Format-Wide -Column 2 -Property Name 
+}
+function ls_alias_c3
+{ Get-ChildItem $args -Exclude .*  | Format-Wide -Column 3 -Property Name 
+}
+function ls_alias_c4
+{ Get-ChildItem $args -Exclude .*  | Format-Wide -Column 4 -Property Name 
+}
+function ls_alias_c5
+{ Get-ChildItem $args -Exclude .*  | Format-Wide -Column 5 -Property Name 
+}
+function ls_alias_unix
+{ wsl ls --color=auto -hF $args 
+}
+function lse_alias_unix
+{ eza --icons -F -H --group-directories-first --git -1 
+}
+function ll_alias_unix
+{ eza --icons -F -H --group-directories-first --git -1 -alF 
+}
 
-function drives { Get-PsDrive -PSProvider 'FileSystem' }
-function ssh_truls { ssh johanw@172.31.232.86 }
-function ssh_linbox { ssh root@172.31.231.5 }
+function drives
+{ Get-PsDrive -PSProvider 'FileSystem' 
+}
+function ssh_truls
+{ ssh johanw@172.31.232.86 
+}
+function ssh_linbox
+{ ssh root@172.31.231.5 
+}
 
-function Open-GitHub {
+function Open-GitHub
+{
     $is_git = git rev-parse --is-inside-work-tree
-    if ($is_git -eq $true ) {
+    if ($is_git -eq $true )
+    {
         $fetch_url = (git config --get remote.origin.url)
         $github_url = ""
         
-        if ($fetch_url -like "*https*") {
+        if ($fetch_url -like "*https*")
+        {
             $github_url = $fetch_url
-        }
-        else {
+        } else
+        {
             $url_split = $fetch_url.Split(":")
-            if ($url_split.Count -gt 1) {
+            if ($url_split.Count -gt 1)
+            {
                 $url_portion = $url_split[1]
                 $github_url = "https://github.com/" + $url_portion
-            }
-            else {
+            } else
+            {
                 Write-Host "Could not parse Github Path"
             }
         }
 
-        if ($github_url) {
+        if ($github_url)
+        {
             firefox $github_url
-        }  
-        else {
+        } else
+        {
             Write-Host "Not a valid Url!" -ForegroundColor red
         }
-    }
-    else {
+    } else
+    {
         Write-Host "Not in a git repo!" -ForegroundColor red
     }
 }
 
-function which ($command) {
+function which ($command)
+{
     Get-Command -Name $command -ErrorAction SilentlyContinue |
-    Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
+        Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
 } 
 
-function sudo! {
+function sudo!
+{
     $commandLine = (Get-History | Select-Object -Last 1).CommandLine
     Start-Process -FilePath powershell.exe -ArgumentList $commandLine -Verb runas
 }
 
-function sudo ($scriptblock) {
+function sudo ($scriptblock)
+{
     # TODO: make -NoExit a parameter
     # TODO: just open PS (no -Command parameter) if $scriptblock -eq ''
     $sh = new-object -com 'Shell.Application'
     $sh.ShellExecute('powershell', "-NoExit -Command $scriptblock", '', 'runas')
 }
 
-function su () {    
+function su ()
+{    
     Start-Process pwsh -Verb runAs
 }
 
 #https://github.com/kelleyma49/PSFzf?tab=readme-ov-file#helper-functions
-function RipGrepFunc([string] $s) { Invoke-PsFzfRipgrep $s }
+function RipGrepFunc([string] $s)
+{ Invoke-PsFzfRipgrep $s 
+}
 
-function FuzzyFindFile() {
+function FuzzyFindFile()
+{
     param(
         [string]$target = '',
         [string]$filter = ''
@@ -195,41 +260,50 @@ function FuzzyFindFile() {
     rff $target $filter | fzf -m --ansi | Invoke-Item
 }
 
-function ListFilesSortedDate() {
+function ListFilesSortedDate()
+{
     Get-ChildItem $dir -Recurse -File | Select-Object LastWriteTime, FullName | Sort-Object LastWriteTime
 }
 
-function OpenCurrentDir() {
+function OpenCurrentDir()
+{
     Invoke-Item .
 }
 
-function FuzzyEditFunc() {
+function FuzzyEditFunc()
+{
     fzf --preview='bat --color=always --theme=ansi --style=numbers {}' | % { vim $_ }
 }
 
-function List-Commands {
+function List-Commands
+{
     bat --language=help --style=plain --paging=never -f $home\dotfiles\Powershell\list.txt
 }
 
 # From https://github.com/nickmhankins/Handle
-function Test-AcceptedEula {
+function Test-AcceptedEula
+{
     # Test if the EulaAccepted property exists and create it if it does not
-    if ((Get-ItemProperty HKCU:\Software\Sysinternals\Handle -ErrorAction SilentlyContinue).EulaAccepted -ne '1') {
+    if ((Get-ItemProperty HKCU:\Software\Sysinternals\Handle -ErrorAction SilentlyContinue).EulaAccepted -ne '1')
+    {
         & reg.exe ADD HKCU\Software\Sysinternals\Handle /v EulaAccepted /t REG_DWORD /d 1 /f 2>&1>$null
         Write-Host 'Eula has been auto-accepted'
     }
 }
 
-Function Test-RunAsAdmin {
-    If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+Function Test-RunAsAdmin
+{
+    If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
+    {
         $False
-    }
-    else {
+    } else
+    {
         $True
     }
 }
 
-Function Get-LockedFiles {
+Function Get-LockedFiles
+{
 
     [cmdletbinding()]
 
@@ -239,16 +313,20 @@ Function Get-LockedFiles {
         [string]$Path
     )
     
-    Begin {
+    Begin
+    {
         Test-AcceptedEula
     }
-    Process {
+    Process
+    {
         $HandleCollection = @()
 
         $Output = & handle.exe $Path
         $Lines = $Output.trim() -like "*pid:*"
-        if ($Lines) {
-            foreach ($Line in $Lines) {
+        if ($Lines)
+        {
+            foreach ($Line in $Lines)
+            {
                 $Result = $Line | Select-String -Pattern '^([^ ]*)\s*pid: ([0-9]*)\s*type: ([^ ]*)\s*([^ ]*)\s*(.*?): (.*)'
                 $Handle = [PSCustomObject] @{
                     ProcessName = $Result.Matches[0].Groups[1].Value
@@ -260,14 +338,15 @@ Function Get-LockedFiles {
                 $HandleCollection += $Handle    
             }
             return $HandleCollection     
-        }
-        else {
+        } else
+        {
             Write-Host "No locked files found or parent process already closed" -ForegroundColor Yellow
         }       
     }
 }
 
-Function Close-LockedFiles {
+Function Close-LockedFiles
+{
 
     [cmdletbinding()]
 
@@ -277,10 +356,12 @@ Function Close-LockedFiles {
         [string]$Path
     )
 
-    Begin {
+    Begin
+    {
         Test-AcceptedEula
     }
-    Process {
+    Process
+    {
         Get-LockedFiles -Path $Path | ForEach-Object {      
             & handle.exe -c $_.User -p $_.ProcessId -y 2>&1>$null
             Write-Host "Closed PID $($_.ProcessID) running in path $($_.Path)" -ForegroundColor Green     
@@ -288,96 +369,114 @@ Function Close-LockedFiles {
     }        
 }
 
-function StupidHist {
+function StupidHist
+{
     $historyLocation = $(Get-PSReadLineOption).HistorySavePath
     $all = Get-Content $historyLocation | select-string -Pattern "^cd .:" | % { echo ($_ -replace "^cd (.*)", "`$1") } | Sort-Object -Unique 
     return $all | Where-Object { Test-Path $($_) }
 }
 
-function CdLast {
+function CdLast
+{
     $location = StupidHist | FZF
-    if ($location) {
+    if ($location)
+    {
         Set-Location $location
     }
 }
 
-function Invoke-FuzzyZoxide() {
+function Invoke-FuzzyZoxide()
+{
     $result = $null
-    try {
+    try
+    {
         (zoxide query --list) | Invoke-Fzf -NoSort -Height 80% | ForEach-Object { $result = $_ }
-    }
-    catch {
+    } catch
+    {
 
     }
-    if ($null -ne $result) {
+    if ($null -ne $result)
+    {
         cd $result
     }
 }
 
-function WingetInstallPackage() {
+function WingetInstallPackage()
+{
     $package_id = winget search --query "" | Invoke-Fzf -Height 100% | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() }
     winget install -e --id $package_id
 }
 
-function FuzzySwitchBranch() {
+function FuzzySwitchBranch()
+{
     $is_git = git rev-parse --is-inside-work-tree
-    if ($is_git -eq $true ) {
+    if ($is_git -eq $true )
+    {
         $branch = cm find branches --format="{name}" --nototal | fzf
         cm switch $branch
-    }
-    else {
+    } else
+    {
         Write-Output "Fail!"
     }
 }
 
-function FuzzyGitBranch() {
+function FuzzyGitBranch()
+{
     $is_git = git rev-parse --is-inside-work-tree
-    if ($is_git -eq $true ) {
+    if ($is_git -eq $true )
+    {
         $cur_branch = git symbolic-ref HEAD
         $cur_branch = $cur_branch.split('/')[-1]
         $default_branch = git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
         $branch = & { git branch --sort=-committerdate; git branch --sort=-committerdate --remote } | rg -v HEAD |  sed 's/^[ \*]*//' | fzf -m --ansi --preview="git diff --stat=80,50 --merge-base ${default_branch} --color=always {}" --preview="git log {} -1 && echo: && echo: && git diff --stat=80,50 --color=always {} --merge-base ${cur_branch}" 
-        if ($branch) { 
+        if ($branch)
+        { 
             $branch = $branch.Replace("origin/", "")
             git switch $branch
         }
-    }
-    else {
+    } else
+    {
         Write-Output "Fail!"
     }
 }
 
-function FuzzyGitDiff() {
+function FuzzyGitDiff()
+{
     $is_git = git rev-parse --is-inside-work-tree
-    if ($is_git -eq $true ) {
+    if ($is_git -eq $true )
+    {
         $root = git rev-parse --show-toplevel
         Push-Location $root
         git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
         Pop-Location
-    }
-    else {
+    } else
+    {
         Write-Output "Fail!"
     }
 }
 
-function GitFuzzy() {
+function GitFuzzy()
+{
     wsl git fuzzy
 }
 
-function RipgrepFindString() {
+function RipgrepFindString()
+{
     # this function is adapted from https://github.com/junegunn/fzf/blob/master/ADVANCED.md#switching-between-ripgrep-mode-and-fzf-mode
     param([Parameter(Mandatory)]$SearchString, [string]$filter)
 
     $RG_PREFIX = "rg --column --line-number --no-heading --color=always --smart-case" 
     $INITIAL_QUERY = $SearchString
 
-    try {
+    try
+    {
         $sleepCmd = ''
         $trueCmd = 'cd .'
         $rgfilter = ''
         $promt = "🔎 ripgrep> "
 
-        if (-not [string]::IsNullOrEmpty($filter)) {
+        if (-not [string]::IsNullOrEmpty($filter))
+        {
             $rgfilter = " -g $filter"
             $promt = "🔎 ripgrep (filter: $filter)> "
         }
@@ -387,7 +486,8 @@ function RipgrepFindString() {
 
         fzf --ansi --color "hl:-1:underline,hl+:-1:underline:reverse" --disabled --query "$INITIAL_QUERY" --bind "change:reload:$sleepCmd $RG_PREFIX {q}$rgfilter || $trueCmd" --prompt $promt --delimiter : --preview 'bat --color=always {1} --highlight-line {2} --theme=TwoDark' --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' | ForEach-Object { $results += $_ }
 
-        if (-not [string]::IsNullOrEmpty($results)) {
+        if (-not [string]::IsNullOrEmpty($results))
+        {
             $split = $results.Split(':')
             $fileList = $split[0]
             $lineNum = $split[1]
@@ -396,49 +496,57 @@ function RipgrepFindString() {
             $editorOptions = ''
             $editor = 'nvim'
 
-            if ($fileList -is [array] -and $fileList.length -gt 1) {
-                for ($i = 0; $i -lt $fileList.Count; $i++) {
+            if ($fileList -is [array] -and $fileList.length -gt 1)
+            {
+                for ($i = 0; $i -lt $fileList.Count; $i++)
+                {
                     $fileList[$i] = '"{0}"' -f $(Resolve-Path $fileList[$i].Trim('"'))
                 }
                 $cmd = "$editor$editorOptions {0}" -f ($fileList -join ' ')
-            }
-            else {
+            } else
+            {
                 $cmd = "$editor$editorOptions ""{0}"" +{1}" -f $(Resolve-Path $fileList.Trim('"')), $LineNum
             }
 
             Write-Host "Executing '$cmd'..."
             Invoke-Expression -Command $cmd
         }
-    }
-    catch {
+    } catch
+    {
         Write-Error "Error occurred: $_"
-    }
-    finally {
+    } finally
+    {
     }
 }
 
-function Get-InstalledApps {
+function Get-InstalledApps
+{
     param (
         [Parameter(ValueFromPipeline = $true)]
         [string[]]$ComputerName = $env:COMPUTERNAME,
         [string]$NameRegex = ''
     )
     
-    foreach ($comp in $ComputerName) {
+    foreach ($comp in $ComputerName)
+    {
         $keys = '', '\Wow6432Node'
-        foreach ($key in $keys) {
-            try {
+        foreach ($key in $keys)
+        {
+            try
+            {
                 $reg = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey('LocalMachine', $comp)
                 $apps = $reg.OpenSubKey("SOFTWARE$key\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames()
-            }
-            catch {
+            } catch
+            {
                 continue
             }
 
-            foreach ($app in $apps) {
+            foreach ($app in $apps)
+            {
                 $program = $reg.OpenSubKey("SOFTWARE$key\Microsoft\Windows\CurrentVersion\Uninstall\$app")
                 $name = $program.GetValue('DisplayName')
-                if ($name -and $name -match $NameRegex) {
+                if ($name -and $name -match $NameRegex)
+                {
                     [pscustomobject]@{
                         ComputerName    = $comp
                         DisplayName     = $name
@@ -446,7 +554,11 @@ function Get-InstalledApps {
                         Publisher       = $program.GetValue('Publisher')
                         InstallDate     = $program.GetValue('InstallDate')
                         UninstallString = $program.GetValue('UninstallString')
-                        Bits            = $(if ($key -eq '\Wow6432Node') { '64' } else { '32' })
+                        Bits            = $(if ($key -eq '\Wow6432Node')
+                            { '64' 
+                            } else
+                            { '32' 
+                            })
                         Path            = $program.name
                     }
                 }
@@ -457,33 +569,44 @@ function Get-InstalledApps {
 
 #((Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }}).VersionInfo.ProductName
 
-function LaunchProgram() {
+function LaunchProgram()
+{
     #--no-sort
     #(Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | select fullname,lastaccesstime | sort -Property lastaccesstime -Descending |  Select-Object -ExpandProperty FullName | fzf | Invoke-Item
-    (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if (Test-Path $_.Name) { Get-ItemProperty $_.Name } } | Select-Object -ExpandProperty VersionInfo | select ProductName, FileName | Format-Table -HideTableHeaders | fzf | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
+    (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if (Test-Path $_.Name)
+        { Get-ItemProperty $_.Name 
+        } } | Select-Object -ExpandProperty VersionInfo | select ProductName, FileName | Format-Table -HideTableHeaders | fzf | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
 }
 
-function LaunchApp() {
+function LaunchApp()
+{
     #--no-sort
     Get-StartApps | Where-Object { $_.AppID -like "*.exe" } | Format-Table -HideTableHeaders | fzf --ansi -m | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
 
     # (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select FileName, ProductName
 }
 
-function LaunchBoth() {
+function LaunchBoth()
+{
     #--no-sort
     $apps = Get-StartApps | Where-Object { $_.AppID -like "*.exe" } | Select-Object @{Name = "Name"; Expression = { $_.Name } }, @{Name = "Path"; Expression = { $_.AppID } }
-    $programs = (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if (Test-Path $_.Name) { Get-ItemProperty $_.Name } } | Select-Object -ExpandProperty VersionInfo | select ProductName, FileName | Select-Object @{Name = "Name"; Expression = { $_.ProductName } }, @{Name = "Path"; Expression = { $_.FileName } }
+    $programs = (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if (Test-Path $_.Name)
+        { Get-ItemProperty $_.Name 
+        } } | Select-Object -ExpandProperty VersionInfo | select ProductName, FileName | Select-Object @{Name = "Name"; Expression = { $_.ProductName } }, @{Name = "Path"; Expression = { $_.FileName } }
     $all = @($apps) + $programs
     $all | Format-Table -HideTableHeaders | fzf --ansi -m | ForEach-Object { $_.split("  ", [StringSplitOptions]::RemoveEmptyEntries)[1].Trim() } | Invoke-Item
     # (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if(Test-Path $_.Name) {Get-ItemProperty $_.Name }} | Select-Object -ExpandProperty VersionInfo | select FileName, ProductName
 }
 
-function LaunchRecent() {
-    (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if (Test-Path $_.Name) { Get-ItemProperty $_.Name } } | select fullname, lastaccesstime | sort -Property lastaccesstime -Descending |  Select-Object -ExpandProperty FullName | fzf | Invoke-Item
+function LaunchRecent()
+{
+    (Get-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility Assistant\Store').PSObject.Properties | Where-Object { $_.Name -like "*.exe" } | ForEach-Object { if (Test-Path $_.Name)
+        { Get-ItemProperty $_.Name 
+        } } | select fullname, lastaccesstime | sort -Property lastaccesstime -Descending |  Select-Object -ExpandProperty FullName | fzf | Invoke-Item
 }
 
-function MentorLearnLog {
+function MentorLearnLog
+{
     #winget install sharkdp.bat
     #Get-Content $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -Wait -Tail 1 | ForEach-Object { bat $env:LOCALAPPDATA\Temp\EnvelopeLog.txt -l log --paging=never --style=plain -f -r $_.Length}
 
@@ -495,7 +618,8 @@ function MentorLearnLog {
     Tail-Log $env:LOCALAPPDATA\Temp\EnvelopeLog.txt
 }
 
-function RipgrepFindFile {
+function RipgrepFindFile
+{
     param(
         [string]$target,
         [string]$filter = ''
@@ -504,7 +628,8 @@ function RipgrepFindFile {
     rg --files -g $filter | rg $target --color=always --smart-case
 }
 
-function NvimKickstart {
+function NvimKickstart
+{
     #alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
     $env:NVIM_APPNAME = 'nvim-kickstart'
     nvim
@@ -512,11 +637,13 @@ function NvimKickstart {
 
 
 #git 
-function GitStatus {
+function GitStatus
+{
     git status
 }
 
-function GitDiff {
+function GitDiff
+{
     git difftool --dir-diff
 }
 
@@ -598,11 +725,10 @@ Set-Alias -Name nvim-kickstart -Value NvimKickstart
 Set-Alias -Name gho -Value Open-GitHub
 
 
-
-
 # Work Stuff
 
-function ghcs {
+function ghcs
+{
     # Debug support provided by common PowerShell function parameters, which is natively aliased as -d or -db
     # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_commonparameters?view=powershell-7.4#-debug
     param(
@@ -616,7 +742,8 @@ function ghcs {
         [Parameter(Position = 0, ValueFromRemainingArguments)]
         [string]$Prompt
     )
-    begin {
+    begin
+    {
         # Create temporary file to store potential command user wants to execute when exiting
         $executeCommandFile = New-TemporaryFile
 
@@ -624,8 +751,10 @@ function ghcs {
         $envGhDebug = $Env:GH_DEBUG
         $envGhHost = $Env:GH_HOST
     }
-    process {
-        if ($PSBoundParameters['Debug']) {
+    process
+    {
+        if ($PSBoundParameters['Debug'])
+        {
             $Env:GH_DEBUG = 'api'
         }
 
@@ -633,9 +762,11 @@ function ghcs {
 
         gh copilot suggest -t $Target -s "$executeCommandFile" $Prompt
     }
-    end {
+    end
+    {
         # Execute command contained within temporary file if it is not empty
-        if ($executeCommandFile.Length -gt 0) {
+        if ($executeCommandFile.Length -gt 0)
+        {
             # Extract command to execute from temporary file
             $executeCommand = (Get-Content -Path $executeCommandFile -Raw).Trim()
 
@@ -657,7 +788,8 @@ function ghcs {
             Invoke-Expression $executeCommand
         }
     }
-    clean {
+    clean
+    {
         # Clean up temporary file used to store potential command user wants to execute when exiting
         Remove-Item -Path $executeCommandFile
 
@@ -666,7 +798,8 @@ function ghcs {
     }
 }
 
-function ghce {
+function ghce
+{
     # Debug support provided by common PowerShell function parameters, which is natively aliased as -d or -db
     # https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_commonparameters?view=powershell-7.4#-debug
     param(
@@ -676,13 +809,16 @@ function ghce {
         [Parameter(Position = 0, ValueFromRemainingArguments)]
         [string[]]$Prompt
     )
-    begin {
+    begin
+    {
         # Store original value of GH_* environment variables
         $envGhDebug = $Env:GH_DEBUG
         $envGhHost = $Env:GH_HOST
     }
-    process {
-        if ($PSBoundParameters['Debug']) {
+    process
+    {
+        if ($PSBoundParameters['Debug'])
+        {
             $Env:GH_DEBUG = 'api'
         }
 
@@ -690,25 +826,50 @@ function ghce {
 
         gh copilot explain $Prompt
     }
-    clean {
+    clean
+    {
         # Restore GH_* environment variables to their original value
         $Env:GH_DEBUG = $envGhDebug
         $Env:GH_HOST = $envGhHost
     }
 }
 
-function susclone {
+function susclone
+{
     # Requires GitHub CLI                                   (winget install --id GitHub.cli)
     # Requires fuzzy finder: fzf                            (winget install fzf)
     # Optional for markdown preview with colors: 'glow'     (winget install charmbracelet.glow) 
 
     $previewCommand = ""
-    if (Get-Command "glow" -ErrorAction SilentlyContinue) { 
+    if (Get-Command "glow" -ErrorAction SilentlyContinue)
+    { 
         $previewCommand = "gh repo view SurgicalScience/{$_i} | glow -s dark {}" 
-    }
-    else {
+    } else
+    {
         $previewCommand = "gh repo view SurgicalScience/{$_i}" 
     }
 
     gh repo list SurgicalScience -L 99999999 --json name --jq '.[].name' | fzf -m --ansi --preview $previewCommand | % { gh repo clone SurgicalScience/$_ } 
 }
+
+
+# Jira
+function jira_open
+{
+    jira sprint list --show-all-issues --current -sopen
+}
+
+function jira_progress
+{
+    jira sprint list --show-all-issues --current -s "In Progress" -a "Johan Wångsell" 
+}
+
+function jira_backlog
+{
+
+}
+
+
+
+Set-Alias -Name jo -Value jira_open
+Set-Alias -Name jp -Value jira_progress
