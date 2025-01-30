@@ -447,7 +447,7 @@ function FuzzyGitDiff()
     {
         $root = git rev-parse --show-toplevel
         Push-Location $root
-        git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { vim $_ }
+        git diff --name-only | fzf -m --ansi --preview 'git diff --color=always {-1} | delta  -s -w %FZF_PREVIEW_COLUMNS%' --preview-window='up,80%,border-bottom,+{2}+3/3,~3' | % { nvim $_ }
         Pop-Location
     } else
     {

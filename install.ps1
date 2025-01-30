@@ -110,6 +110,14 @@ if (!(Test-Path $localConfiguration -PathType Container))
 }
 
 
+# link Lazygit configuration
+$localConfiguration = Join-Path $env:LOCALAPPDATA -ChildPath "lazygit" | Join-Path -ChildPath "config.yml"
+$dotfilesConfiguration = Join-Path "$dotFilesRoot" -ChildPath ".config" | Join-Path -ChildPath "lazygit" | Join-Path -ChildPath "config.yml"
+
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
+    Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
+}
 
 
 
