@@ -869,6 +869,176 @@ function jira_backlog
 
 }
 
+function ask
+{
+    param(
+        [Parameter(ValueFromPipeline = $true)]
+        [string[]]$Prompt
+    )
+
+    if ($null -eq $Prompt -or $Prompt.Length -eq 0)
+    {
+        throw "Prompt cannot be null or empty."
+    }
+
+    ollama run deepseek-r1:14b $Prompt
+}
+
+function TailFileBeforeEnd
+{
+    [System.Text.Encoding]$enc = [System.Text.Encoding]::GetEncoding(65001)
+    $filename = "$env:TEMP/console_output.txt"
+    $fs=New-Object System.IO.FileStream ($filename,"OpenOrCreate", "Read", "ReadWrite",8,"None") 
+    $sr=New-Object System.IO.StreamReader($fs, $enc)
+    $lastPosition=$sr.BaseStream.Length
+    #try to find $n lines before eof
+    $buffer=10240
+    $ptr=$lastPosition #start at the end of the file  
+    $found=0
+    $n=100
+    $output=@()
+    $cur = ""
+    $count = 0
+    $blankCount = 0
+    $test = 0
+
+    if($buffer -ge $sr.BaseStream.Length)
+    {
+        $buffer= $sr.BaseStream.Length - 1
+    }
+    
+    $ptr -= $buffer
+    $sr.BaseStream.Seek($ptr,"Begin")|out-null #step backward
+    $line = $sr.ReadLine()
+
+    if($ptr -gt 0)
+    {
+        while ($line -ne $null)
+        { 
+            $found++
+            $line=$sr.ReadLine() 
+            if($line -eq $null)
+            {
+                continue
+            }
+            if($line.StartsWith("_ ➜"))
+            {
+                $split = $cur.Split("`n", [System.StringSplitOptions]::RemoveEmptyEntries)
+                $output += $split[0 .. ($split.Length - 2)] -join "`n"
+                $cur = ""
+            } else
+            {
+                $cur += $line + "`n"
+            }
+        }
+    }
+
+    
+    $output
+
+    # while($ptr -gt 0 -and $found -lt $n)
+    # {
+    #     $ptr-=$buffer 
+    #     if ($ptr -le 0)
+    #     {$ptr=0
+    #     }
+    #     $sr.BaseStream.Seek($ptr,"Begin")|out-null #step backward
+    #     $line = $sr.ReadLine()
+    #     $found=0
+    #     $output=@()
+    #
+    #     while ( $line -ne $null)
+    #     { #read to the end
+    #
+    #         $output+=$line
+    #         $found++
+    #         $line=$sr.ReadLine() 
+    #         if($line -contains "_ ➜")
+    #         {
+    #             $test += 1
+    #             break
+    #         }
+    #     }
+    #
+    #     if($test -eq 1)
+    #     {
+    #         $sr.ReadLine()
+    #         $output = ""
+    #     }
+    #
+    #     if($test -eq 2)
+    #     {
+    #         break
+    #     }
+    #     
+    #     # if($found -ge $n)
+    #     # { #found enough lines
+    #     #     write-verbose "ok found $found / $n"
+    #     #     foreach($i in ($output.length - $n)..($output.length))
+    #     #     { #take only lines needed
+    #     #         $render+=$output[$i]
+    #     #     }
+    #     #     continue
+    #     #
+    #     # } else
+    #     # { #move backward and retry to find lines
+    #     #     write-verbose "not enough line ($found displayed)"
+    #     #     $ptr-=$buffer
+    #     #     if ($ptr -le 0)
+    #     #     { #eof without finding suffisant lines
+    #     #         $ptr=0
+    #     #         write-host "not enough line ($found displayed)"
+    #     #         $render=$output
+    #     #
+    #     #     }
+    #     # }
+    # }
+    # $output
+    # " -- - -- - - - - -"
+    # $output.split("_ ➜",[System.StringSplitOptions]::RemoveEmptyEntries)[-3]
+}
+
+
+function explain_error
+{
+
+    [System.Text.Encoding]$enc = [System.Text.Encoding]::GetEncoding(65001)
+    $BasePromt = "Hello, could you please explain this error? "
+    Remove-Item $env:TEMP/console_output.txt
+    #sleep 0.2
+    
+    sleep 1.0
+    [System.IO.File]::WriteAllLines("$env:TEMP/console_output.txt", "", $enc)
+    wezterm cli get-text > "$env:TEMP/console_output.txt" --start-line -1000
+    sleep 1.0
+    $Promt = TailFileBeforeEnd | Select-Object -Last 1
+    # $result = wezterm cli get-text #--start-line -1000
+    # $result = Get-Content "$env:TEMP/console_output.txt" -Raw
+    # $cur = ""
+    # $output = ""
+    # ForEach ($line in $($result -split "`r`n"))
+    # {
+    #     if($line -contains "_ ➜")
+    #     {
+    #         $split = $cur.Split("`n", [System.StringSplitOptions]::RemoveEmptyEntries)
+    #         $output += $split[0 .. ($split.Length - 2)] -join "`n"
+    #         $cur = ""
+    #     } else
+    #     {
+    #         $cur += $line + "`n"
+    #     }
+    #
+    # }
+    
+
+    #$Promt
+    ollama run zephyr:latest "$BasePromt" + "'$Promt'"
+    #$Promt = Get-Content "$env:TEMP/PowershellTranscript.txt" -Raw | Split-String "_ ➜"  | Where-Object {$_} | Where-Object {$_.Trim()} | Select-Object -Last 2 | Select-Object -Index 0 
+    # $Promt = Get-Content "$env:TEMP/PowershellTranscript2.txt" -Raw | Split-String "_ ➜"  | foreach {"hello: " + $_.Trim()} | Where-Object {$_ -ne ""}
+    # $Promt
+    # $Promt | Select-Object -Last 2 | Select-Object -Index 1
+    #ollama run zephyr:latest "$BasePromt" + "'$Promt'"
+}
 
 
 Set-Alias -Name jo -Value jira_open
