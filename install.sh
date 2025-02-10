@@ -25,13 +25,16 @@ fi
 (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-sudo -u johanw brew install eza
-sudo -u johanw brew install fzf
-sudo -u johanw brew install bat
-sudo -u johanw brew install bat-extras
-sudo -u johanw brew install git-delta
-sudo -u johanw brew install gh
-sudo -u johanw brew postinstall gcc
+#Runs bash with commands between '_' as nobody if possible
+$RUNAS bash<<_
+brew install eza
+brew install fzf
+brew install bat
+brew install bat-extras
+brew install git-delta
+brew install gh
+brew postinstall gcc
+_
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
