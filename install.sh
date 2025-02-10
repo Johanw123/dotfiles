@@ -59,6 +59,7 @@ brew install bat-extras
 sudo apt-get install -y ripgrep
 sudo apt-get install -y fuse libfuse2
 brew install git-delta
+brew install gh
 
 #firefox
 sudo install -d -m 0755 /etc/apt/keyrings
