@@ -1,12 +1,9 @@
 #!/bin/bash
 
 #check for root
-UID=$(id -u)
-if [ x$UID != x0 ] 
-then
-    #Beware of how you compose the command
-    printf -v cmd_str '%q ' "$0" "$@"
-    exec sudo su -c "$cmd_str"
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
 fi
 
 if fc-list | grep -q -i "FiraCode"; then
