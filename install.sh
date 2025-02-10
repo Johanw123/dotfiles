@@ -1,9 +1,6 @@
 #!/bin/bash
 
-sudo /bin/bash <<EOF 
-./install_admin.sh
-EOF
-
+sudo /bin/bash install_admin.sh
 
 if fc-list | grep -q -i "FiraCode"; then
     echo "FiraCode font found!"
