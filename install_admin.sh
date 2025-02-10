@@ -1,11 +1,12 @@
+
+sudo apt-get install -y fuse libfuse2
+sudo apt-get install -y ripgrep
+
 sudo apt install -y fontconfig
 sudo apt install unzip
 
 #https://github.com/wslutilities/wslu?tab=readme-ov-file
 # sudo apt install wslu
-
-sudo apt-get install -y ripgrep
-sudo apt-get install -y fuse libfuse2
 
 #firefox
 sudo install -d -m 0755 /etc/apt/keyrings

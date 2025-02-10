@@ -1,9 +1,18 @@
 #!/bin/bash
 
 # Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
+brew install gcc
+brew install eza
+brew install fzf
+brew install bat
+brew install bat-extras
+brew install git-delta
+brew install gh
+brew postinstall gcc
 
 sudo /bin/bash install_admin.sh
 
@@ -45,13 +54,7 @@ ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
 #fish
 chsh -s $(which fish)
 
-brew install eza
-brew install fzf
-brew install bat
-brew install bat-extras
-brew install git-delta
-brew install gh
-brew postinstall gcc
+
 
 #zsh
 #zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
