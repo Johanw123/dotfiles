@@ -43,6 +43,9 @@ fi
 # test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
 
+mkdir ~/.config
+mkdir ~/.config/fish
+
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
 ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish

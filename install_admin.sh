@@ -41,6 +41,13 @@ sudo apt install -y nodejs
 sudo apt-get install npm -y
 sudo apt install python3 -y
 sudo apt install python3.10-venv -y
+sudo apt install python3-pip -y
+
+sudo apt install fd-find -y
+sudo apt install zsh -y
+
+sudo apt-get install snap snapd -y
+sudo snap install powershell --classic
 
 curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
