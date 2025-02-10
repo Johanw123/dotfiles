@@ -1,5 +1,3 @@
-curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash
-
 sudo apt install -y fontconfig
 sudo apt install unzip
 

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
 sudo /bin/bash install_admin.sh
 
 if fc-list | grep -q -i "FiraCode"; then
@@ -21,8 +26,7 @@ fi
 # (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/h2s/.bashrc
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+
 
 # test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 # test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
