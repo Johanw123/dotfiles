@@ -39,21 +39,25 @@
     alias z='zoxide'
     alias vim='nvim'
 
-    alias desktop= 'DESKTOP_SESSION=ubuntu \
-      GDMSESSION=ubuntu \
-      GNOME_SHELL_SESSION_MODE=ubuntu \
-      GTK_IM_MODULE=ibus \
-      GTK_MODULES=gail:atk-bridge \
-      IM_CONFIG_CHECK_ENV=1 \
-      IM_CONFIG_PHASE=1 \
-      QT_ACCESSIBILITY=1 \
-      QT_IM_MODULE=ibus \
-      XDG_CURRENT_DESKTOP=ubuntu:GNOME \
-      XDG_DATA_DIRS=/usr/share/ubuntu:$XDG_DATA_DIRS \
-      XDG_SESSION_TYPE=wayland \
-      XMODIFIERS=@im=ibus \
-      MUTTER_DEBUG_DUMMY_MODE_SPECS=1366x768 \
-      gnome-session'
+
+function desk
+  export DESKTOP_SESSION=ubuntu
+  export GDMSESSION=ubuntu 
+  export GNOME_SHELL_SESSION_MODE=ubuntu 
+  export GTK_IM_MODULE=ibus 
+  export GTK_MODULES=gail:atk-bridge 
+  export IM_CONFIG_CHECK_ENV=1 
+  export IM_CONFIG_PHASE=1 
+  export QT_ACCESSIBILITY=1 
+  export QT_IM_MODULE=ibus 
+  export XDG_CURRENT_DESKTOP=ubuntu:GNOME 
+  export XDG_DATA_DIRS=/usr/share/ubuntu:$XDG_DATA_DIRS 
+  export XDG_SESSION_TYPE=wayland 
+  export XMODIFIERS=@im=ibus 
+  export MUTTER_DEBUG_DUMMY_MODE_SPECS=1366x768 
+  gnome-session
+end
+
 
     # alias wine64='whisky'
     # alias wine='whisky'
