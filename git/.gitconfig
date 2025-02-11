@@ -174,6 +174,9 @@
 ;   cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [credential]
 	helper = manager
+	helper = 
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = secretservice
 [credential "https://lfs.surgicalscience.com"]
 	provider = generic
 [color "diff-highlight"]
@@ -207,3 +210,5 @@
        bold yellow => syntax "#222f14"
     zero-style = syntax
     whitespace-error-style = "#aaaaaa"
+[credential "https://dev.azure.com"]
+	useHttpPath = true
