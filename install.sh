@@ -15,6 +15,7 @@ brew install bat-extras
 brew install git-delta
 brew install gh
 brew postinstall gcc
+brew install zsh
 
 sudo /bin/bash install_admin.sh
 
@@ -45,6 +46,14 @@ fi
 
 mkdir ~/.config
 mkdir ~/.config/fish
+
+sudo rm ~/.omnisharp
+sudo rm -rf ~/.config/nvim
+sudo rm ~/.config/fish/config.fish
+sudo rm ~/.config/starship.toml
+sudo rm -rf ~/.zshrc
+sudo rm ~/.wezterm.lua
+sudo rm ~/.gitconfig
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
