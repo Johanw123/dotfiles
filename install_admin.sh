@@ -48,6 +48,7 @@ sudo apt install zsh -y
 
 sudo apt-get install snap snapd -y
 sudo snap install powershell --classic
+sudo snap install snap-store
 
 curl -sS https://starship.rs/install.sh | sudo sh -s -- -y
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh -s -- -y
