@@ -69,6 +69,12 @@ ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
 chsh -s $(which fish)
 
 
+# Git credential manager
+wget https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.6.1/gcm-linux_amd64.2.6.1.deb
+sudo dpkg -i gcm-linux_amd64.2.6.1.deb
+rm gcm-linux_amd64.2.6.1.deb
+
+git-credential-manager configure
 
 #zsh
 #zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
