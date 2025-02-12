@@ -54,7 +54,7 @@ function desk
   export XDG_DATA_DIRS=/usr/share/ubuntu:$XDG_DATA_DIRS 
   export XDG_SESSION_TYPE=wayland 
   export XMODIFIERS=@im=ibus 
-  export MUTTER_DEBUG_DUMMY_MODE_SPECS=1366x768 
+  export MUTTER_DEBUG_DUMMY_MODE_SPECS=1920x1080 
   gnome-session
 end
 
