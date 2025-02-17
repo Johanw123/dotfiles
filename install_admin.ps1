@@ -1,39 +1,39 @@
 Function CheckRunAsAdministrator()
 {
-  #Get current user context
-  $CurrentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
+    #Get current user context
+    $CurrentUser = New-Object Security.Principal.WindowsPrincipal $([Security.Principal.WindowsIdentity]::GetCurrent())
   
-  #Check user is running the script is member of Administrator Group
-  if($CurrentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator))
-  {
-       Write-host "Script is running with Administrator privileges!"
-  }
-  else
+    #Check user is running the script is member of Administrator Group
+    if($CurrentUser.IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator))
     {
-       #Create a new Elevated process to Start PowerShell
-       $ElevatedProcess = New-Object System.Diagnostics.ProcessStartInfo "PowerShell";
+        Write-host "Script is running with Administrator privileges!"
+    } else
+    {
+        #Create a new Elevated process to Start PowerShell
+        $ElevatedProcess = New-Object System.Diagnostics.ProcessStartInfo "PowerShell";
  
-       # Specify the current script path and name as a parameter
-       $ElevatedProcess.Arguments = "& '" + $script:MyInvocation.MyCommand.Path + "'"
+        # Specify the current script path and name as a parameter
+        $ElevatedProcess.Arguments = "& '" + $script:MyInvocation.MyCommand.Path + "'"
  
-       #Set the Process to elevated
-       $ElevatedProcess.Verb = "runas"
+        #Set the Process to elevated
+        $ElevatedProcess.Verb = "runas"
  
-       #Start the new elevated process
-       [System.Diagnostics.Process]::Start($ElevatedProcess)
+        #Start the new elevated process
+        [System.Diagnostics.Process]::Start($ElevatedProcess)
  
-       #Exit from the current, unelevated, process
-       Exit
+        #Exit from the current, unelevated, process
+        Exit
  
     }
 }
 
 Function TryCreateLink([string]$a, [string]$b)
 {
-    if (!(Test-Path $a)) { 
+    if (!(Test-Path $a))
+    { 
         New-Item -Path $a -ItemType SymbolicLink -Value $b
-    }
-    else{
+    } else
+    {
         Write-Host "Link to $a exists"
     }
 }
@@ -41,12 +41,13 @@ Function TryCreateLink([string]$a, [string]$b)
 Function TryAddFont($Font)
 {
     $path = Join-Path "C:\Windows\Fonts\" $Font.Name
-    if (!(Test-Path $path)) { 
+    if (!(Test-Path $path))
+    { 
         Write-Host 'Installing font -' $Font.BaseName
         Copy-Item $Font "C:\Windows\Fonts"
         New-ItemProperty -Name $Font.BaseName -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Fonts" -PropertyType string -Value $Font.name 
-    }
-    else{
+    } else
+    {
         Write-Host "The font '$Font' is already installed"
     }
 }
@@ -89,11 +90,13 @@ winget install -e --id Kitware.CMake
 winget install dandavison.delta
 
 winget install -e --id LLVM.LLVM
+winget install -e --id ImageMagick.ImageMagick
 
-if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin") {
+if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin")
+{
     Write-Host "LLVM is in path" -ForegroundColor Green
-}
-else {
+} else
+{
     $Path = "C:\Program Files\LLVM\bin"
     $Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
     [Environment]::SetEnvironmentVariable( "Path", $Path, "Machine" )
@@ -115,23 +118,28 @@ choco install sysinternals -y
 #https://github.com/PowershellFrameworkCollective/PSUtil
 
 
-if (-not (Get-Module PSUtil -ListAvailable)){
+if (-not (Get-Module PSUtil -ListAvailable))
+{
     Install-Module PSUtil -Force
 }
 
-if (-not (Get-Module PSReadLine -ListAvailable)){
+if (-not (Get-Module PSReadLine -ListAvailable))
+{
     Install-Module PSReadLine -Force
 }
 
-if (-not (Get-Module PSFzf -ListAvailable)){
+if (-not (Get-Module PSFzf -ListAvailable))
+{
     Install-Module PSFzf -Force
 }
 
-if (-not (Get-Module CompletionPredictor -ListAvailable)){
+if (-not (Get-Module CompletionPredictor -ListAvailable))
+{
     Install-Module -Name CompletionPredictor -Repository PSGallery -Force
 }
 
-if (-not (Get-Module PowerShellRun -ListAvailable)){
+if (-not (Get-Module PowerShellRun -ListAvailable))
+{
     Install-Module -Name PowerShellRun -Scope CurrentUser
 }
 
@@ -142,7 +150,8 @@ winget install --id=RealVNC.VNCServer -e
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
-if (!(Test-Path $dotFilesRoot -PathType Container)) {
+if (!(Test-Path $dotFilesRoot -PathType Container))
+{
     git clone https://github.com/Johanw123/dotfiles.git $dotFilesRoot
 }
 
@@ -150,12 +159,14 @@ if (!(Test-Path $dotFilesRoot -PathType Container)) {
 #     git clone https://github.com/NvChad/NvChad --branch v2.0 $HOME\AppData\Local\nvim --depth 1
 # } 
 
-if (Test-Path -Path "$HOME\AppData\Local\nvim\" -PathType Container) {
+if (Test-Path -Path "$HOME\AppData\Local\nvim\" -PathType Container)
+{
     # We link our own custom lua here from dotfiles later
     rm $HOME\AppData\Local\nvim -r -force
 }
 
-if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" -PathType Container) {
+if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" -PathType Container)
+{
     # We link our own powershell local state
     rm $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -r -force
 }
@@ -181,7 +192,8 @@ $FontFolder = "fonts"
 $FontItem = Get-Item -Path $FontFolder
 $FontList = Get-ChildItem -Path "$FontItem\*" -Include ('*.fon','*.otf','*.ttc','*.ttf')
 
-foreach ($Font in $FontList) {
+foreach ($Font in $FontList)
+{
     TryAddFont $Font
 }
 
