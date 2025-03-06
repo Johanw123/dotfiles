@@ -18,7 +18,7 @@ plug "zap-zsh/vim"
 # plug "zap-zsh/atmachine-prompt"
 plug "zap-zsh/zap-prompt"
 plug "zap-zsh/fzf"
-plug "zap-zsh/exa"
+#plug "zap-zsh/exa"
 plug "zsh-users/zsh-syntax-highlighting"
 #
 
@@ -38,6 +38,17 @@ if command -v bat &> /dev/null; then
   alias cat="bat -pp --theme \"Visual Studio Dark+\"" 
   alias catt="bat --theme \"Visual Studio Dark+\"" 
 fi
+
+
+alias ls='eza $eza_params'
+alias l='eza --git-ignore $eza_params'
+alias ll='eza --all --header --long $eza_params'
+alias llm='eza --all --header --long --sort=modified $eza_params'
+alias la='eza -lbhHigUmuSa'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree $eza_params'
+alias tree='eza --tree $eza_params'
+
 
 # Load and initialise completion system
 autoload -Uz compinit

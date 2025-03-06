@@ -6,7 +6,6 @@ alias nvimrc='nvim ~/.config/nvim/'
 alias yay="paru"
 alias lvim="env TERM=wezterm lvim"
 
-alias ll='ls -alF'
 
 # Colorize grep output (good for log files)
 alias grep='grep --color=auto'
@@ -65,3 +64,6 @@ CYGWIN* | MINGW32* | MSYS* | MINGW*)
 	# echo 'Other OS'
 	;;
 esac
+
+
+
