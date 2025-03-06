@@ -56,7 +56,8 @@ end
 
 if wezterm.target_triple == "aarch64-apple-darwin" then
 	font_name = "FiraCode Nerd Font"
-	shell = { "/opt/homebrew/bin/fish", "-l" }
+	--shell = { "/opt/homebrew/bin/fish", "-l" }
+	shell = { "/bin/zsh" }
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)

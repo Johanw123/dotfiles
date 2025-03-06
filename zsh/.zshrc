@@ -1,7 +1,6 @@
 #!/bin/sh
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
-
 # history
 HISTFILE=~/.zsh_history
 
@@ -22,16 +21,16 @@ plug "zap-zsh/fzf"
 plug "zap-zsh/exa"
 plug "zsh-users/zsh-syntax-highlighting"
 #
-eval "$(starship init zsh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+
+# eval "`pip completion --zsh`"
 # plug "spaceship-prompt/spaceship-prompt"
 
 # keybinds
 #bindkey '^ ' autosuggest-accept
-
-
-
 
 export PATH="$HOME/.local/bin":$PATH
 
