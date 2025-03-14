@@ -66,7 +66,8 @@ end
       case Darwin
         export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
   #eval "$(/opt/homebrew/bin/brew shellenv)"
-        eval "(/opt/homebrew/bin/brew shellenv)"
+  #eval "(/opt/homebrew/bin/brew shellenv)"
+        /opt/homebrew/bin/brew shellenv | source
       case Linux
         eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
       case '*'
