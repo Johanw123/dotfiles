@@ -62,16 +62,29 @@ end
     # alias wine64='whisky'
     # alias wine='whisky'
 
-    switch (uname)
-      case Darwin
-        export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
-  #eval "$(/opt/homebrew/bin/brew shellenv)"
-  #eval "(/opt/homebrew/bin/brew shellenv)"
-        /opt/homebrew/bin/brew shellenv | source
-      case Linux
-        eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-      case '*'
-    end
+  #   switch (uname)
+  #     case Darwin
+  #       export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
+  # #eval "$(/opt/homebrew/bin/brew shellenv)"
+  # #eval "(/opt/homebrew/bin/brew shellenv)"
+  #       /opt/homebrew/bin/brew shellenv | source
+  #     case Linux
+  #       eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  #     case '*'
+  #   end
+
+  if test -d /home/linuxbrew/.linuxbrew # Linux
+    set -gx HOMEBREW_PREFIX "/home/linuxbrew/.linuxbrew"
+    set -gx HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
+    set -gx HOMEBREW_REPOSITORY "$HOMEBREW_PREFIX/Homebrew"
+  else if test -d /opt/homebrew # MacOS
+    set -gx HOMEBREW_PREFIX "/opt/homebrew"
+    set -gx HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
+    set -gx HOMEBREW_REPOSITORY "$HOMEBREW_PREFIX/homebrew"
+  end
+  fish_add_path -gP "$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin";
+  ! set -q MANPATH; and set MANPATH ''; set -gx MANPATH "$HOMEBREW_PREFIX/share/man" $MANPATH;
+  ! set -q INFOPATH; and set INFOPATH ''; set -gx INFOPATH "$HOMEBREW_PREFIX/share/info" $INFOPATH;
     
     set TERM "xterm-256color"
     set fish_greeting
@@ -115,3 +128,4 @@ starship init fish | source
 
 set PATH $HOME/.local/bin/ $PATH
 set PATH $HOME/dotfiles/bash/bin/ $PATH
+set PATH $HOME/squashfs-root/usr/bin/ $PATH
