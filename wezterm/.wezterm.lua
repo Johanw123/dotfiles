@@ -285,6 +285,31 @@ local config = {
 			mods = "LEADER",
 			key = "v",
 		},
+		{
+			key = "h",
+			mods = "CTRL|SHIFT",
+			action = wezterm.action.AdjustPaneSize({ "Left", 5 }),
+		},
+		{
+			key = "l",
+			mods = "CTRL|SHIFT",
+			action = wezterm.action.AdjustPaneSize({ "Right", 5 }),
+		},
+		{
+			key = "j",
+			mods = "CTRL|SHIFT",
+			action = wezterm.action.AdjustPaneSize({ "Down", 5 }),
+		},
+		{
+			key = "k",
+			mods = "CTRL|SHIFT",
+			action = wezterm.action.AdjustPaneSize({ "Up", 5 }),
+		},
+		{
+			key = "m",
+			mods = "LEADER",
+			action = wezterm.action.TogglePaneZoomState,
+		},
 
 		{
 			action = wezterm.action.CloseCurrentTab({ confirm = true }),
