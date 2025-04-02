@@ -174,7 +174,6 @@
 #   cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [credential]
 	helper = manager
-	credentialStore = secretservice
 [credential "https://lfs.surgicalscience.com"]
 	provider = generic
 [color "diff-highlight"]

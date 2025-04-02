@@ -427,8 +427,8 @@ function FuzzyGitBranch()
     {
         $cur_branch = git symbolic-ref HEAD
         $cur_branch = $cur_branch.split('/')[-1]
-        $default_branch = git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
-        $branch = & { git branch --sort=-committerdate; git branch --sort=-committerdate --remote } | rg -v HEAD |  sed 's/^[ \*]*//' | fzf -m --ansi --preview="git diff --stat=80,50 --merge-base ${default_branch} --color=always {}" --preview="git log {} -1 && echo: && echo: && git diff --stat=80,50 --color=always {} --merge-base ${cur_branch}" 
+        #$default_branch = git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+        $branch = & { git branch --sort=-committerdate; git branch --sort=-committerdate --remote } | rg -v HEAD |  sed 's/^[ \*]*//' | fzf -m --ansi --preview="git log {} -3 && echo: && echo: && git diff --stat=80,50 --color=always {} --merge-base ${cur_branch}" 
         if ($branch)
         { 
             $branch = $branch.Replace("origin/", "")
