@@ -130,9 +130,9 @@
 	useHttpPath = true
 
 
-[includeIf "gitdir:/Users"]
+[includeIf "gitdir:/Users/"]
     path = ~/.gitconfig-macos
-[includeIf "gitdir:C:"]
+[includeIf "gitdir:C:/"]
 	    path = .gitconfig-windows
-[includeIf "gitdir:/home"]
+[includeIf "gitdir:/home/"]
     path = ~/.gitconfig-linux
