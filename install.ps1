@@ -55,6 +55,24 @@ if (!(Test-Path $localConfiguration -PathType Container))
     Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
 }
 
+# link gitconfigs configuration
+$localConfiguration = Join-Path $HOME ".gitconfig"
+$dotfilesConfiguration = Join-Path $dotFilesRoot "git" | Join-Path -ChildPath ".gitconfig"
+
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
+    Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
+}
+
+# link gitconfig-windows configuration
+$localConfiguration = Join-Path $HOME ".gitconfig-windows"
+$dotfilesConfiguration = Join-Path $dotFilesRoot "git" | Join-Path -ChildPath ".gitconfig-windows"
+
+if (!(Test-Path $localConfiguration -PathType Container))
+{ 
+    Start-Process -FilePath "pwsh" -ArgumentList "-c New-Item -Path $localConfiguration -ItemType SymbolicLink -Value $dotfilesConfiguration".Split(" ") -Verb runas
+}
+
 # link Powershell configuration
 $localConfiguration = Join-Path $HOME "Documents" | Join-Path -ChildPath "PowerShell" | Join-Path -ChildPath "Microsoft.PowerShell_profile.ps1"
 $dotfilesConfiguration = Join-Path $dotFilesRoot "Powershell" | Join-Path -ChildPath "Microsoft.PowerShell_profile.ps1"

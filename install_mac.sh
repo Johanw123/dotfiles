@@ -87,6 +87,8 @@ ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
 ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
+ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
+ln -s ~/dotfiles/git/.gitconfig-macos ~/.gitconfig-macos
 
 if ! command -v dscl . -read ~/ UserShell | grep "fish" &> /dev/null
 then

@@ -1,13 +1,11 @@
-[core]
-	editor = "C:\\Users\\johanw\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code" --wait
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 [user]
-	name = johanw1232
-	email = 73111635+johanw1232@users.noreply.github.com
+	name = Johan Wångsell
+	email = johan.wangsell@surgicalscience.com
 [safe]
 	directory = G:/dev/lms-envelope
 
@@ -40,41 +38,10 @@
  	true-color = always
  	syntax-theme = base16
 
-
-
     line-numbers-left-format = "{nm:>1}┊"
     line-numbers-right-format = " {np:>1}┊"
     line-numbers-left-style = red
     line-numbers-right-style = green
-	
-	;features = colibri
-	; file-modified-label = 🥑
-	; line-numbers-left-style = black
-	; line-numbers-right-style = black
-	; line-numbers-zero-style = black
-	; file-style = white
-	; file-decoration-style = white box
-	; hunk-header-style = omit
-	; minus-style = syntax "#272734"
-	; line-numbers-minus-style = red
-	; minus-emph-style = black red
-	; plus-style = syntax "#272734"
-	; line-numbers-plus-style = green
-	; plus-emph-style = black green
-; [merge]
-	; conflictStyle = zdiff3
-; [diff]
-; 	colorMoved = default
-
-; [diff]
-; 	tool = plasticdiff
-;
-; [difftool "plasticdiff"]
-;   cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -s=\"$LOCAL\" -d=\"$PWD/$REMOTE\" i=eol
-;
-; [difftool]
-;   prompt = false
-
 
 [delta "colibri"]
     # author: https://github.com/pablospe
@@ -109,54 +76,6 @@
 
 
 
-
-
- [diff]
- 	tool = plasticdiff
-	colorMoved = default
- [difftool "plasticdiff"]
-	#cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -s=\"$LOCAL\" -d=\"$PWD/$REMOTE\" i=eol
-	cmd = G:/dev/got_experimental/AvaloniaDiff/bin/Debug/net8.0/AvaloniaDiff.exe $PWD $LOCAL $REMOTE
- [difftool]
- 	prompt = false
- [merge]
- 	tool = plasticmerge
- [mergetool "plasticmerge"]
- 	cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -d=\"$LOCAL\" -s=\"$REMOTE\" -b=\"$BASE\" -r=\"$MERGED\"
- 	trustExitCode = true
-
-# [diff]
-#     tool = bc
-# [difftool]
-#     prompt = false
-# [difftool "bc"]
-#     cmd = meld "$LOCAL" "$REMOTE"
-
-# [diff]
-#     tool = meld
-# [difftool]
-#     prompt = false
-# [difftool "meld"]
-#     cmd = meld "$LOCAL" "$REMOTE"
-
-# # Add the following to your .gitconfig file.
-# [merge]
-#     tool = meld
-# [mergetool "meld"]
-# # Choose one of these two lines (not both!) explained below.
-#     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-#     #cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
-
-
-# [mergetool]
-# 	prompt = false
-# 	keepBackup = false
-# [diff]
-# 	tool = bc
-# [difftool "bc"]
-# 	path = c:/Program Files/Beyond Compare 5/bcomp.exe
-
-
 # [diff]
 #   tool = diffview
 # [difftool]
@@ -172,8 +91,8 @@
 #   keepBackup = false
 # [mergetool "diffview"]
 #   cmd = nvim -n -c "DiffviewOpen" "$MERGE"
-[credential]
-	helper = manager
+#
+
 [credential "https://lfs.surgicalscience.com"]
 	provider = generic
 [color "diff-highlight"]
@@ -209,3 +128,11 @@
     whitespace-error-style = "#aaaaaa"
 [credential "https://dev.azure.com"]
 	useHttpPath = true
+
+
+[includeIf "gitdir:/Users"]
+    path = ~/.gitconfig-macos
+[includeIf "gitdir:C:"]
+    path = ~/.gitconfig-windows
+[includeIf "gitdir:/home"]
+    path = ~/.gitconfig-linux

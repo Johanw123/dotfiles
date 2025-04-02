@@ -1,0 +1,17 @@
+ [core]
+	editor = "C:\\Users\\johanw\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code" --wait
+[diff]
+ 	tool = plasticdiff
+	colorMoved = default
+ [difftool "plasticdiff"]
+	cmd = C:/'Program Files'/PlasticSCM5/client/mergetool.exe -s=\"$LOCAL\" -d=\"$PWD/$REMOTE\" i=eol
+#cmd = G:/dev/got_experimental/AvaloniaDiff/bin/Debug/net8.0/AvaloniaDiff.exe $PWD $LOCAL $REMOTE
+ [difftool]
+ 	prompt = false
+ [merge]
+ 	tool = plasticmerge
+ [mergetool "plasticmerge"]
+ 	cmd = 'C:/Program Files/PlasticSCM5/client/mergetool.exe' -s=\"$REMOTE\" -b=\"$BASE\" -d=\"$LOCAL\" -r=\"$MERGED\" --automatic
+ 	trustExitCode = true
+[credential]
+	helper = manager

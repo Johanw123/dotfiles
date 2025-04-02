@@ -62,6 +62,7 @@ ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
 ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
+ln -s ~/dotfiles/git/.gitconfig-linux ~/.gitconfig-linux
 
 # ------------------------------
 
