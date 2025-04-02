@@ -842,14 +842,16 @@ function susclone
 
     $previewCommand = ""
     if (Get-Command "glow" -ErrorAction SilentlyContinue)
-    { 
+    {
         $previewCommand = "gh repo view SurgicalScience/{$_i} | glow -s dark {}" 
+    } elseif (Get-Command "grip" -ErrorAction SilentlyContinue) {
+        $previewCommand = "gh repo view SurgicalScience/Solidarity | grip --export -"
     } else
     {
         $previewCommand = "gh repo view SurgicalScience/{$_i}" 
     }
 
-    gh repo list SurgicalScience -L 99999999 --json name --jq '.[].name' | fzf -m --ansi --preview $previewCommand | % { gh repo clone SurgicalScience/$_ } 
+    gh repo list SurgicalScience -L 99999999 --json name --jq '.[].name' | fzf -m --ansi --preview $previewCommand | % { gh repo clone SurgicalScience/$_ -- --recurse-submodules} 
 }
 
 

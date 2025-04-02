@@ -157,25 +157,23 @@
 # 	path = c:/Program Files/Beyond Compare 5/bcomp.exe
 
 
-; [diff]
-;   tool = diffview
-; [difftool]
-;   prompt = false
-;   keepBackup = false
-; [difftool "diffview"]
-;   cmd = nvim -n -c "DiffviewOpen" "$LOCAL" "$REMOTE"
-;
-; [merge]
-;   tool = diffview
-; [mergetool]
-;   prompt = false
-;   keepBackup = false
-; [mergetool "diffview"]
-;   cmd = nvim -n -c "DiffviewOpen" "$MERGE"
+# [diff]
+#   tool = diffview
+# [difftool]
+#   prompt = false
+#   keepBackup = false
+# [difftool "diffview"]
+#   cmd = nvim -n -c "DiffviewOpen" "$LOCAL" "$REMOTE"
+#
+# [merge]
+#   tool = diffview
+# [mergetool]
+#   prompt = false
+#   keepBackup = false
+# [mergetool "diffview"]
+#   cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [credential]
 	helper = manager
-	helper = 
-	helper = /usr/local/bin/git-credential-manager
 	credentialStore = secretservice
 [credential "https://lfs.surgicalscience.com"]
 	provider = generic
