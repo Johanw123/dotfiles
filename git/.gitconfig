@@ -133,6 +133,6 @@
 [includeIf "gitdir:/Users"]
     path = ~/.gitconfig-macos
 [includeIf "gitdir:C:"]
-    path = ~/.gitconfig-windows
+	    path = .gitconfig-windows
 [includeIf "gitdir:/home"]
     path = ~/.gitconfig-linux
