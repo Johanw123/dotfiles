@@ -432,7 +432,9 @@ function FuzzyGitBranch()
         if ($branch)
         { 
             $branch = $branch.Replace("origin/", "")
-            git switch $branch
+
+            & .\_scripts\remove_all_symlinks.bat
+            git switch $branch            
         }
     } else
     {
