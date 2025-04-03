@@ -81,6 +81,9 @@ end
     set -gx HOMEBREW_PREFIX "/opt/homebrew"
     set -gx HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
     set -gx HOMEBREW_REPOSITORY "$HOMEBREW_PREFIX/homebrew"
+
+    export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
+    export PATH="/usr/local/share/dotnet/x64:$PATH"
   end
   fish_add_path -gP "$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin";
   ! set -q MANPATH; and set MANPATH ''; set -gx MANPATH "$HOMEBREW_PREFIX/share/man" $MANPATH;
