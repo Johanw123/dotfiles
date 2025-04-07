@@ -136,3 +136,5 @@
 	    path = .gitconfig-windows
 [includeIf "gitdir:/home/"]
     path = ~/.gitconfig-linux
+[credential "http://192.168.0.180:3000"]
+	provider = generic
