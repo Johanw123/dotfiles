@@ -136,5 +136,13 @@
 	    path = .gitconfig-windows
 [includeIf "gitdir:/home/"]
     path = ~/.gitconfig-linux
+
 [credential "http://192.168.0.180:3000"]
+provider = generic
+[merge]
+	ff = false
+	commit = no
+[pull]
+	ff = only
+[credential "https://x4x2w7nqu3.execute-api.eu-central-1.amazonaws.com"]
 	provider = generic
