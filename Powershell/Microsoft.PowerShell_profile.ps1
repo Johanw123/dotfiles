@@ -887,6 +887,13 @@ function edu_create_pr
 
 function edu_create_pr_ai
 {
+    # Dependencies:
+    # git
+    # jq
+    # jira cli
+    # ollama
+    # github cli
+
     $git_branch = git rev-parse --abbrev-ref HEAD
     Write-Output "Current branch: $git_branch"
 
@@ -912,15 +919,8 @@ function edu_create_pr_ai
     $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
     $AiText = [string]::join("`n",($AiText.Split("`n")))
 
-    Write-Output $AiText
-    $AiText | Out-File E:\Dev\asd.txt
-
     Write-Output "Creating PR..."
     gh pr create --title "$task" --body "$summary `n`n`n <details><summary>AI Summary</summary>`n`n$AiText</details>"
-
-    #gh pr create --title "$task" --body "$summary" --dry-run --base "edu_develop"
-    #gh pr edit 17 --title "$task" --body "$summary `n`n`n <details><summary>AI Summary</summary>`n`n$AiText</details>"
-    #gh pr create --fill-verbose --dry-run --base "edu_develop"
 }
 
 # Jira

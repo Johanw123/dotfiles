@@ -92,6 +92,8 @@ winget install dandavison.delta
 winget install -e --id LLVM.LLVM
 winget install -e --id ImageMagick.ImageMagick
 
+winget install --id=jqlang.jq  -e
+
 if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin")
 {
     Write-Host "LLVM is in path" -ForegroundColor Green
