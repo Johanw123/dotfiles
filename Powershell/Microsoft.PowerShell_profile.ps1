@@ -903,7 +903,44 @@ function edu_create_pr
 
 function edu_create_pr_ai
 {
+<<<<<<< HEAD
     edu_create_pr($true)
+=======
+    # Dependencies:
+    # git
+    # jq
+    # jira cli
+    # ollama
+    # github cli
+
+    $git_branch = git rev-parse --abbrev-ref HEAD
+    Write-Output "Current branch: $git_branch"
+
+    $task = [Regex]::Match($git_branch, "EG-\d\d\d\d$").Value
+
+    Write-Output "Parsed Ticket/Issue Id: $task"
+
+    $summary = (jira issue view $task --raw  | jq ".fields.summary").Replace("`"","")
+    $summary += " - (https://surgscience.atlassian.net/browse/$task)"
+    
+    Write-Output "Summary: $summary"
+    
+    $git_log = git log edu_develop..$git_branch --reverse --pretty=tformat:"   ~ %s<br>"
+    $summary += "`n`nCommits: `n$git_log"
+
+    Write-Output "Git Log: $git_log"
+    
+    $diff = git -c pager.diff='less -R' diff $(git merge-base edu_develop HEAD) -z
+    $Promt = "You are an expert developer, so you know how to read all kinds of code syntax. Read the git patch diff calmly from top to bottom, paying attention to each addition, deletion, and unchanged line carefully. Focus on changes, not only the last or first lines, and figure out the main idea of the input. If complex, break it down into smaller parts to organize your thoughts. If JSON or declaration structures are present, pay attention to the special case mentioned above to avoid misinterpretation, but if it's a regular code, focus on the context and the changes made. Write a commit message based on the git diff provided. Read the diff below and write a commit message that accurately describes the changes made."
+
+    Write-Output "Generating AI Summary..."
+
+    $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
+    $AiText = [string]::join("`n",($AiText.Split("`n")))
+
+    Write-Output "Creating PR..."
+    gh pr create --title "$task" --body "$summary `n`n`n <details><summary>AI Summary</summary>`n`n$AiText</details>"
+>>>>>>> refs/remotes/origin/main
 }
 
 # Jira
