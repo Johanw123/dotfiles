@@ -923,6 +923,22 @@ function edu_create_pr_ai
     gh pr create --title "$task" --body "$summary `n`n`n <details><summary>AI Summary</summary>`n`n$AiText</details>"
 }
 
+function summarize_branch
+{
+    $git_branch = git rev-parse --abbrev-ref HEAD
+    Write-Output "Current branch: $git_branch"
+
+
+    $diff = git -c pager.diff='less -R' diff $(git merge-base edu_develop HEAD) -z
+    #$Promt = "You are an expert developer, so you know how to read all kinds of code syntax. Read the git patch diff calmly from top to bottom, paying attention to each addition, deletion, and unchanged line carefully. Focus on changes, not only the last or first lines, and figure out the main idea of the input. If complex, break it down into smaller parts to organize your thoughts. If JSON or declaration structures are present, pay attention to the special case mentioned above to avoid misinterpretation, but if it's a regular code, focus on the context and the changes made. Read the diff below and do a code review on it. Check if all the variable names follow the same syntax as the rest of the code and check for errors and syntax faults. Please do a good job, or you are fired!"
+
+    $Promt = "\n Review this code, provide suggestions for improvement, coding best practices, improve readability, and maintainability. Remove any code smells and anti-patterns. Provide code examples for your suggestion. Respond in markdown format. If the file does not have any code or does not need any changes, say 'No changes needed'."
+    $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
+    $AiText = [string]::join("`n",($AiText.Split("`n")))
+
+    $AiText
+}
+
 # Jira
 function jira_open
 {
