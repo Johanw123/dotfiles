@@ -92,6 +92,8 @@ winget install dandavison.delta
 winget install -e --id LLVM.LLVM
 winget install -e --id ImageMagick.ImageMagick
 
+
+
 winget install --id=jqlang.jq  -e
 
 if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin")
@@ -198,6 +200,13 @@ foreach ($Font in $FontList)
 {
     TryAddFont $Font
 }
+
+
+# Test stuff
+winget install LGUG2Z.komorebi
+winget install LGUG2Z.whkd
+winget install FilesCommunity.Files
+
 
 # Work 
 winget install --id=Microsoft.VisualStudio.2022.Professional  -e
