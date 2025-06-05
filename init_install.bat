@@ -1,6 +1,7 @@
 winget install --id Microsoft.Powershell --source winget
 winget install chocolatey
 winget install -e --id Git.Git
+winget install -e --id GitHub.cli
 winget install -e --id ajeetdsouza.zoxide
 winget install -e --id Starship.Starship
 
