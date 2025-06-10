@@ -70,8 +70,10 @@ winget install -e --id 7zip.7zip
 
 winget install --id=Microsoft.DotNet.Runtime.7  -e
 winget install --id=Microsoft.DotNet.Runtime.8  -e
+winget install --id=Microsoft.DotNet.Runtime.9  -e
 winget install Microsoft.DotNet.SDK.7
 winget install Microsoft.DotNet.SDK.8
+winget install Microsoft.DotNet.SDK.9
 winget install -e --id SlackTechnologies.Slack
 winget install -e --id Microsoft.VisualStudioCode
 
@@ -92,7 +94,8 @@ winget install dandavison.delta
 winget install -e --id LLVM.LLVM
 winget install -e --id ImageMagick.ImageMagick
 
-
+winget install Mozilla.Firefox
+winget install --id=sourcegit-scm.SourceGit  -e
 
 winget install --id=jqlang.jq  -e
 
