@@ -13,7 +13,7 @@ brew install fzf
 brew install bat
 brew install bat-extras
 brew install git-delta
-brew install gh
+# brew install gh
 brew postinstall gcc
 brew install zsh
 
