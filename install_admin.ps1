@@ -61,7 +61,7 @@ Set-Location $dotFilesRoot
 
 winget install --id GitHub.cli
 
-winget install --id=Neovim.Neovim.Nightly  -e
+winget install Neovim.Neovim
 winget install wez.wezterm
 winget install -e --id Microsoft.WindowsTerminal
 winget install eza-community.eza
@@ -70,8 +70,10 @@ winget install -e --id 7zip.7zip
 
 winget install --id=Microsoft.DotNet.Runtime.7  -e
 winget install --id=Microsoft.DotNet.Runtime.8  -e
+winget install --id=Microsoft.DotNet.Runtime.9  -e
 winget install Microsoft.DotNet.SDK.7
 winget install Microsoft.DotNet.SDK.8
+winget install Microsoft.DotNet.SDK.9
 winget install -e --id SlackTechnologies.Slack
 winget install -e --id Microsoft.VisualStudioCode
 
@@ -92,6 +94,11 @@ winget install dandavison.delta
 winget install -e --id LLVM.LLVM
 winget install -e --id ImageMagick.ImageMagick
 
+winget install Mozilla.Firefox
+winget install --id=sourcegit-scm.SourceGit  -e
+
+winget install --id=jqlang.jq  -e
+
 if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin")
 {
     Write-Host "LLVM is in path" -ForegroundColor Green
@@ -103,20 +110,13 @@ if($Env:Path -split ";" -contains "C:\Program Files\LLVM\bin")
 }
 
 # Command line programs
-#choco install ripgrep -y
-#choco install fzf -y
-#choco install zoxide -y
 choco install highlight -y
-choco install vifm -y
-
-#choco install starship -y
-choco install sysinternals -y
-
-#choco install neovim --pre -y --force
 
 #Powershell Plugins
 #https://github.com/PowershellFrameworkCollective/PSUtil
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 
 if (-not (Get-Module PSUtil -ListAvailable))
 {
@@ -145,9 +145,6 @@ if (-not (Get-Module PowerShellRun -ListAvailable))
 
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
-# real vnc
-winget install --id=RealVNC.VNCServer -e
-
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
 if (!(Test-Path $dotFilesRoot -PathType Container))
@@ -171,10 +168,12 @@ if (Test-Path -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb
     rm $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState -r -force
 }
 
+$documentsFolder = [Environment]::GetFolderPath("MyDocuments")
+
 TryCreateLink "$env:LOCALAPPDATA\nvim" "$dotFilesRoot\kickstart.nvim"
 #TryCreateLink "$env:LOCALAPPDATA\nvim\lua\custom" "$dotFilesRoot\.config\nvim\lua\custom"
-TryCreateLink "$HOME\.omnisharp" "$dotFilesRoot\.omnisharp"
-TryCreateLink "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
+TryCreateLink "$HOME\.omnisharp" "$dotFilesRoot\.omnisharp" 
+TryCreateLink "$documentsFolder\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
 #TryCreateLink "$HOME\PowerShell\Microsoft.PowerShell_profile.ps1" "$dotFilesRoot\Powershell\Microsoft.PowerShell_profile.ps1"
 TryCreateLink "$env:APPDATA\lsd" "$dotFilesRoot\lsd"
 TryCreateLink "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState" "$dotFilesRoot\windows_terminal\LocalState"
@@ -197,33 +196,20 @@ foreach ($Font in $FontList)
     TryAddFont $Font
 }
 
-# Work 
-winget install --id=Microsoft.VisualStudio.2022.Professional  -e
-winget install Microsoft.VisualStudio.2022.BuildTools
-winget install Microsoft.VCRedist.2015+.x64
-winget install Microsoft.VCRedist.2015+.x86
-winget install --id=Nvidia.CUDA -v "12.2.2" -e
-winget install --id=Ccache.Ccache  -e
+# Test stuff
+winget install LGUG2Z.komorebi
+winget install LGUG2Z.whkd
+winget install FilesCommunity.Files
 
 # requires reload probably
 #ccache -M 10G
 #ccache -o compression_level=5
 
-
 # Windows 11 Settings
 New-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "TaskbarAl" -Value 0 -Force
 New-Item -Path "HKCU:\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" -Value "" -Force
 
-& ".\install_nvidia_drivers.ps1"
-
-
-# WSL
-# Enable Needed Virtualization
-#dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-#dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-#Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
-
-#wsl.exe --install --d Ubuntu-22.04
+#& ".\install_nvidia_drivers.ps1"
 
 # git settings
 git config --global diff.tool plasticdiff
@@ -235,3 +221,5 @@ git config --global mergetool.plasticmerge.cmd "C:/'Program Files'/PlasticSCM5/c
 git config --global mergetool.plasticmerge.trustExitCode true
 git config --global mergetool.prompt false
 git config --global mergetool.keepBackup false
+
+pause
