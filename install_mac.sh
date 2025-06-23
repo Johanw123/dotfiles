@@ -81,6 +81,8 @@ sudo rm ~/.zshrc
 sudo rm ~/.wezterm.lua
 
 ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
+ln -sf ~/dotfiles/sketchybar ~/.config/sketchybar
+
 # ln -s ~/dotfiles/.config/nvim/lua/custom ~/.config/nvim/lua/custom
 ln -s ~/dotfiles/kickstart.nvim/ ~/.config/nvim
 ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
@@ -89,6 +91,7 @@ ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
 ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/git/.gitconfig-macos ~/.gitconfig-macos
+ln -s ~/dotfiles/aerospace/aerospace.toml ~/.aerospace.toml
 
 if ! command -v dscl . -read ~/ UserShell | grep "fish" &> /dev/null
 then
