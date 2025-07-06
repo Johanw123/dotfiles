@@ -25,5 +25,74 @@
   "menus.clock.weather.location": "Gothenburg",
   "menus.clock.weather.unit": "metric",
   "menus.clock.weather.enabled": false,
-  "theme.osd.enable": true
+  "theme.osd.enable": true,
+  "theme.bar.buttons.modules.cpu.enableBorder": false,
+  "bar.layouts": {
+    "0": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "kbinput",
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "clock",
+        "notifications"
+      ]
+    },
+    "1": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    },
+    "2": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    }
+  },
+  "theme.bar.menus.monochrome": false,
+  "wallpaper.pywal": false,
+  "theme.bar.menus.background": "#11111b",
+  "theme.bar.floating": false,
+  "theme.bar.buttons.enableBorders": false,
+  "theme.bar.enableShadow": false,
+  "theme.bar.transparent": false,
+  "theme.bar.opacity": 75,
+  "theme.bar.buttons.opacity": 100,
+  "theme.bar.buttons.monochrome": false,
+  "theme.bar.buttons.icon_background": "#242438",
+  "theme.bar.buttons.background": "#242438",
+  "theme.bar.buttons.background_opacity": 0,
+  "theme.bar.border.color": "#444b4f",
+  "theme.bar.border.location": "bottom",
+  "theme.bar.border.width": "0.1em"
 }
