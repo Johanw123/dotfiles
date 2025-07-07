@@ -15,7 +15,7 @@ cd snapd
 makepkg -si
 cd ..
 
-git https://aur.archlinux.org/sourcegit.git
+git clone https://aur.archlinux.org/sourcegit.git
 cd sourcegit
 makepkg -si
 cd ..
@@ -28,4 +28,4 @@ yay -S slack-desktop --noconfirm
 yay -S git-credential-manager --noconfirm
 yay -S dotnet-sdk --noconfirm
 
-sudo /bin/bash install_admin.sh
+sudo /bin/bash install_manjaro_admin.sh
