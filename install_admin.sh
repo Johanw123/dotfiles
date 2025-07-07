@@ -128,30 +128,38 @@ fi
 # test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
 
-mkdir ~/.config
-mkdir ~/.config/fish
+# mkdir ~/.config
+# mkdir ~/.config/fish
+#
+# sudo rm ~/.omnisharp
+# sudo rm -r ~/.omnisharp
+# sudo rm -rf ~/.config/nvim
+# sudo rm ~/.config/fish/config.fish
+# sudo rm ~/.config/starship.toml
+# sudo rm -rf ~/.zshrc
+# sudo rm ~/.wezterm.lua
+# sudo rm ~/.gitconfig
+#
+# sudo rm -r ~/.config/nvim
+# sudo rm -r ~/.cache/nvim
+# sudo rm -r ~/.local/share/nvim
+#
+# ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
+# ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
+# ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
+# ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
+# ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
+# ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
+# ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
+# ln -s ~/dotfiles/git/.gitconfig-linux ~/.gitconfig-linux
+#
+# ln -s ~/dotfiles/kitty ~/.config
+# ln -s ~/dotfiles/hypr ~/.config
+# ln -s ~/dotfiles/hyprpanel/ ~/.config
+#
+#
 
-sudo rm ~/.omnisharp
-sudo rm -r ~/.omnisharp
-sudo rm -rf ~/.config/nvim
-sudo rm ~/.config/fish/config.fish
-sudo rm ~/.config/starship.toml
-sudo rm -rf ~/.zshrc
-sudo rm ~/.wezterm.lua
-sudo rm ~/.gitconfig
-
-sudo rm -r ~/.config/nvim
-sudo rm -r ~/.cache/nvim
-sudo rm -r ~/.local/share/nvim
-
-ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
-ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
-ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
-ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
-ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
-ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
-ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
-ln -s ~/dotfiles/git/.gitconfig-linux ~/.gitconfig-linux
+sudo /bin/bash folders.sh
 
 # ------------------------------
 
