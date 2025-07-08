@@ -176,7 +176,8 @@ function drives
 { Get-PsDrive -PSProvider 'FileSystem' 
 }
 function ssh_truls
-{ ssh johanw@172.31.232.86 
+{ 
+    ssh johanw@172.31.232.86 
 }
 function ssh_linbox
 { ssh root@172.31.231.5 
@@ -847,7 +848,8 @@ function susclone
     if (Get-Command "glow" -ErrorAction SilentlyContinue)
     {
         $previewCommand = "gh repo view SurgicalScience/{$_i} | glow -s dark {}" 
-    } elseif (Get-Command "grip" -ErrorAction SilentlyContinue) {
+    } elseif (Get-Command "grip" -ErrorAction SilentlyContinue)
+    {
         $previewCommand = "gh repo view SurgicalScience/Solidarity | grip --export -"
     } else
     {

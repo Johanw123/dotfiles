@@ -146,3 +146,12 @@ provider = generic
 	ff = only
 [credential "https://x4x2w7nqu3.execute-api.eu-central-1.amazonaws.com"]
 	provider = generic
+[credential]
+	helper = 
+	helper = /home/johanw/.dotnet/tools/git-credential-manager
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

@@ -46,7 +46,8 @@ local SOFT_RIGHT_ARROW = wezterm.nerdfonts.pl_right_soft_divider
 local SOLID_RIGHT_ARROW = utf8.char(0xe0b0)
 
 if is_unix() then
-	shell = { "/usr/local/bin/fish", "-l" }
+	shell = { "fish", "-l" }
+	-- shell = { "/usr/local/bin/fish", "-l" }
 end
 
 if wezterm.target_triple == "x86_64-apple-darwin" then
