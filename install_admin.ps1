@@ -184,6 +184,13 @@ TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\keep_w
 TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\remove_intune.bat" "$dotFilesRoot\work/remove_intune.bat"
 TryCreateLink "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\remove_intune.ps1" "$dotFilesRoot\work/remove_intune.ps1"
 
+TryCreateLink "$HOME\.gitconfig" "$dotFilesRoot\git\.gitconfig" 
+TryCreateLink "$HOME\.gitconfig-windows" "$dotFilesRoot\git\.gitconfig-windows"
+TryCreateLink "$HOME\applications.json" "$dotFilesRoot\win\komorebi\applications.json"
+TryCreateLink "$HOME\komorebi.bar.json" "$dotFilesRoot\win\komorebi\komorebi.bar.json"
+TryCreateLink "$HOME\komorebi.json" "$dotFilesRoot\win\komorebi\komorebi.json"
+TryCreateLink "$HOME\.config\whkdrc" "$dotFilesRoot\win\komorebi\whkdrc"
+
 #New-ItemProperty 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders' Personal -Value '$env:userprofile\dotfiles\Powershell\Microsoft.PowerShell_profile.ps1' -Type ExpandString -Force
 
 #Fonts
@@ -199,6 +206,7 @@ foreach ($Font in $FontList)
 # Test stuff
 winget install LGUG2Z.komorebi
 winget install LGUG2Z.whkd
+winget install --id AmN.yasb
 winget install FilesCommunity.Files
 
 # requires reload probably

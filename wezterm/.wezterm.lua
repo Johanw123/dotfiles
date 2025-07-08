@@ -4,10 +4,10 @@ local wsl_domains = wezterm.default_wsl_domains()
 
 local background_color = "#22262e"
 
-wezterm.on("gui-startup", function(cmd)
-	local _, _, window = wezterm.mux.spawn_window(cmd or {})
-	window:gui_window():toggle_fullscreen()
-end)
+-- wezterm.on("gui-startup", function(cmd)
+-- 	local _, _, window = wezterm.mux.spawn_window(cmd or {})
+-- 	window:gui_window():toggle_fullscreen()
+-- end)
 
 for _, domain in ipairs(wsl_domains) do
 	domain.default_cwd = "~"
