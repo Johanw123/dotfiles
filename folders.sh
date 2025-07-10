@@ -1,4 +1,4 @@
-
+#!/bash
 sudo rm ~/.omnisharp
 sudo rm -r ~/.omnisharp
 sudo rm -rf ~/.config/nvim
@@ -7,6 +7,7 @@ sudo rm ~/.config/starship.toml
 sudo rm -rf ~/.zshrc
 sudo rm ~/.wezterm.lua
 sudo rm ~/.gitconfig
+sudo rm -rf ~/.config/hypr
 
 sudo rm -r ~/.config/nvim
 sudo rm -r ~/.cache/nvim
