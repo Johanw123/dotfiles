@@ -44,16 +44,17 @@ sudo pacman -S cuda --noconfirm
 sudo pacman -S kitty --noconfirm
 sudo pacman -S fish --noconfirm
 sudo pacman -S ccache --noconfirm
+sudo pacman -S libsecret --noconfirm
+sudo pacman -S ollama --noconfirm
 
-
+ccache -M 100G
+ccache -o compression_level=5
 
 #sudo pacman -S conan --noconfirm
 
 
 #sudo apt install -y pip
 #sudo pip install conan
-
-
 
 #sudo apt install -y build-essential ninja-build valgrind lcov mono-complete devscripts debhelper
 #sudo apt install -y g++-10
@@ -65,8 +66,7 @@ sudo pacman -S ccache --noconfirm
 #sudo apt install -y libglbinding2 libglbinding-dev
 
 #sudo apt install -y ccache
-ccache -M 100G
-ccache -o compression_level=5
+
 
 
 

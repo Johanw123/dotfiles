@@ -8,7 +8,21 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 Import-Module PSReadLine
 Import-Module -Name CompletionPredictor
-Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+
+foreach ($i in $info)
+{
+    if ($i -eq $IsLinux)
+    {
+        Write-Host $i is Linux
+    } elseif ($i -eq $IsMacOS)
+    {
+        Write-Host $i is This is a dirty, dirty Mac
+    } elseif ($i -eq $IsWindows)
+    {
+        Write-Host $i is Windows
+        Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
+    }
+}
 
 # Other hosts (ISE, ConEmu) don't always work as well with PSReadLine.
 # Also, if PS is run with -Command, PSRL loading is suppressed.
@@ -433,7 +447,8 @@ function FuzzyGitBranch()
         if ($branch)
         { 
             $branch = $branch.Replace("origin/", "")
-            if (Test-Path ".\_scripts\remove_all_symlinks.bat") {
+            if (Test-Path ".\_scripts\remove_all_symlinks.bat")
+            {
                 & .\_scripts\remove_all_symlinks.bat
             }
             git switch $branch            

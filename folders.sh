@@ -29,3 +29,5 @@ sudo ln -s ~/dotfiles/git/.gitconfig-linux ~/.gitconfig-linux
 sudo ln -s ~/dotfiles/kitty ~/.config
 sudo ln -s ~/dotfiles/hypr ~/.config
 sudo ln -s ~/dotfiles/hyprpanel/ ~/.config
+
+sudo ln ~/dotfiles/Powershell/Microsoft.PowerShell_profile.ps1 ~/.config/powershell/Microsoft.PowerShell_profile.ps1

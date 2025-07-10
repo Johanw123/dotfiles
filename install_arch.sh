@@ -40,9 +40,14 @@ yay -S dotnet-sdk --noconfirm
 yay -S powershell-bin --noconfirm
 yay -S hyprland-git --noconfirm
 yay -S ags-hyprpanel-git --noconfirm
-yay -S gcc13 --noconfirm
+#yay -S gcc13 --noconfirm #takes ages
 
 sudo bash install_manjaro_admin.sh
+
+
+#pwsh
+#Install-Module CompletionPredictor
+
 
 #sudo ln /bin/gcc++ /usr/bin/g++-15
 #sudo ln /bin/gcc++ /usr/bin/g++-15
