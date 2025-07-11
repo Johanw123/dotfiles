@@ -39,6 +39,9 @@ sudo pacman -S cmake --noconfirm
 sudo pacman -S ninja --noconfirm
 sudo pacman -S lld --noconfirm
 sudo pacman -S cuda --noconfirm
+sudo pacman -S tinyxml --noconfirm
+sudo pacman -S lapacke --noconfirm
+sudo pacman -S openal --noconfirm
 #sudo yay -S gcc13 --noconfirm
 
 sudo pacman -S kitty --noconfirm

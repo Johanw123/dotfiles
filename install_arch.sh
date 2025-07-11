@@ -44,13 +44,15 @@ yay -S ags-hyprpanel-git --noconfirm
 
 sudo bash install_manjaro_admin.sh
 
-
 #pwsh
 #Install-Module CompletionPredictor
 
+#cuda (susrepo1 wants gcc at /usr/bin/gcc)
+#sudo ln /bin/gcc++ /usr/bin/gcc-15
+#sudo ln /bin/g++ /usr/bin/g++-15
 
-#sudo ln /bin/gcc++ /usr/bin/g++-15
-#sudo ln /bin/gcc++ /usr/bin/g++-15
+#cuda (susrepo1 wants cuda at /usr/local/cuda/bin)
+#sudo ln -sf /opt/cuda /usr/local
 
 #nvidia stuff
 #systemctl enable nvidia-suspend.service
