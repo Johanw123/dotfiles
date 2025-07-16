@@ -1,8 +1,5 @@
-
-
 sudo pamac install base-devel --no-confirm
 
-sudo pacman -Syu yay --noconfirm
 
 sudo pacman -S code --noconfirm
 sudo pacman -S github-cli --noconfirm
@@ -40,8 +37,10 @@ sudo pacman -S ninja --noconfirm
 sudo pacman -S lld --noconfirm
 sudo pacman -S cuda --noconfirm
 sudo pacman -S tinyxml --noconfirm
+sudo pacman -S xml2 --noconfirm
 sudo pacman -S lapacke --noconfirm
 sudo pacman -S openal --noconfirm
+sudo pacman -S gdb
 #sudo yay -S gcc13 --noconfirm
 
 sudo pacman -S kitty --noconfirm
@@ -49,6 +48,14 @@ sudo pacman -S fish --noconfirm
 sudo pacman -S ccache --noconfirm
 sudo pacman -S libsecret --noconfirm
 sudo pacman -S ollama --noconfirm
+
+sudo pacman -S vlc
+sudo pacman -S ffmpeg
+sudo pacman -S vlc-plugin-ffmpeg
+sudo pacman -S vlc-plugin-gstreamer
+
+sudo pacman -S wine
+sudo pacman -S winetricks
 
 ccache -M 100G
 ccache -o compression_level=5
