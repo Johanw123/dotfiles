@@ -42,6 +42,7 @@ sudo pacman -S lapacke --noconfirm
 sudo pacman -S openal --noconfirm
 sudo pacman -S gdb --noconfirm
 sudo pacman -S lldb --noconfirm
+sudo pacman -S krdc --noconfirm # remote desktop client
 #sudo yay -S gcc13 --noconfirm
 
 sudo pacman -S kitty --noconfirm
