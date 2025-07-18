@@ -40,7 +40,8 @@ sudo pacman -S tinyxml --noconfirm
 sudo pacman -S xml2 --noconfirm
 sudo pacman -S lapacke --noconfirm
 sudo pacman -S openal --noconfirm
-sudo pacman -S gdb
+sudo pacman -S gdb --noconfirm
+sudo pacman -S lldb --noconfirm
 #sudo yay -S gcc13 --noconfirm
 
 sudo pacman -S kitty --noconfirm
@@ -56,6 +57,9 @@ sudo pacman -S vlc-plugin-gstreamer
 
 sudo pacman -S wine
 sudo pacman -S winetricks
+
+sudo pacman -S power-profiles-daemon
+sudo systemctl enable power-profiles-daemon.service --now
 
 ccache -M 100G
 ccache -o compression_level=5

@@ -59,6 +59,7 @@ sudo bash install_arch_admin.sh
 #systemctl enable nvidia-suspend.service
 #systemctl enable nvidia-hibernate.service
 #systemctl enable nvidia-hibernate.service
+#sudo systemctl enable --now nvidia-powerd.service
 
 # /etc/modprobe.d/nvidia.conf
 #options nvidia NVreg_UsePageAttributeTable=1 NVreg_InitializeSystemMemoryAllocations=0 NVreg_EnableStreamMemOPs=1 NVreg_DynamicPowerManagement=0x02 NVreg_RegistryDwords=RMIntrLockingMode=1
@@ -87,3 +88,16 @@ sudo bash install_arch_admin.sh
 # Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
 #ACTION=="remove|unbind", SUBSYSTEM=="pci", DRIVERS=="nvidia", ATTR{vendor}=="0x10de", \
 #    ATTR{class}=="0x03[0-9]*", TEST=="power/control", ATTR{power/control}="on"
+
+
+
+
+#VirtualBox
+#https://www.youtube.com/watch?v=N4C5CeYfntE -> shared folders, shared clipboard, guest drivers
+
+#sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso
+#sudo gpasswd -a $USER vboxusers
+#sudo modprobe vboxdrv
+#sudo modprobe -r kvm_intel
+#sudo systemctl enable vboxweb.service
+#sudo systemctl start vboxweb.service
