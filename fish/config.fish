@@ -162,6 +162,7 @@ set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 
     export MGFXC_WINE_PATH=/Users/johanwangsell/.winemonogame
     export PATH="/usr/local/share/dotnet/x64:$PATH"
+    # export PATH="$HOME/.dotnet/tools:$PATH"
   end
   fish_add_path -gP "$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin";
   ! set -q MANPATH; and set MANPATH ''; set -gx MANPATH "$HOMEBREW_PREFIX/share/man" $MANPATH;
@@ -210,3 +211,4 @@ starship init fish | source
 set PATH $HOME/.local/bin/ $PATH
 set PATH $HOME/dotfiles/bash/bin/ $PATH
 set PATH $HOME/squashfs-root/usr/bin/ $PATH
+set PATH $HOME/.dotnet/tools/ $PATH

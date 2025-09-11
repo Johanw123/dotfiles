@@ -1,4 +1,5 @@
-#!/bash
+#!/bin/sh
+
 sudo rm ~/.omnisharp
 sudo rm -r ~/.omnisharp
 sudo rm -rf ~/.config/nvim
@@ -13,8 +14,12 @@ sudo rm -r ~/.config/nvim
 sudo rm -r ~/.cache/nvim
 sudo rm -r ~/.local/share/nvim
 
-sudo mkdir ~/.config
-sudo mkdir ~/.config/fish
+sudo rm -rf "~/.config/kitty"
+sudo rm -rf "~/.config/hypr"
+sudo rm -rf "~/.config/hyprpanel"
+
+#sudo mkdir ~/.config
+#sudo mkdir ~/.config/fish
 
 sudo ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
 sudo ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
@@ -26,8 +31,8 @@ sudo ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
 sudo ln -s ~/dotfiles/git/.gitconfig-linux ~/.gitconfig-linux
 
 
-sudo ln -s ~/dotfiles/kitty ~/.config
-sudo ln -s ~/dotfiles/hypr ~/.config
-sudo ln -s ~/dotfiles/hyprpanel/ ~/.config
+sudo ln -snf ~/dotfiles/kitty ~/.config/kitty
+sudo ln -snf ~/dotfiles/hypr ~/.config/hypr
+sudo ln -snf ~/dotfiles/hyprpanel/ ~/.config/hyprpanel
 
 sudo ln ~/dotfiles/Powershell/Microsoft.PowerShell_profile.ps1 ~/.config/powershell/Microsoft.PowerShell_profile.ps1
