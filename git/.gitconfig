@@ -144,3 +144,5 @@ provider = generic
 	commit = no
 [pull]
 	ff = only
+[credential "https://x4x2w7nqu3.execute-api.eu-central-1.amazonaws.com"]
+	provider = generic

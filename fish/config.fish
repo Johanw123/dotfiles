@@ -58,6 +58,80 @@ function desk
   gnome-session
 end
 
+function quicksim_lapsim
+  set current_dir $PWD
+  set found "0"
+  while true
+    if test -d ./products
+      if test -d ./Runtime
+          set found "1"
+          break
+      end
+    end
+
+     if [ "$PWD" = "/" ]
+      echo "Reached sytem root without finding susrepo1 root"
+      break
+    end
+
+    cd ..
+  end
+
+  if [ $found = "1" ]
+    set path $PWD/Runtime/LapSim/bin_$argv/quickSim
+    if test -e $path 
+      command $path
+    else
+      echo "Could not find filepath: $path"
+    end
+  end
+
+  cd $current_dir
+end
+
+function qslap
+  quicksim_lapsim "release"
+end
+
+function qslapd
+  quicksim_lapsim "debug"
+end
+
+function qslapu
+  quicksim_lapsim "unopt"
+end
+
+function bcli
+  set current_dir $PWD
+  set found "0"
+  while true
+    if test -d ./products
+      if test -d ./Runtime
+          set found "1"
+          break
+      end
+    end
+
+     if [ "$PWD" = "/" ]
+      echo "Reached sytem root without finding susrepo1 root"
+      break
+    end
+
+    cd ..
+  end
+
+  if [ $found = "1" ]
+    set path $PWD/cmake/BuildCLI
+    if test -e $path 
+      cd $PWD/cmake
+      command $path -s
+    else
+      echo "Could not find filepath: $path"
+    end
+  end
+
+  cd $current_dir
+end
 
     # alias wine64='whisky'
     # alias wine='whisky'
@@ -72,6 +146,10 @@ end
   #       eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
   #     case '*'
   #   end
+
+
+# ~/.config/fish/config.fish
+set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 
   if test -d /home/linuxbrew/.linuxbrew # Linux
     set -gx HOMEBREW_PREFIX "/home/linuxbrew/.linuxbrew"
