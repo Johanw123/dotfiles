@@ -873,6 +873,81 @@ function susclone
     gh repo list SurgicalScience -L 99999999 --json name --jq '.[].name' | fzf -m --ansi --preview $previewCommand | % { gh repo clone SurgicalScience/$_ -- --recurse-submodules} 
 }
 
+function solid_create_pr
+{
+    #TODO: merge with the edu one and add parameter for ai and for base branch
+
+    $addAiText = 1
+    $git_branch = git rev-parse --abbrev-ref HEAD
+    Write-Output "Current branch: $git_branch"
+
+    $task = [Regex]::Match($git_branch, "EG-\d\d\d\d").Value
+
+    Write-Output "Parsed Ticket/Issue Id: $task"
+
+
+    $jira_task = jira issue view $task --raw
+
+    $summary = ($jira_task | jq ".fields.summary").Replace("`"","")
+    $summary_short = $summary
+    $summary += " - (https://surgscience.atlassian.net/browse/$task)"
+    # $summary += ($jira_task | jq ".fields.summary").Replace("`"","")
+
+    Write-Output "Summary: $summary"
+    
+    $git_log = git log bs-lapsuite..$git_branch --reverse --pretty=tformat:"   ~ %s<br>"
+    $summary += "`n`nCommits: `n$git_log"
+
+    $jira_plain = (jira issue view $task --plain)
+
+    Write-Output "Git Log: $git_log"
+    Write-Output "Jira Description: $jira_plain"
+
+    if($addAiText)
+    {
+        $diff = git --no-pager diff $(git merge-base bs-lapsuite HEAD) -z -- '*.cs'
+        $Promt = "You are an expert developer, so you know how to read all kinds of code syntax. Read the git patch diff calmly from top to bottom, paying attention to each addition, deletion, and unchanged line carefully. Focus on changes, not only the last or first lines, and figure out the main idea of the input. If complex, break it down into smaller parts to organize your thoughts. If JSON or declaration structures are present, pay attention to the special case mentioned above to avoid misinterpretation, but if it's a regular code, focus on the context and the changes made. Write a commit message based on the git diff provided. Read the diff below and write a commit message that accurately describes the changes made. Ignore changes made in .unity and .scene files and .meta files also, focus on changes in .cs files thanks. A line beginning with a + means addition, - means deletion and no prefix means unchanged line."
+        $PromtDescription = "You are an expert developer and you love reading and summarizing descriptions of tickets on Jira. Please read this jira description and summarize it in a short and readable, concise way. Make sure there is a good amount of readability with paragraphs and new lines for easy readability thanks. Focus on the description text, nothing else like assignee and report is important, thanks. Ignore comments also, focus only on Description section. Ignore Priority, Labels, Epic Link, Fix Version/s, Components, Affects Version/s, Reporter, Assignee, Status, Resolution, Created, Updated, Due date, Votes, Project, Labels, Watches and all other fields. Focus only on Description text. Here is the description:"
+
+        Write-Output "Generating AI Summary..."
+
+        # $diff.substring(0, [System.Math]::Min(10, $diff.Length))
+        # $diff = $diff.Substring(0, [System.Math]::Min(1500, $diff.Length)) #ollama limit is 16k tokens, so limit to 15k chars to be sure
+        $diff = $diff[0..3000] -join ""
+
+        $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
+        $AiText = [string]::join("`n",($AiText.Split("`n")))
+
+        $AiDescription = ollama run qwen2.5-coder:14b "$PromtDescription $jira_plain"
+        $AiDescription = [string]::join("`n",($AiDescription.Split("`n")))
+
+
+        $jira_plain = [string]::join("`n",($jira_plain.Split("`n")))
+
+        Write-Output "AI Summary: $AiDescription"
+
+        $summary += " `n`n`n <details><summary>AI Diff Summary</summary>`n`n$AiText</details>"
+        $summary += " `n`n`n <details><summary>Jira Description</summary>`n`n$jira_plain</details>"
+        # $summary += " `n`n`n <details><summary>Jira AI Description Summary</summary>`n`n$AiDescription</details>"
+        $summary += " `n`n`n $AiDescription"
+    }
+
+    $existing_pr = gh pr list --base "bs-lapsuite" --json number --jq ".[].number" --head $git_branch
+
+    Write-Output "Existing PR: $existing_pr"
+    if($existing_pr)
+    {
+        gh pr edit $existing_pr --title "$summary_short ($task)" --body "$summary"
+    } else
+    {
+        gh pr create --title "$summary_short ($task)" --body "$summary" --base "bs-lapsuite"
+    }
+
+    Write-Output "Creating PR..."
+
+    Write-Output "Moving task to review on Jira board..."
+    jira issue move $task "In Review"
+}
 
 function edu_create_pr
 {
