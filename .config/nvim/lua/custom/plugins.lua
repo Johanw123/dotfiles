@@ -479,9 +479,16 @@ local plugins = {
     end
   },
 
-  {
-    "github/copilot.vim",
-    lazy = false
+  -- {
+  --   "github/copilot.vim",
+  --   lazy = false
+  -- },
+
+  { 
+      "zbirenbaum/copilot.lua" 
+    dependencies = {
+      "copilotlsp-nvim/copilot-lsp" -- (optional) for NES functionality
+    }
   },
 
   {
@@ -547,6 +554,26 @@ local plugins = {
         ["Select Cursor Up"] = "<S-A-Up>",
     }
     end,
+  },
+
+  {
+      "soemre/commentless.nvim",
+      cmd = "Commentless",
+      keys = {
+          {
+              "<leader>/",
+              function()
+                  require("commentless").toggle()
+              end,
+              desc = "Toggle Comments",
+          },
+      },
+      dependencies = {
+          "nvim-treesitter/nvim-treesitter",
+      },
+      opts = {
+          -- Customize Configuration
+      },
   },
 
 }

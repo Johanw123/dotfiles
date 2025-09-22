@@ -9,19 +9,16 @@ Invoke-Expression (& { (zoxide init powershell | Out-String) })
 Import-Module PSReadLine
 Import-Module -Name CompletionPredictor
 
-foreach ($i in $info)
+if ($IsLinux)
 {
-    if ($i -eq $IsLinux)
-    {
-        Write-Host $i is Linux
-    } elseif ($i -eq $IsMacOS)
-    {
-        Write-Host $i is This is a dirty, dirty Mac
-    } elseif ($i -eq $IsWindows)
-    {
-        Write-Host $i is Windows
-        Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-    }
+    Write-Host $i is Linux
+} elseif ($IsMacOS)
+{
+    Write-Host $i is This is a dirty, dirty Mac
+} elseif ($IsWindows)
+{
+    Write-Host $i is Windows
+    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
 }
 
 # Other hosts (ISE, ConEmu) don't always work as well with PSReadLine.
@@ -746,6 +743,7 @@ Set-Alias -Name gho -Value Open-GitHub
 
 # Work Stuff
 
+# Command Suggest
 function ghcs
 {
     # Debug support provided by common PowerShell function parameters, which is natively aliased as -d or -db
@@ -817,6 +815,7 @@ function ghcs
     }
 }
 
+# Command Explain
 function ghce
 {
     # Debug support provided by common PowerShell function parameters, which is natively aliased as -d or -db
@@ -972,8 +971,20 @@ function ask
 
 function TailFileBeforeEnd
 {
+    $tmp_path = "" 
+
+    if ($IsLinux)
+    {
+        $tmp_path = "/tmp/console_output.txt"
+    } elseif ($IsMacOS)
+    {
+    } elseif ($IsWindows)
+    {
+        $tmp_path = "$env:TEMP/console_output.txt"
+    }
+
     [System.Text.Encoding]$enc = [System.Text.Encoding]::GetEncoding(65001)
-    $filename = "$env:TEMP/console_output.txt"
+    $filename = $tmp_path
     $fs=New-Object System.IO.FileStream ($filename,"OpenOrCreate", "Read", "ReadWrite",8,"None") 
     $sr=New-Object System.IO.StreamReader($fs, $enc)
     $lastPosition=$sr.BaseStream.Length
@@ -1088,14 +1099,28 @@ function TailFileBeforeEnd
 function explain_error
 {
 
+    $tmp_path = "" 
+
+    if ($IsLinux)
+    {
+        $tmp_path = "/tmp/console_output.txt"
+    } elseif ($IsMacOS)
+    {
+    } elseif ($IsWindows)
+    {
+        $tmp_path = "$env:TEMP/console_output.txt"
+    }
     [System.Text.Encoding]$enc = [System.Text.Encoding]::GetEncoding(65001)
     $BasePromt = "Hello, could you please explain this error? "
-    Remove-Item $env:TEMP/console_output.txt
+    if(Test-Path $tmp_path)
+    {
+        Remove-Item $tmp_path 
+    }
     #sleep 0.2
     
     sleep 1.0
-    [System.IO.File]::WriteAllLines("$env:TEMP/console_output.txt", "", $enc)
-    wezterm cli get-text > "$env:TEMP/console_output.txt" --start-line -1000
+    [System.IO.File]::WriteAllLines($tmp_path, "", $enc)
+    wezterm cli get-text > $tmp_path --start-line -1000
     sleep 1.0
     $Promt = TailFileBeforeEnd | Select-Object -Last 1
     # $result = wezterm cli get-text #--start-line -1000
