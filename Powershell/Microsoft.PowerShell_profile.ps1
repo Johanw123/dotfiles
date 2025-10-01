@@ -184,14 +184,16 @@ function ll_alias_unix
 }
 
 function drives
-{ Get-PsDrive -PSProvider 'FileSystem' 
+{ 
+    Get-PsDrive -PSProvider 'FileSystem' 
 }
 function ssh_truls
 { 
     ssh johanw@172.31.232.86 
 }
 function ssh_linbox
-{ ssh root@172.31.231.5 
+{ 
+    ssh root@172.31.231.5 
 }
 
 function Open-GitHub
@@ -873,8 +875,25 @@ function susclone
     gh repo list SurgicalScience -L 99999999 --json name --jq '.[].name' | fzf -m --ansi --preview $previewCommand | % { gh repo clone SurgicalScience/$_ -- --recurse-submodules} 
 }
 
+
 function solid_create_pr
 {
+    create_pr -addAiText $true -base_branch 'bs-lapsuite'
+}
+
+
+function edu_create_pr
+{
+    create_pr -addAiText $true -base_branch 'edu_develop'
+}
+
+function create_pr
+{
+    param(
+        [bool]$addAiText,
+        [string]$base_branch
+    )
+
     #TODO: merge with the edu one and add parameter for ai and for base branch
 
     $addAiText = 1
@@ -895,19 +914,19 @@ function solid_create_pr
 
     Write-Output "Summary: $summary"
     
-    $git_log = git log bs-lapsuite..$git_branch --reverse --pretty=tformat:"   ~ %s<br>"
+    $git_log = git log $base_branch..$git_branch --reverse --pretty=tformat:"   ~ %s<br>"
     $summary += "`n`nCommits: `n$git_log"
 
-    $jira_plain = (jira issue view $task --plain)
+    $jira_plain = (jira issue view $task --plain --comments 0)
 
     Write-Output "Git Log: $git_log"
     Write-Output "Jira Description: $jira_plain"
 
     if($addAiText)
     {
-        $diff = git --no-pager diff $(git merge-base bs-lapsuite HEAD) -z -- '*.cs'
+        $diff = git --no-pager diff $(git merge-base $base_branch HEAD) -z -- '*.cs'
         $Promt = "You are an expert developer, so you know how to read all kinds of code syntax. Read the git patch diff calmly from top to bottom, paying attention to each addition, deletion, and unchanged line carefully. Focus on changes, not only the last or first lines, and figure out the main idea of the input. If complex, break it down into smaller parts to organize your thoughts. If JSON or declaration structures are present, pay attention to the special case mentioned above to avoid misinterpretation, but if it's a regular code, focus on the context and the changes made. Write a commit message based on the git diff provided. Read the diff below and write a commit message that accurately describes the changes made. Ignore changes made in .unity and .scene files and .meta files also, focus on changes in .cs files thanks. A line beginning with a + means addition, - means deletion and no prefix means unchanged line."
-        $PromtDescription = "You are an expert developer and you love reading and summarizing descriptions of tickets on Jira. Please read this jira description and summarize it in a short and readable, concise way. Make sure there is a good amount of readability with paragraphs and new lines for easy readability thanks. Focus on the description text, nothing else like assignee and report is important, thanks. Ignore comments also, focus only on Description section. Ignore Priority, Labels, Epic Link, Fix Version/s, Components, Affects Version/s, Reporter, Assignee, Status, Resolution, Created, Updated, Due date, Votes, Project, Labels, Watches and all other fields. Focus only on Description text. Here is the description:"
+        $PromtDescription = "You are an expert developer and you love reading and summarizing descriptions of tickets on Jira. Please read this jira description and summarize it in a short and readable, concise way. Make sure there is a good amount of readability with paragraphs and new lines for easy readability thanks. Focus on the description text, nothing else like assignee and report is important, thanks. Ignore comments also, focus only on Description section. Ignore Priority, Labels, Epic Link, Fix Version/s, Components, Affects Version/s, Reporter, Assignee, Status, Resolution, Created, Updated, Due date, Votes, Project, Labels, Watches and all other fields. Focus only on Description text. Again, dont mention the comments at all, its not important information, Description is!. Follow this template: A 'Task Summary' on top with some general information about the task. Followed by a dividing line, and at last a summary of the Description itself (only the description in this section). Here is the description:"
 
         Write-Output "Generating AI Summary..."
 
@@ -932,7 +951,7 @@ function solid_create_pr
         $summary += " `n`n`n $AiDescription"
     }
 
-    $existing_pr = gh pr list --base "bs-lapsuite" --json number --jq ".[].number" --head $git_branch
+    $existing_pr = gh pr list --base $base_branch --json number --jq ".[].number" --head $git_branch
 
     Write-Output "Existing PR: $existing_pr"
     if($existing_pr)
@@ -940,78 +959,18 @@ function solid_create_pr
         gh pr edit $existing_pr --title "$summary_short ($task)" --body "$summary"
     } else
     {
-        gh pr create --title "$summary_short ($task)" --body "$summary" --base "bs-lapsuite"
+        $pr_link = gh pr create --title "$summary_short ($task)" --body "$summary" --base $base_branch 
+        Write-Output "PR created at: $pr_link"
+        jira issue comment add $task "PR created at: $pr_link"
     }
 
     Write-Output "Creating PR..."
+
 
     Write-Output "Moving task to review on Jira board..."
     jira issue move $task "In Review"
 }
 
-function edu_create_pr
-{
-    param(
-        [bool]$addAiText
-    )
-
-    $git_branch = git rev-parse --abbrev-ref HEAD
-    Write-Output "Current branch: $git_branch"
-
-    $task = [Regex]::Match($git_branch, "EG-\d\d\d\d$").Value
-
-    Write-Output "Parsed Ticket/Issue Id: $task"
-
-    $summary = (jira issue view $task --raw  | jq ".fields.summary").Replace("`"","")
-    $summary += " - (https://surgscience.atlassian.net/browse/$task)"
-    
-    Write-Output "Summary: $summary"
-    
-    $git_log = git log edu_develop..$git_branch --reverse --pretty=tformat:"   ~ %s<br>"
-    $summary += "`n`nCommits: `n$git_log"
-
-    Write-Output "Git Log: $git_log"
-
-    if($addAiText)
-    {
-        $diff = git -c pager.diff='less -R' diff $(git merge-base edu_develop HEAD) -z
-        $Promt = "You are an expert developer, so you know how to read all kinds of code syntax. Read the git patch diff calmly from top to bottom, paying attention to each addition, deletion, and unchanged line carefully. Focus on changes, not only the last or first lines, and figure out the main idea of the input. If complex, break it down into smaller parts to organize your thoughts. If JSON or declaration structures are present, pay attention to the special case mentioned above to avoid misinterpretation, but if it's a regular code, focus on the context and the changes made. Write a commit message based on the git diff provided. Read the diff below and write a commit message that accurately describes the changes made."
-
-        Write-Output "Generating AI Summary..."
-
-        $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
-        $AiText = [string]::join("`n",($AiText.Split("`n")))
-
-        $summary += " `n`n`n <details><summary>AI Summary</summary>`n`n$AiText</details>"
-    }
-
-    Write-Output "Creating PR..."
-    gh pr create --title "$task" --body "$summary" --base "edu_develop"
-
-    Write-Output "Moving task to review on Jira board..."
-    jira issue move $task "In Review"
-}
-
-function edu_create_pr_ai
-{
-    edu_create_pr($true)
-}
-
-function summarize_branch
-{
-    $git_branch = git rev-parse --abbrev-ref HEAD
-    Write-Output "Current branch: $git_branch"
-
-
-    $diff = git -c pager.diff='less -R' diff $(git merge-base edu_develop HEAD) -z
-    #$Promt = "You are an expert developer, so you know how to read all kinds of code syntax. Read the git patch diff calmly from top to bottom, paying attention to each addition, deletion, and unchanged line carefully. Focus on changes, not only the last or first lines, and figure out the main idea of the input. If complex, break it down into smaller parts to organize your thoughts. If JSON or declaration structures are present, pay attention to the special case mentioned above to avoid misinterpretation, but if it's a regular code, focus on the context and the changes made. Read the diff below and do a code review on it. Check if all the variable names follow the same syntax as the rest of the code and check for errors and syntax faults. Please do a good job, or you are fired!"
-
-    $Promt = "\n Review this code, provide suggestions for improvement, coding best practices, improve readability, and maintainability. Remove any code smells and anti-patterns. Provide code examples for your suggestion. Respond in markdown format. If the file does not have any code or does not need any changes, say 'No changes needed'."
-    $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
-    $AiText = [string]::join("`n",($AiText.Split("`n")))
-
-    $AiText
-}
 
 # Jira
 function jira_open
