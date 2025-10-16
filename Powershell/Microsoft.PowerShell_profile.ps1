@@ -233,6 +233,36 @@ function Open-GitHub
     }
 }
 
+#https://github.com/SurgicalScience/Solidarity/compare/bs-lapsuite...EG-6689_add_build_targets
+function ghc
+{
+    $url = git config --get remote.origin.url
+
+    if($url -like "*SurgicalScience/Solidarity*")
+    {
+        GitHubCompare -base_repo 'Solidarity' -base_branch 'bs-lapsuite'
+    } elseif($url -like "*SurgicalScience/got_susrepo1*")
+    {
+        GitHubCompare -base_repo 'got_susrepo1' -base_branch 'edu_develop'
+    }
+}
+
+function GitHubCompare
+{
+    param(
+        [string]$base_repo,
+        [string]$base_branch
+    )
+
+    $git_branch = git rev-parse --abbrev-ref HEAD
+    Write-Output "Current branch: $git_branch"
+   
+    $github_url = "https://github.com/SurgicalScience/$base_repo/compare/$base_branch...$git_branch"
+
+    Write-Output "Opening URL: $github_url"
+    firefox $github_url
+}
+
 function which ($command)
 {
     Get-Command -Name $command -ErrorAction SilentlyContinue |
