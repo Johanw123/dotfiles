@@ -106,6 +106,36 @@ input {
     position x=1280 y=0
 }
 
+output "eDP-2"{
+    // off
+    mode "2560x1600@240"
+    scale 1
+    variable-refresh-rate
+    transform "normal"
+    position x=0 y=0
+}
+
+output "Dp-3" {
+    mode "2560x1440@165"
+    scale 1
+    transform "normal"
+    position x=2560 y=0
+}
+
+output "HDMI-A-1" {
+    // off
+    // mode "2560x1440@60"
+    // scale 1
+    // transform "normal"
+    // position x=5120 y=0
+}
+
+
+debug {
+    honor-xdg-activation-with-invalid-serial
+    wait-for-frame-completion-before-queueing
+}
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
@@ -197,7 +227,7 @@ layout {
         // If you enable the border, you probably want to disable the focus ring.
         // off
 
-        width 1
+        width 2
         active-color "#ffc87f"
         inactive-color "#505050"
 
@@ -217,6 +247,7 @@ layout {
         // Uncomment the next line to enable shadows.
         // on
 
+        
         // By default, the shadow draws only around its window, and not behind it.
         // Uncomment this setting to make the shadow draw behind its window.
         //
@@ -269,7 +300,14 @@ layout {
 
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
-spawn-at-startup "cosmic-panel"
+
+// spawn-at-startup "cosmic-ext-alternative-startup"
+    // spawn-at-startup "cosmic-panel"
+
+
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+spawn-at-startup "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
+spawn-at-startup "dms" "run"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -358,16 +396,22 @@ binds {
     // Most actions that you can bind here can also be invoked programmatically with
     // `niri msg action do-something`.
 
+
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    // Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    // Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Run an Application: fuzzel" { spawn "firefox"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+
+    Mod+T { spawn "cosmic-term"; }
+    Mod+D { spawn "cosmic-launcher"; }
+    Mod+Shift+D { spawn "cosmic-app-library"; }
+    Mod+Alt+L { spawn "cosmic-greeter"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -425,23 +469,23 @@ binds {
     Mod+Ctrl+Home { move-column-to-first; }
     Mod+Ctrl+End  { move-column-to-last; }
 
-    Mod+Shift+Left  { focus-monitor-left; }
-    Mod+Shift+Down  { focus-monitor-down; }
-    Mod+Shift+Up    { focus-monitor-up; }
-    Mod+Shift+Right { focus-monitor-right; }
-    Mod+Shift+H     { focus-monitor-left; }
-    Mod+Shift+J     { focus-monitor-down; }
-    Mod+Shift+K     { focus-monitor-up; }
-    Mod+Shift+L     { focus-monitor-right; }
+    Mod+Shift+Ctrl+Left  { focus-monitor-left; }
+    Mod+Shift+Ctrl+Down  { focus-monitor-down; }
+    Mod+Shift+Ctrl+Up    { focus-monitor-up; }
+    Mod+Shift+Ctrl+Right { focus-monitor-right; }
+    Mod+Shift+Ctrl+H     { focus-monitor-left; }
+    Mod+Shift+Ctrl+J     { focus-monitor-down; }
+    Mod+Shift+Ctrl+K     { focus-monitor-up; }
+    Mod+Shift+Ctrl+L     { focus-monitor-right; }
 
-    Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
-    Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
-    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
-    Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
-    Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
-    Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
-    Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+    Mod+Shift+Left  { move-column-to-monitor-left; }
+    Mod+Shift+Down  { move-column-to-monitor-down; }
+    Mod+Shift+Up    { move-column-to-monitor-up; }
+    Mod+Shift+Right { move-column-to-monitor-right; }
+    Mod+Shift+H     { move-column-to-monitor-left; }
+    Mod+Shift+J     { move-column-to-monitor-down; }
+    Mod+Shift+K     { move-column-to-monitor-up; }
+    Mod+Shift+L     { move-column-to-monitor-right; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
@@ -541,7 +585,7 @@ binds {
     Mod+BracketRight { consume-or-expel-window-right; }
 
     // Consume one window from the right to the bottom of the focused column.
-    Mod+Comma  { consume-window-into-column; }
+    // Mod+Comma  { consume-window-into-column; }
     // Expel the bottom window from the focused column to the right.
     Mod+Period { expel-window-from-column; }
 
@@ -615,4 +659,56 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+
+
+    Mod+Space hotkey-overlay-title="Application Launcher" {
+      spawn "dms" "ipc" "call" "spotlight" "toggle";
+   }
+   // Mod+V hotkey-overlay-title="Clipboard Manager" {
+   //    spawn "dms" "ipc" "call" "clipboard" "toggle";
+   // }
+   Mod+M hotkey-overlay-title="Task Manager" {
+      spawn "dms" "ipc" "call" "processlist" "toggle";
+   }
+   Mod+N hotkey-overlay-title="Notification Center" {
+      spawn "dms" "ipc" "call" "notifications" "toggle";
+   }
+   Mod+Comma hotkey-overlay-title="Settings" {
+      spawn "dms" "ipc" "call" "settings" "toggle";
+   }
+   Mod+P hotkey-overlay-title="Notepad" {
+      spawn "dms" "ipc" "call" "notepad" "toggle";
+   }
+   Super+Alt+L hotkey-overlay-title="Lock Screen" {
+      spawn "dms" "ipc" "call" "lock" "lock";
+   }
+   Mod+X hotkey-overlay-title="Power Menu" {
+      spawn "dms" "ipc" "call" "powermenu" "toggle";
+   }
+   // Mod+C hotkey-overlay-title="Control Center" {
+   //    spawn "dms" "ipc" "call" "control-center" "toggle";
+   // }
+   // XF86AudioRaiseVolume allow-when-locked=true {
+   //    spawn "dms" "ipc" "call" "audio" "increment" "3";
+   // }
+   // XF86AudioLowerVolume allow-when-locked=true {
+   //    spawn "dms" "ipc" "call" "audio" "decrement" "3";
+   // }
+   // XF86AudioMute allow-when-locked=true {
+   //    spawn "dms" "ipc" "call" "audio" "mute";
+   // }
+   // XF86AudioMicMute allow-when-locked=true {
+   //    spawn "dms" "ipc" "call" "audio" "micmute";
+   // }
+   // XF86MonBrightnessUp allow-when-locked=true {
+   //    spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
+   // }
+   // // You can override the default device for e.g. keyboards by adding the device name to the last param
+   // XF86MonBrightnessDown allow-when-locked=true {
+   //    spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
+   // }
+   // Night mode toggle
+   Mod+Shift+N allow-when-locked=true {
+      spawn "dms" "ipc" "call" "night" "toggle";
+   }
 }
