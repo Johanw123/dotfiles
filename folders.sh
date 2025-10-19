@@ -1,38 +1,40 @@
 #!/bin/sh
 
-sudo rm ~/.omnisharp
-sudo rm -r ~/.omnisharp
-sudo rm -rf ~/.config/nvim
-sudo rm ~/.config/fish/config.fish
-sudo rm ~/.config/starship.toml
-sudo rm -rf ~/.zshrc
-sudo rm ~/.wezterm.lua
-sudo rm ~/.gitconfig
-sudo rm -rf ~/.config/hypr
+user=johan
 
-sudo rm -r ~/.config/nvim
-sudo rm -r ~/.cache/nvim
-sudo rm -r ~/.local/share/nvim
+sudo rm /home/$user/.omnisharp
+sudo rm -rf /home/$user/.omnisharp
+sudo rm -rf /home/$user/.config/nvim
+sudo rm /home/$user/.config/fish/config.fish
+sudo rm /home/$user/.config/starship.toml
+sudo rm -rf /home/$user/.zshrc
+sudo rm /home/$user/.wezterm.lua
+sudo rm /home/$user/.gitconfig
+sudo rm -rf /home/$user/.config/hypr
 
-sudo rm -rf "~/.config/kitty"
-sudo rm -rf "~/.config/hypr"
-sudo rm -rf "~/.config/hyprpanel"
+sudo rm -rf /home/$user/.config/nvim
+sudo rm -rf /home/$user/.cache/nvim
+sudo rm -rf /home/$user/.local/share/nvim
+
+sudo rm -rf "/home/$user/.config/kitty"
+sudo rm -rf "/home/$user/.config/hypr"
+sudo rm -rf "/home/$user/.config/hyprpanel"
 
 #sudo mkdir ~/.config
 #sudo mkdir ~/.config/fish
 
-sudo ln -sf ~/dotfiles/.omnisharp ~/.omnisharp
-sudo ln -s ~/dotfiles/kickstart.nvim ~/.config/nvim
-sudo ln -s ~/dotfiles/fish/config.fish ~/.config/fish/config.fish
-sudo ln -s ~/dotfiles/starship/starship.toml ~/.config/starship.toml
-sudo ln -s ~/dotfiles/zsh/.zshrc ~/.zshrc
-sudo ln -s ~/dotfiles/wezterm/.wezterm.lua ~/.wezterm.lua
-sudo ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
-sudo ln -s ~/dotfiles/git/.gitconfig-linux ~/.gitconfig-linux
+sudo ln -sf /home/$user/dotfiles/.omnisharp /home/$user/.omnisharp
+sudo ln -s /home/$user/dotfiles/kickstart.nvim /home/$user/.config/nvim
+sudo ln -s /home/$user/dotfiles/fish/config.fish /home/$user/.config/fish/config.fish
+sudo ln -s /home/$user/dotfiles/starship/starship.toml /home/$user/.config/starship.toml
+sudo ln -s /home/$user/dotfiles/zsh/.zshrc /home/$user/.zshrc
+sudo ln -s /home/$user/dotfiles/wezterm/.wezterm.lua /home/$user/.wezterm.lua
+sudo ln -s /home/$user/dotfiles/git/.gitconfig /home/$user/.gitconfig
+sudo ln -s /home/$user/dotfiles/git/.gitconfig-linux /home/$user/.gitconfig-linux
 
 
-sudo ln -snf ~/dotfiles/kitty ~/.config/kitty
-sudo ln -snf ~/dotfiles/hypr ~/.config/hypr
-sudo ln -snf ~/dotfiles/hyprpanel/ ~/.config/hyprpanel
+sudo ln -snf /home/$user/dotfiles/kitty /home/$user/.config/kitty
+sudo ln -snf /home/$user/dotfiles/hypr /home/$user/.config/hypr
+sudo ln -snf /home/$user/dotfiles/hyprpanel/ /home/$user/.config/hyprpanel
 
-sudo ln ~/dotfiles/Powershell/Microsoft.PowerShell_profile.ps1 ~/.config/powershell/Microsoft.PowerShell_profile.ps1
+sudo ln /home/$user/dotfiles/Powershell/Microsoft.PowerShell_profile.ps1 /home/$user/.config/powershell/Microsoft.PowerShell_profile.ps1
