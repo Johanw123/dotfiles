@@ -3,7 +3,7 @@
   
   "layer": "top",
   "position": "top",
-  "height": 40,
+  "height": 20,
   
   "modules-left": [
     "custom/launcher",
