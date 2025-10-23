@@ -1,0 +1,7 @@
+#!/bin/bash
+
+grim -o HDMI-A-1 -l 0 /tmp/hyprlock_hdmi1.png &
+grim -o DP-3 -l 0 /tmp/hyprlock_dp3.png &
+grim -o eDP-2 -l 0 /tmp/hyprlock_edp2.png &
+# grim -o DP-2 -l 0 /tmp/hyprlock_dp2.png &
+hyprlock && rm -f /tmp/hyprlock_*.png
