@@ -24,10 +24,18 @@ sudo pacman -S unzip --noconfirm
 
 sudo pacman -S wezterm --noconfirm
 
+sudo pacman -S slurp --noconfirm
+
 
 sudo curl -sS https://starship.rs/install.sh | sh
 
 sudo systemctl enable --now snapd.socket
+
+#hyprland
+sudo pacman -S hyprland --noconfirm
+sudo pacman -S hyprshot --noconfirm
+sudo pacman -S hyprlock --noconfirm
+sudo pacman -S hyprpicker --noconfirm
 
 
 #Work/Dev
@@ -64,6 +72,20 @@ sudo systemctl enable power-profiles-daemon.service --now
 
 ccache -M 100G
 ccache -o compression_level=5
+
+if fc-list | grep -q -i "FiraCode"; then
+    echo "FiraCode font found!"
+else
+    echo "FiraCode font not found"
+    echo "[-] Download fonts [-]"
+    echo "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip"
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.zip
+    unzip FiraCode.zip -d ~/.fonts
+    fc-cache -fv
+    echo "done!"
+fi
+
+
 
 #sudo pacman -S conan --noconfirm
 

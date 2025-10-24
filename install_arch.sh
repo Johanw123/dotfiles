@@ -24,6 +24,9 @@ yay -S unityhub --noconfirm
 yay -S snapd --noconfirm
 yay -S sourcegit --noconfirm
 
+# yay -S gpu-screen-recorder --noconfirm
+yay -S gpu-screen-recorder-ui --noconfirm
+
 #dotnet
 yay -S dotnet-sdk --noconfirm
 yay -S dotnet-sdk-7.0 --noconfirm
