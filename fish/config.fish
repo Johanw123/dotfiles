@@ -215,3 +215,6 @@ set PATH $HOME/squashfs-root/usr/bin/ $PATH
 set PATH $HOME/.dotnet/tools/ $PATH
 
 set PATH $HOME/my_msvc/opt/msvc/bin/x64 $PATH
+set PATH $HOME/bin $PATH
+
+
