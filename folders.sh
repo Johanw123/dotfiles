@@ -35,6 +35,7 @@ sudo ln -s /home/$user/dotfiles/git/.gitconfig-linux /home/$user/.gitconfig-linu
 
 sudo ln -snf /home/$user/dotfiles/kitty /home/$user/.config/kitty
 sudo ln -snf /home/$user/dotfiles/hypr /home/$user/.config/hypr
+sudo ln -snf /home/$user/dotfiles/niri /home/$user/.config/niri
 sudo ln -snf /home/$user/dotfiles/hyprpanel/ /home/$user/.config/hyprpanel
 
 sudo ln /home/$user/dotfiles/Powershell/Microsoft.PowerShell_profile.ps1 /home/$user/.config/powershell/Microsoft.PowerShell_profile.ps1

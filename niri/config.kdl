@@ -13,8 +13,8 @@ input {
             // For more information, see xkeyboard-config(7).
 
             // For example:
-            // layout "us,ru"
-            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
+            layout "us,se"
+            options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
 
             // If this section is empty, niri will fetch xkb settings
             // from org.freedesktop.locale1. You can control these using
@@ -69,7 +69,8 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-     focus-follows-mouse max-scroll-amount="0%"
+     // focus-follows-mouse max-scroll-amount="0%"
+      focus-follows-mouse max-scroll-amount="5%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -109,6 +110,22 @@ input {
     position x=1280 y=0
 }
 
+
+
+output "Dell Inc. DELL U2725QE 2FJM934" {
+    scale 1.5
+    mode "3840x2160@120"
+    variable-refresh-rate
+    position x=0 y=0
+}
+
+
+output "Acer Technologies XB271HU T4TEE0028502" {
+    scale 1
+    mode "2560x1440@60"
+    position x=2560 y=0
+}
+
 output "eDP-2"{
     // off
     mode "2560x1600@240"
@@ -132,6 +149,7 @@ output "HDMI-A-1" {
     // transform "normal"
     // position x=5120 y=0
 }
+
 
 
 debug {
@@ -691,9 +709,9 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 
 
-    Mod+Space hotkey-overlay-title="Application Launcher" {
-      spawn "dms" "ipc" "call" "spotlight" "toggle";
-   }
+   //  Mod+Space hotkey-overlay-title="Application Launcher" {
+   //    spawn "dms" "ipc" "call" "spotlight" "toggle";
+   // }
    // Mod+V hotkey-overlay-title="Clipboard Manager" {
    //    spawn "dms" "ipc" "call" "clipboard" "toggle";
    // }
