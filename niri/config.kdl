@@ -21,6 +21,9 @@ input {
             // localectl set-x11-keymap.
         }
 
+        repeat-delay 300
+        repeat-rate 80
+
         // Enable numlock on startup, omitting this setting disables it.
         numlock
     }
@@ -133,7 +136,10 @@ output "HDMI-A-1" {
 
 debug {
     honor-xdg-activation-with-invalid-serial
-    wait-for-frame-completion-before-queueing
+    // wait-for-frame-completion-before-queueing
+    render-drm-device "/dev/dri/renderD128"
+    // render-drm-device "/dev/dri/card1"
+    // wait-for-frame-completion-in-pipewire
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -293,6 +299,28 @@ layout {
     }
 }
 
+// blur {
+//   on
+//   passes 4 // number of times to apply the blur effect
+//   radius 1.0 // radius of the blur effect
+//   noise 0.1 //add grain to the blur
+// }
+
+environment {
+    // Set a variable like this:
+    // QT_QPA_PLATFORM "wayland"
+
+    // Remove a variable by using null as the value:
+    // DISPLAY null
+
+    // __NV_PRIME_RENDER_OFFLOAD "1"
+    // __VK_LAYER_NV_optimus "NVIDIA_only"
+    // __GLX_VENDOR_LIBRARY_NAME "nvidia"
+
+    XDG_MENU_PREFIX "arch-"
+    XDG_SESSION_TYPE "wayland"
+}
+
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
@@ -307,7 +335,11 @@ layout {
 
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "kwalletd6"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "dms" "run"
+spawn-at-startup "gsr-ui"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -403,15 +435,13 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     // Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty"; }
     // Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+B hotkey-overlay-title="Run an Application: fuzzel" { spawn "firefox"; }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
-    Mod+T { spawn "cosmic-term"; }
-    Mod+D { spawn "cosmic-launcher"; }
-    Mod+Shift+D { spawn "cosmic-app-library"; }
-    Mod+Alt+L { spawn "cosmic-greeter"; }
+    // Mod+T { spawn "cosmic-term"; }
+    // Mod+D { spawn "cosmic-launcher"; }
+    // Mod+Shift+D { spawn "cosmic-app-library"; }
+    // Mod+Alt+L { spawn "cosmic-greeter"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -443,10 +473,10 @@ binds {
     Mod+Down  { focus-window-down; }
     Mod+Up    { focus-window-up; }
     Mod+Right { focus-column-right; }
-    Mod+H     { focus-column-left; }
-    Mod+J     { focus-window-down; }
-    Mod+K     { focus-window-up; }
-    Mod+L     { focus-column-right; }
+    // Mod+H     { focus-column-left; }
+    // Mod+J     { focus-window-down; }
+    // Mod+K     { focus-window-up; }
+    // Mod+L     { focus-column-right; }
 
     Mod+Ctrl+Left  { move-column-left; }
     Mod+Ctrl+Down  { move-window-down; }
@@ -711,4 +741,22 @@ binds {
    Mod+Shift+N allow-when-locked=true {
       spawn "dms" "ipc" "call" "night" "toggle";
    }
+
+    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "kitty"; }
+    Mod+D hotkey-overlay-title="App launcher" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+    Mod+B hotkey-overlay-title="Open Firefox" { spawn "firefox"; }
+
+    Mod+L hotkey-overlay-title="Lock screen" { spawn "hyprlock"; }
+
+    Mod+Shift+S hotkey-overlay-title="Snipping" { spawn "hyprshot" "-m region --clipboard-only"; }
+    Mod+Shift+C hotkey-overlay-title="Colorpicker" { spawn "hyprpicker" "--autocopy"; }
+
+
+// bind = SUPER, z, easymotion, action:hyprctl dispatch focuswindow address:{}
+//
+// bind = $mainMod, F1, exec, ~/.config/hypr/scripts/gamemode.sh
+//
+// bind = $mainMod, F2, exec, dms kill
+// bind = $mainMod, F3, exec, dms restart
+
 }
