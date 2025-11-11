@@ -112,19 +112,26 @@ input {
 
 
 
+// Home PC
 output "Dell Inc. DELL U2725QE 2FJM934" {
     scale 1.5
-    mode "3840x2160@120"
+    mode "3840x2160@119.999"
     variable-refresh-rate
     position x=0 y=0
 }
 
-
-output "Acer Technologies XB271HU T4TEE0028502" {
+output "Acer Technologies XB271HU #ASOLr6WN+UTd" {
     scale 1
-    mode "2560x1440@60"
+    variable-refresh-rate
+    mode "2560x1440@143.998"
     position x=2560 y=0
 }
+
+// output "Acer Technologies XB271HU T4TEE0028502" {
+//     scale 1
+//     mode "2560x1440@60"
+//     position x=2560 y=0
+// }
 
 output "eDP-2"{
     // off
@@ -135,12 +142,12 @@ output "eDP-2"{
     position x=0 y=0
 }
 
-output "Dp-3" {
-    mode "2560x1440@165"
-    scale 1
-    transform "normal"
-    position x=2560 y=0
-}
+// output "Dp-3" {
+//     mode "2560x1440@165"
+//     scale 1
+//     transform "normal"
+//     position x=2560 y=0
+// }
 
 output "HDMI-A-1" {
     // off
