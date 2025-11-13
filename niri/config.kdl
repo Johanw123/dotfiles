@@ -126,6 +126,36 @@ output "Acer Technologies XB271HU #ASOLr6WN+UTd" {
     mode "2560x1440@143.998"
     position x=2560 y=0
 }
+// Home PC
+
+// Work laptop
+
+output "Acer Technologies XB271HU #ASPXvgxq3rPd" {
+    scale 1
+    // variable-refresh-rate
+    mode "2560x1440@165"
+    position x=2560 y=0
+}
+
+
+output "BOE NE160QDM-NZC Unknown" {
+    scale 1
+    variable-refresh-rate
+    mode "2560x1600@240"
+    position x=0 y=0
+}
+
+
+output "Dell Inc. DELL U2717D J0XYN952165S" {
+    scale 1
+    // variable-refresh-rate
+    // mode "2560x1440@240"
+    position x=5120 y=0
+}
+
+
+
+// Work laptop
 
 // output "Acer Technologies XB271HU T4TEE0028502" {
 //     scale 1
@@ -358,7 +388,7 @@ environment {
     // spawn-at-startup "cosmic-panel"
 
 
-spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+// spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "kwalletd6"
@@ -776,6 +806,10 @@ binds {
     Mod+Shift+S hotkey-overlay-title="Snipping" { spawn "hyprshot" "-m region --clipboard-only"; }
     Mod+Shift+C hotkey-overlay-title="Colorpicker" { spawn "hyprpicker" "--autocopy"; }
 
+    // For Work
+    Mod+Shift+W hotkey-overlay-title="Work Websites" {
+      spawn "firefox" "https://app.clockify.me/timesheet" "https://outlook.office.com/mail/0/?deeplink=mail%2F0%2F%3Fnlp%3D0" "https://surgscience.atlassian.net/jira/software/c/projects/EG/boards/298" "https://surgscience.atlassian.net/wiki/spaces/GOTS/overview" "https://github.com/SurgicalScience";
+    }
 
 // bind = SUPER, z, easymotion, action:hyprctl dispatch focuswindow address:{}
 //
@@ -783,5 +817,4 @@ binds {
 //
 // bind = $mainMod, F2, exec, dms kill
 // bind = $mainMod, F3, exec, dms restart
-
 }
