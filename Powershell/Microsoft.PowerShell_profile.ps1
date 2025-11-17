@@ -962,20 +962,24 @@ function create_pr
 
         # $diff.substring(0, [System.Math]::Min(10, $diff.Length))
         # $diff = $diff.Substring(0, [System.Math]::Min(1500, $diff.Length)) #ollama limit is 16k tokens, so limit to 15k chars to be sure
-        $diff = $diff[0..3000] -join ""
-
-        $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
-        $AiText = [string]::join("`n",($AiText.Split("`n")))
 
         $AiDescription = ollama run qwen2.5-coder:14b "$PromtDescription $jira_plain"
         $AiDescription = [string]::join("`n",($AiDescription.Split("`n")))
-
 
         $jira_plain = [string]::join("`n",($jira_plain.Split("`n")))
 
         Write-Output "AI Summary: $AiDescription"
 
-        $summary += " `n`n`n <details><summary>AI Diff Summary</summary>`n`n$AiText</details>"
+        if ($diff)
+        {
+            $diff = $diff[0..3000] -join ""
+
+            $AiText = ollama run qwen2.5-coder:14b "$Promt $diff"
+            $AiText = [string]::join("`n",($AiText.Split("`n")))
+
+            $summary += " `n`n`n <details><summary>AI Diff Summary</summary>`n`n$AiText</details>"
+        } 
+
         $summary += " `n`n`n <details><summary>Jira Description</summary>`n`n$jira_plain</details>"
         # $summary += " `n`n`n <details><summary>Jira AI Description Summary</summary>`n`n$AiDescription</details>"
         $summary += " `n`n`n $AiDescription"
