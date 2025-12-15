@@ -808,7 +808,7 @@ binds {
 
     // For Work
     Mod+Shift+W hotkey-overlay-title="Work Websites" {
-      spawn "firefox" "https://app.clockify.me/timesheet" "https://outlook.office.com/mail/0/?deeplink=mail%2F0%2F%3Fnlp%3D0" "https://surgscience.atlassian.net/jira/software/c/projects/EG/boards/298" "https://surgscience.atlassian.net/wiki/spaces/GOTS/overview" "https://github.com/SurgicalScience";
+      spawn "firefox" "https://app.clockify.me/timesheet" "https://outlook.office.com/mail/0/?deeplink=mail%2F0%2F%3Fnlp%3D0" "https://surgscience.atlassian.net/jira/software/c/projects/EG/boards/298" "https://surgscience.atlassian.net/wiki/spaces/GOTS/overview" "https://github.com/SurgicalScience" "https://unity.surgicalscience.com/realtime-usage?toolsets=Unity+Build+Server+Free%2CUnity+Industry%28Floating%29" "https://teams.microsoft.com/v2/";
     }
 
 // bind = SUPER, z, easymotion, action:hyprctl dispatch focuswindow address:{}
