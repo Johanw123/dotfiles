@@ -372,8 +372,11 @@ environment {
     // __VK_LAYER_NV_optimus "NVIDIA_only"
     // __GLX_VENDOR_LIBRARY_NAME "nvidia"
 
-    XDG_MENU_PREFIX "arch-"
+    // XDG_MENU_PREFIX "plasma- kbuildsycoca6"
+    XDG_MENU_PREFIX "arch- kbuildsycoca6 --noincremental"
     XDG_SESSION_TYPE "wayland"
+    QT_QPA_PLATFORMTHEME "qt6ct"
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT "1"
 }
 
 // Add lines like this to spawn processes at startup.
@@ -454,13 +457,8 @@ window-rule {
 }
 
  window-rule {
-
-match app-id=r#"UntitledGemGame"#
-
-// exclude title="^.* - Thunar$"
-
-open-floating true
-
+    match app-id=r#"UntitledGemGame"#
+    open-floating true
 } 
 
 // Example: block out two password managers from screen capture.
