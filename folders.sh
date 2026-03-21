@@ -3,14 +3,17 @@
 user=johan
 
 sudo rm /home/$user/.omnisharp
-sudo rm -rf /home/$user/.omnisharp
-sudo rm -rf /home/$user/.config/nvim
 sudo rm /home/$user/.config/fish/config.fish
 sudo rm /home/$user/.config/starship.toml
-sudo rm -rf /home/$user/.zshrc
 sudo rm /home/$user/.wezterm.lua
 sudo rm /home/$user/.gitconfig
+sudo rm /home/$user/.config/DankMaterialShell/settings.json
+
 sudo rm -rf /home/$user/.config/hypr
+sudo rm -rf /home/$user/.zshrc
+sudo rm -rf /home/$user/.omnisharp
+sudo rm -rf /home/$user/.config/nvim
+
 
 sudo rm -rf /home/$user/.config/nvim
 sudo rm -rf /home/$user/.cache/nvim
@@ -32,10 +35,17 @@ sudo ln -s /home/$user/dotfiles/wezterm/.wezterm.lua /home/$user/.wezterm.lua
 sudo ln -s /home/$user/dotfiles/git/.gitconfig /home/$user/.gitconfig
 sudo ln -s /home/$user/dotfiles/git/.gitconfig-linux /home/$user/.gitconfig-linux
 
+sudo ln -s /home/$user/dotfiles//DankMaterialShell/settings.json /home/$user/.config/DankMaterialShell/settings.json
+
+sudo rm /home/$user/.config/DankMaterialShell/settings.json
+
 
 sudo ln -snf /home/$user/dotfiles/kitty /home/$user/.config/kitty
 sudo ln -snf /home/$user/dotfiles/hypr /home/$user/.config/hypr
 sudo ln -snf /home/$user/dotfiles/niri /home/$user/.config/niri
 sudo ln -snf /home/$user/dotfiles/hyprpanel/ /home/$user/.config/hyprpanel
+
+
+
 
 sudo ln /home/$user/dotfiles/Powershell/Microsoft.PowerShell_profile.ps1 /home/$user/.config/powershell/Microsoft.PowerShell_profile.ps1
