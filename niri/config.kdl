@@ -377,6 +377,14 @@ environment {
     XDG_SESSION_TYPE "wayland"
     QT_QPA_PLATFORMTHEME "qt6ct"
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT "1"
+    SDL_VIDEODRIVER "wayland"
+
+    XDG_CURRENT_DESKTOP "niri"
+    QT_QPA_PLATFORM "wayland"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    QT_QPA_PLATFORMTHEME "gtk3"
+    QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+
 }
 
 // Add lines like this to spawn processes at startup.
@@ -433,6 +441,17 @@ animations {
     // slowdown 3.0
 }
 
+
+layer-rule {
+    match namespace="^quickshell$"
+    place-within-backdrop true
+}
+
+layer-rule {
+    match namespace="dms:blurwallpaper"
+    place-within-backdrop true
+}
+
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
@@ -463,7 +482,7 @@ window-rule {
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
@@ -472,6 +491,12 @@ window-rule {
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
 }
+
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
@@ -826,3 +851,17 @@ binds {
 // bind = $mainMod, F2, exec, dms kill
 // bind = $mainMod, F3, exec, dms restart
 }
+
+// include "dms/alttab.kdl"
+// include "dms/colors.kdl"
+// include "dms/layout.kdl"
+// include "dms/windowrules.kdl"
+// include "dms/binds.kdl"
+// include "dms/cursor.kdl"
+// include "dms/outputs.kdl"
+// include "dms/wpblur.kdl"
+
+include "dms/colors.kdl"
+include "dms/layout.kdl"
+include "dms/alttab.kdl"
+include "dms/binds.kdl"

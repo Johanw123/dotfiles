@@ -26,6 +26,8 @@ sudo pacman -S wezterm --noconfirm
 
 sudo pacman -S slurp --noconfirm
 
+sudo pacman -S archlinux-xdg-menu
+
 
 sudo curl -sS https://starship.rs/install.sh | sh
 
@@ -37,6 +39,7 @@ sudo pacman -S hyprshot --noconfirm
 sudo pacman -S hyprlock --noconfirm
 sudo pacman -S hyprpicker --noconfirm
 
+sudo pacman -S uwsm --noconfirm
 
 #Work/Dev
 
@@ -67,8 +70,8 @@ sudo pacman -S vlc-plugin-gstreamer
 sudo pacman -S wine
 sudo pacman -S winetricks
 
-sudo pacman -S power-profiles-daemon
-sudo systemctl enable power-profiles-daemon.service --now
+#sudo pacman -S power-profiles-daemon
+#sudo systemctl enable power-profiles-daemon.service --now
 
 ccache -M 100G
 ccache -o compression_level=5
@@ -85,6 +88,21 @@ else
     echo "done!"
 fi
 
+
+# Virtual machine
+
+sudo pacman -S libvirt virt-manager qemu-full dnsmasq dmidecode
+sudo systemctl enable --now libvirtd.service virtlogd.service
+sudo usermod -aG libvirt $USER
+sudo virsh net-autostart default
+sudo virsh net-start default
+
+sudo pacman -S docker
+sudo pacman -S docker-compose
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo systemctl start docker
 
 
 #sudo pacman -S conan --noconfirm
