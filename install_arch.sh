@@ -29,12 +29,19 @@ yay -S gpu-screen-recorder-ui --noconfirm
 
 #dotnet
 yay -S dotnet-sdk --noconfirm
+yay -S dotnet-sdk-6.0 --noconfirm
 yay -S dotnet-sdk-7.0 --noconfirm
 yay -S dotnet-sdk-8.0 --noconfirm
 yay -S dotnet-runtime --noconfirm
 yay -S dotnet-runtime-7.0 --noconfirm
 yay -S dotnet-runtime-8.0 --noconfirm
 yay -S dotnet-host --noconfirm
+
+
+yay -S omnisharp-roslyn --noconfirm
+
+# virtual machine stuff
+sudo pacman -Sy swtpm --noconfirm # For tmp 2.0 FIX 
 
 # works stuff
 # yay -S slack-desktop --noconfirm
@@ -92,15 +99,3 @@ sudo bash install_arch_admin.sh
 #ACTION=="remove|unbind", SUBSYSTEM=="pci", DRIVERS=="nvidia", ATTR{vendor}=="0x10de", \
 #    ATTR{class}=="0x03[0-9]*", TEST=="power/control", ATTR{power/control}="on"
 
-
-
-
-#VirtualBox
-#https://www.youtube.com/watch?v=N4C5CeYfntE -> shared folders, shared clipboard, guest drivers
-
-#sudo pacman -S virtualbox virtualbox-host-dkms virtualbox-guest-iso
-#sudo gpasswd -a $USER vboxusers
-#sudo modprobe vboxdrv
-#sudo modprobe -r kvm_intel
-#sudo systemctl enable vboxweb.service
-#sudo systemctl start vboxweb.service

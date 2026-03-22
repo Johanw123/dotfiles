@@ -104,6 +104,8 @@ sudo groupadd docker
 sudo usermod -aG docker $USER
 sudo systemctl start docker
 
+# For empty list in dolphin apps
+sudo ln -s /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
 
 #sudo pacman -S conan --noconfirm
 
