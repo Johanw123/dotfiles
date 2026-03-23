@@ -89,6 +89,38 @@ function quicksim_lapsim
   cd $current_dir
 end
 
+
+function quicksim_lap4
+  set current_dir $PWD
+  set found "0"
+  while true
+    if test -d ./products
+      if test -d ./Runtime
+          set found "1"
+          break
+      end
+    end
+
+     if [ "$PWD" = "/" ]
+      echo "Reached sytem root without finding susrepo1 root"
+      break
+    end
+
+    cd ..
+  end
+
+  if [ $found = "1" ]
+    set path $PWD/Runtime/Lap4/bin_$argv/quickSim
+    if test -e $path 
+      command $path
+    else
+      echo "Could not find filepath: $path"
+    end
+  end
+
+  cd $current_dir
+end
+
 function qslap
   quicksim_lapsim "release"
 end
@@ -99,6 +131,18 @@ end
 
 function qslapu
   quicksim_lapsim "unopt"
+end
+
+function qslap4
+  quicksim_lap4 "release"
+end
+
+function qslap4d
+  quicksim_lap4 "debug"
+end
+
+function qslap4u
+  quicksim_lap4 "unopt"
 end
 
 function bcli
@@ -217,4 +261,7 @@ set PATH $HOME/.dotnet/tools/ $PATH
 set PATH $HOME/my_msvc/opt/msvc/bin/x64 $PATH
 set PATH $HOME/bin $PATH
 
+set PATH $HOME/.local/share/nvim/mason/bin/ $PATH
+
 set OLLAMA_API_BASE "http://localhost:11434"
+set -x SurgicalScienceDevMode "1"

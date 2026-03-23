@@ -375,6 +375,7 @@ environment {
     // XDG_MENU_PREFIX "plasma- kbuildsycoca6"
     XDG_MENU_PREFIX "arch- kbuildsycoca6 --noincremental"
     XDG_SESSION_TYPE "wayland"
+
     QT_QPA_PLATFORMTHEME "qt6ct"
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT "1"
     SDL_VIDEODRIVER "wayland"
@@ -384,7 +385,6 @@ environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
     QT_QPA_PLATFORMTHEME "gtk3"
     QT_QPA_PLATFORMTHEME_QT6 "gtk3"
-
 }
 
 // Add lines like this to spawn processes at startup.

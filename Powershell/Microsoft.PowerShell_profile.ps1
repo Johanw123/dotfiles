@@ -914,7 +914,7 @@ function solid_create_pr
 
 function edu_create_pr
 {
-    create_pr -addAiText $true -base_branch 'edu_develop'
+    create_pr -addAiText $true -base_branch 'edu/develop'
 }
 
 function create_pr
