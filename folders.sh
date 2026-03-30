@@ -35,6 +35,7 @@ sudo ln -s /home/$user/dotfiles/zsh/.zshrc /home/$user/.zshrc
 sudo ln -s /home/$user/dotfiles/wezterm/.wezterm.lua /home/$user/.wezterm.lua
 sudo ln -s /home/$user/dotfiles/git/.gitconfig /home/$user/.gitconfig
 sudo ln -s /home/$user/dotfiles/git/.gitconfig-linux /home/$user/.gitconfig-linux
+sudo ln -s /home/$user/dotfiles/tmux/.tmux.conf /home/$user/.tmux.conf
 
 
 
