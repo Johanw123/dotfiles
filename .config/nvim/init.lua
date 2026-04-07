@@ -254,6 +254,7 @@ vim.pack.add({
 	{ src = "https://github.com/mason-org/mason.nvim.git" },
 	{ src = "https://github.com/mason-org/mason-lspconfig.nvim.git" },
 	{ src = "https://github.com/neovim/nvim-lspconfig.git" },
+	{ src = "https://github.com/dchinmay2/clangd_extensions.nvim" },
 	{ src = "https://github.com/Saghen/blink.cmp" },
 	{ src = "https://github.com/seblyng/roslyn.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
@@ -286,7 +287,6 @@ vim.pack.add({
 	{ src = "https://github.com/typicode/bg.nvim" },
 	{ src = "https://github.com/ThePrimeagen/harpoon" },
 	{ src = "https://github.com/max397574/better-escape.nvim" }, 
-	{ src = "https://github.com/p00f/clangd_extensions.nvim" },
 	{ src = "https://github.com/folke/snacks.nvim" },
 	
 })
@@ -441,7 +441,26 @@ require("blink.cmp").setup({
 	appearance = {
 		nerd_font_variant = 'mono'
 	},
-	completion = { documentation = { auto_show = true } },
+	completion = { 
+    documentation = { auto_show = true },
+    menu = {
+      draw = {
+        -- We don't need label_description now because label and label_description are already
+        -- combined together in label by colorful-menu.nvim.
+        columns = { { 'kind_icon' }, { 'label', gap = 1 } },
+        components = {
+          label = {
+            text = function(ctx)
+              return require('colorful-menu').blink_components_text(ctx)
+            end,
+            highlight = function(ctx)
+              return require('colorful-menu').blink_components_highlight(ctx)
+            end,
+          },
+        },
+      },
+    },
+  },
 	sources = {
 		default = { 'lsp', 'path', 'snippets', 'buffer' },
 	},
