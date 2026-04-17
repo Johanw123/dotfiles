@@ -377,7 +377,7 @@ environment {
     XDG_SESSION_TYPE "wayland"
 
     QT_QPA_PLATFORMTHEME "qt6ct"
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT "1"
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT "0"
     SDL_VIDEODRIVER "wayland"
 
     XDG_CURRENT_DESKTOP "niri"
@@ -441,7 +441,6 @@ animations {
     // slowdown 3.0
 }
 
-
 layer-rule {
     match namespace="^quickshell$"
     place-within-backdrop true
@@ -497,12 +496,22 @@ window-rule {
     default-floating-position x=10 y=10 relative-to="bottom-right"
 }
 
+window-rule {
+    // Match the app-id of your popup tool
+    match app-id=r#"spotlight"# 
+
+    // Set the opacity (0.0 to 1.0)
+    opacity 0.55
+}
 
 // Example: enable rounded corners for all windows.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
+    background-effect {
+        blur true
+    }
 }
 
 binds {
@@ -865,3 +874,7 @@ include "dms/colors.kdl"
 include "dms/layout.kdl"
 include "dms/alttab.kdl"
 include "dms/binds.kdl"
+
+include "dms/cursor.kdl"
+
+include "dms/windowrules.kdl"
