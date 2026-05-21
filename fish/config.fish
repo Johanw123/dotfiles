@@ -294,3 +294,8 @@ set PATH $HOME/.local/share/nvim/mason/bin/ $PATH
 set OLLAMA_API_BASE "http://localhost:11434"
 set -x SurgicalScienceDevMode "1"
 set -x SDL_VIDEODRIVER "wayland"
+
+
+
+set -x LAPSUITE_UI_PROJECT_PATH "/home/johanw/Dev/workspaces/LapMentorGUI/"
+set -x LAPSUITE_GODOT_BIN "/bin/godot"
