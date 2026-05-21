@@ -121,6 +121,8 @@ function quicksim_lap4
   cd $current_dir
 end
 
+
+# Start quickSim functions
 function qslap
   quicksim_lapsim "release"
 end
@@ -143,6 +145,32 @@ end
 
 function qslap4u
   quicksim_lap4 "unopt"
+end
+
+# Build quickSim functions
+function blap4
+  bcli "-plinux-release" "-tquickSimLap4"
+end
+
+function blap4d
+  bcli "-plinux-debug" "-tquickSimLap4"
+end
+
+function blap4u
+  bcli "-plinux-unopt" "-tquickSimLap4"
+end
+
+# Build then start quickSim functions
+function bqslap4
+  blap4 && qslap4
+end
+
+function bqslap4d
+  blap4d && qslap4d
+end
+
+function bqslap4u
+  blap4u && qslap4u
 end
 
 function bcli
@@ -168,7 +196,7 @@ function bcli
     set path $PWD/cmake/BuildCLI
     if test -e $path 
       cd $PWD/cmake
-      command $path -s
+      command $path -s $argv
     else
       echo "Could not find filepath: $path"
     end
@@ -265,3 +293,4 @@ set PATH $HOME/.local/share/nvim/mason/bin/ $PATH
 
 set OLLAMA_API_BASE "http://localhost:11434"
 set -x SurgicalScienceDevMode "1"
+set -x SDL_VIDEODRIVER "wayland"
