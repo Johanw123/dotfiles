@@ -481,6 +481,12 @@ window-rule {
     open-floating true
 } 
 
+
+ window-rule {
+    match app-id=r#"LapMentorGUI"#
+    open-floating true
+} 
+
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
 window-rule {
@@ -882,9 +888,10 @@ binds {
 
 include "dms/colors.kdl"
 include "dms/layout.kdl"
-//include "dms/alttab.kdl"
+// include "dms/alttab.kdl"
 include "dms/binds.kdl"
 
 include "dms/cursor.kdl"
 
 include "dms/windowrules.kdl"
+
