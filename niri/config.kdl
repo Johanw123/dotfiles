@@ -406,6 +406,8 @@ spawn-at-startup "kwalletd6"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "dms" "run"
 spawn-at-startup "gsr-ui"
+// spawn-at-startup "niri-float-sticky"
+// spawn-at-startup "niri-float-sticky" "-app-id" "org.mozilla.firefox" "-title" "Picture-in-Picture"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -512,6 +514,14 @@ window-rule {
     background-effect {
         blur true
     }
+}
+
+ window-rule {
+    match app-id=r#"^org\.mozilla\.firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+    default-column-width { fixed 600; }
+    default-window-height { fixed 350; }
+    default-floating-position x=300 y=60 relative-to="top-right"
 }
 
 binds {
@@ -872,7 +882,7 @@ binds {
 
 include "dms/colors.kdl"
 include "dms/layout.kdl"
-include "dms/alttab.kdl"
+//include "dms/alttab.kdl"
 include "dms/binds.kdl"
 
 include "dms/cursor.kdl"
