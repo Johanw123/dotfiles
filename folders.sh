@@ -28,7 +28,7 @@ sudo rm -rf "/home/$user/.config/hyprpanel"
 #sudo mkdir ~/.config/fish
 
 sudo ln -sf /home/$user/dotfiles/.omnisharp /home/$user/.omnisharp
-sudo ln -s /home/$user/dotfiles/kickstart.nvim /home/$user/.config/nvim
+sudo ln -s /home/$user/dotfiles/.config/nvim /home/$user/.config/nvim
 sudo ln -s /home/$user/dotfiles/fish/config.fish /home/$user/.config/fish/config.fish
 sudo ln -s /home/$user/dotfiles/starship/starship.toml /home/$user/.config/starship.toml
 sudo ln -s /home/$user/dotfiles/zsh/.zshrc /home/$user/.zshrc
