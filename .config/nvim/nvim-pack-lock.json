@@ -30,7 +30,7 @@
     },
     "clangd_extensions.nvim": {
       "rev": "fda4d4c9f1e1c156a320087083cc45cad52c3ada",
-      "src": "https://github.com/p00f/clangd_extensions.nvim"
+      "src": "https://github.com/dchinmay2/clangd_extensions.nvim"
     },
     "colorful-menu.nvim": {
       "rev": "b51a659459df8d078201aefc995db8175ed55e84",
