@@ -255,6 +255,7 @@ vim.pack.add({
   { src = "https://github.com/mason-org/mason-lspconfig.nvim.git" },
   { src = "https://github.com/neovim/nvim-lspconfig.git" },
   { src = "https://github.com/dchinmay2/clangd_extensions.nvim" },
+  { src = "https://github.com/Saghen/blink.lib" },
   { src = "https://github.com/Saghen/blink.cmp" },
   { src = "https://github.com/seblyng/roslyn.nvim" },
   { src = "https://github.com/stevearc/oil.nvim" },
