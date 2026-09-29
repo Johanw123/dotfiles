@@ -231,6 +231,7 @@ set -x SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
     set -gx HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
     set -gx HOMEBREW_REPOSITORY "$HOMEBREW_PREFIX/Homebrew"
     export MGFXC_WINE_PATH=/home/johan/.winemonogame
+    # export MGFXC_WINE_PATH=/home/johan/.wine
   else if test -d /opt/homebrew # MacOS
     set -gx HOMEBREW_PREFIX "/opt/homebrew"
     set -gx HOMEBREW_CELLAR "$HOMEBREW_PREFIX/Cellar"
@@ -302,5 +303,8 @@ set -x LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/usr/src/tensorrt/lib/"
 
 set -x LAPSUITE_UI_PROJECT_PATH "/home/johanw/Dev/workspaces/LapMentorGUI/"
 set -x LAPSUITE_GODOT_BIN "/bin/godot"
+
+set -e DOTNET_ROOT
+set -e DOTNET_MULTILEVEL_LOOKUP
 
 pyenv init - fish | source
