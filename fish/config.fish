@@ -40,6 +40,9 @@
     alias vim='nvim'
 
 
+    alias perfview="wine ~/.local/bin/PerfView.exe"
+
+
 function desk
   export DESKTOP_SESSION=ubuntu
   export GDMSESSION=ubuntu 
@@ -293,7 +296,7 @@ set PATH $HOME/.local/share/nvim/mason/bin/ $PATH
 
 set OLLAMA_API_BASE "http://localhost:11434"
 set -x SurgicalScienceDevMode "1"
-set -x SDL_VIDEODRIVER "wayland"
+set -x SDL_VIDEODRIVER "wayland,x11"
 
 set -x LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/usr/src/tensorrt/lib/"
 

@@ -28,6 +28,10 @@
       "rev": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
       "src": "https://github.com/akinsho/bufferline.nvim"
     },
+    "buftabline.nvim": {
+      "rev": "d86b08c558eb587159b549e9a9ef77f0c21b5426",
+      "src": "https://github.com/jose-elias-alvarez/buftabline.nvim"
+    },
     "clangd_extensions.nvim": {
       "rev": "78c2ecd659d54972be17aa6ba2deac3c53223b80",
       "src": "https://github.com/dchinmay2/clangd_extensions.nvim"

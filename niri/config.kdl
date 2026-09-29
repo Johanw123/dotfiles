@@ -116,13 +116,13 @@ input {
 output "Dell Inc. DELL U2725QE 2FJM934" {
     scale 1.5
     mode "3840x2160@119.999"
-    variable-refresh-rate
+    // variable-refresh-rate
     position x=0 y=0
 }
 
 output "Acer Technologies XB271HU #ASOLr6WN+UTd" {
     scale 1
-    variable-refresh-rate
+    // variable-refresh-rate
     mode "2560x1440@143.998"
     position x=2560 y=0
 }
@@ -378,7 +378,7 @@ environment {
 
     QT_QPA_PLATFORMTHEME "qt6ct"
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT "0"
-    SDL_VIDEODRIVER "wayland"
+    SDL_VIDEODRIVER "wayland,x11"
 
     XDG_CURRENT_DESKTOP "niri"
     QT_QPA_PLATFORM "wayland"
@@ -406,6 +406,7 @@ spawn-at-startup "kwalletd6"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "dms" "run"
 spawn-at-startup "gsr-ui"
+spawn-at-startup "steam"
 // spawn-at-startup "niri-float-sticky"
 // spawn-at-startup "niri-float-sticky" "-app-id" "org.mozilla.firefox" "-title" "Picture-in-Picture"
 
@@ -475,6 +476,12 @@ window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }
+
+window-rule {
+    match app-id="resolve"
+    open-floating true
+}
+
 
  window-rule {
     match app-id=r#"UntitledGemGame"#
