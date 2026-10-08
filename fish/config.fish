@@ -163,6 +163,20 @@ function blap4u
   bcli "-plinux-unopt" "-tquickSimLap4"
 end
 
+
+function blap
+  bcli "-plinux-release" "-tquickSimLapsim"
+end
+
+function blapd
+  bcli "-plinux-debug" "-tquickSimLapsim"
+end
+
+function blapu
+  bcli "-plinux-unopt" "-tquickSimLapsim"
+end
+
+
 # Build then start quickSim functions
 function bqslap4
   blap4 && qslap4
@@ -175,6 +189,19 @@ end
 function bqslap4u
   blap4u && qslap4u
 end
+
+function bqslap
+  blap && qslap
+end
+
+function bqslapd
+  blapd && qslapd
+end
+
+function bqslapu
+  blapu && qslapu
+end
+
 
 function bcli
   set current_dir $PWD
