@@ -902,3 +902,26 @@ include "dms/cursor.kdl"
 
 include "dms/windowrules.kdl"
 
+
+// Keep the Lap4 simulation floating alongside LapMentorGUI.
+window-rule {
+    match title="^Surgical Science Lap4$"
+    open-floating true
+    open-fullscreen false
+    default-column-width { fixed 1920; }
+    default-window-height { fixed 1080; }
+}
+
+// Add these rules to your niri config for run_lap4_labwc.sh.
+window-rule {
+    match title="^Lap4 nested test$"
+    open-floating true
+    open-fullscreen false
+    default-column-width { fixed 1920; }
+    default-window-height { fixed 1080; }
+}
+
+window-rule {
+    match title="^Lap4 nested fullscreen$"
+    open-fullscreen true
+}

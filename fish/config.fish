@@ -61,93 +61,52 @@ function desk
   gnome-session
 end
 
-function quicksim_lapsim
-  set current_dir $PWD
-  set found "0"
-  while true
-    if test -d ./products
-      if test -d ./Runtime
-          set found "1"
-          break
-      end
+# Launch through nested labwc so GUI overlay windows stack correctly on niri.
+function quicksim_labwc --argument-names product mode
+  set -l repo_root "$PWD"
+  while not test -f "$repo_root/linux/run_sim_labwc.sh"
+    if test "$repo_root" = /
+      echo "Could not find linux/run_sim_labwc.sh above the current directory." >&2
+      return 1
     end
-
-     if [ "$PWD" = "/" ]
-      echo "Reached sytem root without finding susrepo1 root"
-      break
-    end
-
-    cd ..
+    set repo_root (path dirname "$repo_root")
   end
 
-  if [ $found = "1" ]
-    set path $PWD/Runtime/LapSim/bin_$argv/quickSim
-    if test -e $path 
-      command $path
-    else
-      echo "Could not find filepath: $path"
-    end
-  end
-
-  cd $current_dir
+  command bash "$repo_root/linux/run_sim_labwc.sh" "$product" "$mode" $argv[3..-1]
 end
 
+function quicksim_lapsim
+  quicksim_labwc LapSim $argv
+end
 
 function quicksim_lap4
-  set current_dir $PWD
-  set found "0"
-  while true
-    if test -d ./products
-      if test -d ./Runtime
-          set found "1"
-          break
-      end
-    end
-
-     if [ "$PWD" = "/" ]
-      echo "Reached sytem root without finding susrepo1 root"
-      break
-    end
-
-    cd ..
-  end
-
-  if [ $found = "1" ]
-    set path $PWD/Runtime/Lap4/bin_$argv/quickSim
-    if test -e $path 
-      command $path
-    else
-      echo "Could not find filepath: $path"
-    end
-  end
-
-  cd $current_dir
+  quicksim_labwc Lap4 $argv
 end
 
 
 # Start quickSim functions
 function qslap
-  quicksim_lapsim "release"
+  quicksim_lapsim "release" $argv
 end
 
 function qslapd
-  quicksim_lapsim "debug"
+  quicksim_lapsim "debug" $argv
 end
 
 function qslapu
-  quicksim_lapsim "unopt"
+  quicksim_lapsim "unopt" $argv
 end
 
 function qslap4
-  quicksim_lap4 "release"
+  quicksim_lap4 "release" $argv
 end
 
 function qslap4d
-  quicksim_lap4 "debug"
+  quicksim_lap4 "debug" $argv
 end
 
 function qslap4u
-  quicksim_lap4 "unopt"
+  quicksim_lap4 "unopt" $argv
 end
 
 # Build quickSim functions
@@ -179,33 +138,34 @@ end
 
 # Build then start quickSim functions
 function bqslap4
-  blap4 && qslap4
+  blap4 && qslap4 $argv
 end
 
 function bqslap4d
-  blap4d && qslap4d
+  blap4d && qslap4d $argv
 end
 
 function bqslap4u
-  blap4u && qslap4u
+  blap4u && qslap4u $argv
 end
 
 function bqslap
-  blap && qslap
+  blap && qslap $argv
 end
 
 function bqslapd
-  blapd && qslapd
+  blapd && qslapd $argv
 end
 
 function bqslapu
-  blapu && qslapu
+  blapu && qslapu $argv
 end
 
 
 function bcli
-  set current_dir $PWD
-  set found "0"
+  set -l current_dir $PWD
+  set -l build_status 1
+  set -l found "0"
   while true
     if test -d ./products
       if test -d ./Runtime
@@ -223,16 +183,18 @@ function bcli
   end
 
   if [ $found = "1" ]
-    set path $PWD/cmake/BuildCLI
-    if test -e $path 
+    set -l build_cli_path $PWD/cmake/BuildCLI
+    if test -e $build_cli_path 
       cd $PWD/cmake
-      command $path -s $argv
+      command $build_cli_path -s $argv
+      set build_status $status
     else
-      echo "Could not find filepath: $path"
+      echo "Could not find filepath: $build_cli_path"
     end
   end
 
   cd $current_dir
+  return $build_status
 end
 
     # alias wine64='whisky'
