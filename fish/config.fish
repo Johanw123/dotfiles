@@ -290,10 +290,13 @@ set -x SDL_VIDEODRIVER "wayland,x11"
 
 set -x LD_LIBRARY_PATH "$LD_LIBRARY_PATH:/usr/src/tensorrt/lib/"
 
+# Work
 set -x LAPSUITE_UI_PROJECT_PATH "/home/johanw/Dev/workspaces/LapMentorGUI/"
 set -x LAPSUITE_GODOT_BIN "/bin/godot"
+set -gx SUSREPO_WINDOWS_HOST edu@NODEALBREXIT
 
 set -e DOTNET_ROOT
 set -e DOTNET_MULTILEVEL_LOOKUP
+
 
 pyenv init - fish | source

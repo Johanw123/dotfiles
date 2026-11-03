@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+# Linux counterpart of FuzzyGitBranch (fgb) in the PowerShell profile.
+set -euo pipefail
+
+if [[ ${1-} == --help || ${1-} == -h ]]; then
+    cat <<'EOF'
+Usage: fgb
+
+Pick a local or remote Git branch with fzf, then switch to it.
+Type to filter, Enter to switch, or Esc to cancel. The preview shows recent
+commits and changes since the merge base with HEAD. Branches are sorted by
+most recent commit. Remote branches use an existing local branch of the same
+name, or create a local tracking branch. Uses already fetched remote refs.
+
+Run inside a Git working tree. Requires git and fzf.
+EOF
+    exit 0
+elif (( $# > 0 )); then
+    printf 'Usage: fgb\n' >&2
+    exit 2
+fi
+
+for dependency in git fzf; do
+    if ! command -v "$dependency" >/dev/null 2>&1; then
+        printf 'fgb: required command not found: %s\n' "$dependency" >&2
+        exit 1
+    fi
+done
+
+if [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) != true ]]; then
+    printf 'fgb: run this command inside a Git working tree.\n' >&2
+    exit 1
+fi
+
+refs=$(git for-each-ref --sort=-committerdate \
+    --format='%(refname)%09%(refname:lstrip=2)%09%(symref)' refs/heads refs/remotes)
+candidates=''
+while IFS=$'\t' read -r ref display symbolic_target; do
+    # Exclude symbolic aliases such as origin/HEAD.
+    [[ -n $ref && -z $symbolic_target ]] || continue
+    candidates+="$ref"$'\t'"$display"$'\n'
+done <<< "$refs"
+
+if [[ -z $candidates ]]; then
+    printf 'fgb: no branches found.\n' >&2
+    exit 1
+fi
+
+if selected=$(printf '%s' "$candidates" | fzf --no-multi --ansi \
+    --delimiter=$'\t' --with-nth=2 \
+    --header 'Git branches: Enter to switch, Esc to cancel' \
+    --preview 'git log --color=always -3 {1} --; printf "\n"; git diff --stat=80,50 --color=always HEAD...{1} --'); then
+    [[ -n $selected ]] || exit 0
+else
+    selection_status=$?
+    case $selection_status in
+        1|130) exit 0 ;;
+        *) exit "$selection_status" ;;
+    esac
+fi
+
+ref=${selected%%$'\t'*}
+case $ref in
+    refs/heads/*)
+        git switch --no-guess -- "${ref#refs/heads/}"
+        ;;
+    refs/remotes/*)
+        remote_branch=${ref#refs/remotes/}
+        branch=${remote_branch#*/}
+        if git show-ref --verify --quiet "refs/heads/$branch"; then
+            git switch --no-guess -- "$branch"
+        else
+            git switch --track -c "$branch" "$ref"
+        fi
+        ;;
+    *)
+        printf 'fgb: unexpected branch selection: %s\n' "$ref" >&2
+        exit 1
+        ;;
+esac

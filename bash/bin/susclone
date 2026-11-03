@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Linux counterpart of susclone in Powershell/Microsoft.PowerShell_profile.ps1.
+set -euo pipefail
+
+usage() {
+    cat <<'EOF'
+Usage: susclone
+
+Select SurgicalScience repositories with fzf and clone them, including
+submodules, into the current directory. Use Tab to select multiple repositories,
+Enter to clone, or Esc to cancel. Existing paths are skipped.
+
+Requires git, gh (authenticated with gh auth login), and fzf.
+Install glow for an optional Markdown preview.
+
+Example:
+  cd ~/Dev/workspaces
+  susclone
+EOF
+}
+
+if [[ ${1-} == --help || ${1-} == -h ]]; then
+    usage
+    exit 0
+elif (( $# > 0 )); then
+    usage >&2
+    exit 2
+fi
+
+for dependency in git gh fzf; do
+    if ! command -v "$dependency" >/dev/null 2>&1; then
+        printf 'susclone: required command not found: %s\n' "$dependency" >&2
+        exit 1
+    fi
+done
+
+if ! repositories=$(gh repo list SurgicalScience --limit 99999999 --json name --jq '.[].name'); then
+    printf 'susclone: could not list repositories. Check GitHub access with gh auth status.\n' >&2
+    exit 1
+fi
+if [[ -z $repositories ]]; then
+    printf 'susclone: no accessible SurgicalScience repositories found.\n' >&2
+    exit 1
+fi
+
+preview='GH_PAGER=cat gh repo view SurgicalScience/{}'
+if command -v glow >/dev/null 2>&1; then
+    preview+=' | glow -s dark -'
+fi
+
+if selected=$(printf '%s\n' "$repositories" | fzf --multi --ansi \
+    --header 'SurgicalScience: Tab to select, Enter to clone, Esc to cancel' \
+    --preview "$preview"); then
+    [[ -n $selected ]] || exit 0
+else
+    selection_status=$?
+    case $selection_status in
+        1|130) exit 0 ;;
+        *) exit "$selection_status" ;;
+    esac
+fi
+
+result=0
+while IFS= read -r repository; do
+    if [[ -e $repository || -L $repository ]]; then
+        printf 'Skipping %s: path already exists.\n' "$repository"
+        continue
+    fi
+    if ! gh repo clone "SurgicalScience/$repository" -- --recurse-submodules; then
+        printf 'susclone: failed to clone %s\n' "$repository" >&2
+        result=1
+    fi
+done <<< "$selected"
+exit "$result"

@@ -1,7 +1,6 @@
 binds {
-    Mod+Space hotkey-overlay-title="Application Launcher" { 
-        spawn "dms" "ipc" "call" "spotlight" "toggle"; 
-    }
+    // Mod+Space is reserved for keyboard layout switching via XKB.
+    // Spotlight is bound to Mod+D in config.kdl.
 
     Mod+V hotkey-overlay-title="Clipboard Manager" { 
         spawn "dms" "ipc" "call" "clipboard" "toggle"; 

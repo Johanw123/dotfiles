@@ -1,0 +1,215 @@
+#!/usr/bin/env bash
+# Build the current Unity checkout for Linux and run it with the packaged GUI
+# in one nested labwc/XWayland desktop, where overlay positioning is supported.
+set -euo pipefail
+
+script_path=$(realpath "${BASH_SOURCE[0]}")
+inside=0
+if [[ ${1:-} == --inside ]]; then
+    repo_root=${2:?Missing Solidarity checkout for the nested session}
+    inside=1
+    shift 2
+else
+    repo_root=$PWD
+    while [[ ! -f $repo_root/ProjectSettings/ProjectVersion.txt ||
+             ! -f $repo_root/Assets/Code/Scripts/SurgicalScience.Solidarity.asmdef ]]; do
+        if [[ $repo_root == / ]]; then
+            echo "Run bslap4 inside a Solidarity checkout." >&2
+            exit 1
+        fi
+        repo_root=$(dirname -- "$repo_root")
+    done
+fi
+build_dir="$repo_root/Builds/Linux"
+player="$build_dir/Solidarity.x86_64"
+
+if (( inside )); then
+    if [[ -z ${DISPLAY:-} || $DISPLAY == "${SOLIDARITY_OUTER_DISPLAY:-}" ]]; then
+        echo "labwc did not provide a separate XWayland DISPLAY." >&2
+        exit 1
+    fi
+    python3 - <<'PY'
+import json
+import os
+import subprocess
+import time
+
+for attempt in range(100):
+    result = subprocess.run(["niri", "msg", "--json", "windows"],
+                            capture_output=True, text=True, check=True)
+    window = next((w for w in json.loads(result.stdout)
+                   if w.get("pid") == int(os.environ["LABWC_PID"])), None)
+    if window is not None:
+        window_id = str(window["id"])
+        actions = [["fullscreen-window", "--id", window_id]] if os.environ["SOLIDARITY_FULLSCREEN"] == "1" else [
+            ["move-window-to-floating", "--id", window_id],
+            ["set-window-width", "--id", window_id, "1920"],
+            ["set-window-height", "--id", window_id, "1080"],
+        ]
+        for action in actions:
+            subprocess.run(["niri", "msg", "action", *action], check=True)
+        break
+    time.sleep(0.1)
+else:
+    raise SystemExit("Could not identify the outer labwc window; Solidarity was not started.")
+PY
+    # Unity and the Godot process it starts must share labwc's X11 output.
+    unset WAYLAND_DISPLAY
+    export SDL_VIDEODRIVER=x11
+    cd "$build_dir"
+    exec "$player" -screen-fullscreen 0 -popupwindow -logFile "$build_dir/player.log" "$@"
+fi
+
+usage() {
+    cat <<'EOF'
+Usage: bslap4 [OPTIONS] [-- PLAYER_ARGUMENTS...]
+
+Builds the current checkout (including uncommitted changes) with the Unity
+version in ProjectVersion.txt, then starts the Linux player inside labwc.
+The GUI scenes/scripts come from this checkout's packaged LapMentorGUI.exe;
+Linux Godot runs them with the Linux extension libraries from --gui-project.
+No Wine is used. Close the Unity editor for this project before building.
+Close existing Solidarity and Godot GUI instances before launching.
+
+Options:
+  --no-build           Run the previous Linux build without rebuilding Unity.
+  --build-only         Build and prepare the Linux runtime without launching.
+  --fullscreen         Make the outer labwc window fullscreen (default 1920x1080).
+  --gui-project DIR    LapMentorGUI checkout (default: ../LapMentorGUI).
+  --unity FILE         Unity editor executable (otherwise find the matching Hub install).
+  --godot FILE         Linux Godot executable (default: godot on PATH).
+  -h, --help           Show this help.
+
+Build output and logs: Builds/Linux/
+Requirements: Unity with Linux Build Support, Linux Godot, the GUI's compiled
+Linux gdsustools extension; labwc, Xwayland, alacritty, python3 and niri to launch.
+EOF
+}
+
+build=1
+build_only=0
+gui_project="$repo_root/../LapMentorGUI"
+unity=${UNITY_EDITOR:-}
+godot=${GODOT_BIN:-godot}
+export SOLIDARITY_FULLSCREEN=0
+while (( $# )); do
+    case "$1" in
+        --no-build) build=0; shift ;;
+        --build-only) build_only=1; shift ;;
+        --fullscreen) export SOLIDARITY_FULLSCREEN=1; shift ;;
+        --gui-project|--unity|--godot)
+            if (( $# < 2 )); then echo "Missing value for $1" >&2; exit 2; fi
+            case "$1" in
+                --gui-project) gui_project=$2 ;;
+                --unity) unity=$2 ;;
+                --godot) godot=$2 ;;
+            esac
+            shift 2
+            ;;
+        -h|--help) usage; exit 0 ;;
+        --) shift; break ;;
+        *) echo "Unknown option: $1" >&2; usage >&2; exit 2 ;;
+    esac
+done
+
+gui_project=$(realpath "$gui_project")
+godot=$(command -v "$godot") || { echo "Linux Godot not found. Use --godot FILE." >&2; exit 1; }
+if [[ ! -f $gui_project/project.godot ||
+      ! -f $gui_project/addons/gdsustools/bin/libgdsustools.linux.template_debug.x86_64.so ]]; then
+    echo "Missing LapMentorGUI project or its compiled Linux gdsustools extension: $gui_project" >&2
+    exit 1
+fi
+if (( !build_only )); then
+    for dependency in labwc Xwayland alacritty python3 niri; do
+        command -v "$dependency" >/dev/null || { echo "Missing dependency: $dependency" >&2; exit 1; }
+    done
+    [[ -n ${WAYLAND_DISPLAY:-} ]] || { echo "Run from your niri/Wayland session." >&2; exit 1; }
+    niri msg --json windows >/dev/null
+fi
+
+mkdir -p "$build_dir"
+if (( build )); then
+    version=$(sed -n 's/^m_EditorVersion: //p' "$repo_root/ProjectSettings/ProjectVersion.txt" | tr -d '\r')
+    if [[ -z $unity ]]; then
+        unity="$HOME/Unity/Hub/Editor/$version/Editor/Unity"
+    fi
+    [[ -x $unity ]] || { echo "Unity $version not found: $unity. Use --unity FILE." >&2; exit 1; }
+    # Unity and the project's OpenXR build callbacks serialize these files.
+    # Preserve the user's current settings, including uncommitted edits.
+    settings_backup=$(mktemp -d /tmp/solidarity-linux-settings.XXXXXX)
+    settings_files=(ProjectSettings/ProjectSettings.asset Assets/XR/XRGeneralSettings.asset)
+    for file in "${settings_files[@]}"; do
+        mkdir -p "$settings_backup/$(dirname "$file")"
+        cp "$repo_root/$file" "$settings_backup/$file"
+    done
+    restore_settings() {
+        for file in "${settings_files[@]}"; do
+            if ! cmp -s "$settings_backup/$file" "$repo_root/$file"; then
+                cp "$settings_backup/$file" "$repo_root/$file"
+            fi
+        done
+        rm -rf -- "$settings_backup"
+    }
+    trap restore_settings EXIT
+    echo "Building the current checkout with Unity $version. Log: $build_dir/build.log"
+    if ! "$unity" -batchmode -quit -projectPath "$repo_root" \
+        -buildTarget Linux64 -buildLinux64Player "$player" -logFile "$build_dir/build.log"; then
+        tail -n 60 "$build_dir/build.log" >&2
+        exit 1
+    fi
+    restore_settings
+    trap - EXIT
+    cp "$repo_root/config.ini" "$build_dir/config.ini"
+fi
+[[ -x $player ]] || { echo "No Linux player at $player; run without --no-build." >&2; exit 1; }
+export SOLIDARITY_GUI_PACK="$build_dir/Solidarity_Data/StreamingAssets/plugins/gui/LapMentorGUI.exe"
+[[ -f $SOLIDARITY_GUI_PACK ]] || { echo "The Linux build is missing its packaged GUI." >&2; exit 1; }
+export SOLIDARITY_GODOT_BIN="$godot"
+export SOLIDARITY_GUI_LOG="$build_dir/gui.log"
+export LAPSUITE_UI_PROJECT_PATH="$gui_project"
+export LAPSUITE_GODOT_BIN="$build_dir/run-godot.sh"
+# Use GUIController's existing external-Godot startup path. It owns the process
+# and stops it when the simulation closes. --main-pack selects the built GUI
+# content; --path provides the matching Linux extension libraries.
+cat > "$LAPSUITE_GODOT_BIN" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+exec "$SOLIDARITY_GODOT_BIN" --main-pack "$SOLIDARITY_GUI_PACK" \
+    --display-driver x11 --rendering-method gl_compatibility \
+    --log-file "$SOLIDARITY_GUI_LOG" "$@"
+SH
+chmod +x "$LAPSUITE_GODOT_BIN"
+if (( build_only )); then
+    echo "Linux runtime ready: $player"
+    exit 0
+fi
+
+config_dir=$(mktemp -d /tmp/solidarity-labwc.XXXXXX)
+trap 'rm -rf -- "$config_dir"' EXIT
+cat > "$config_dir/rc.xml" <<'XML'
+<?xml version="1.0"?>
+<labwc_config>
+  <windowRules>
+    <windowRule identifier="*Solidarity*" serverDecoration="no">
+      <action name="Maximize" />
+    </windowRule>
+    <windowRule title="*" allowAlwaysOnTop="yes" />
+  </windowRules>
+</labwc_config>
+XML
+: > "$config_dir/autostart"
+: > "$config_dir/shutdown"
+: > "$config_dir/environment"
+export SOLIDARITY_OUTER_DISPLAY=${DISPLAY:-}
+printf -v session_command '%q ' alacritty -e bash "$script_path" --inside "$repo_root" "$@"
+echo "Starting Solidarity. Player log: $build_dir/player.log"
+echo "Compositor log: $build_dir/labwc.log"
+if WLR_BACKENDS=wayland WLR_WL_OUTPUTS=1 LABWC_UPDATE_ACTIVATION_ENV=0 \
+    labwc --config-dir "$config_dir" --title "Solidarity nested session" \
+    --session "$session_command" > "$build_dir/labwc.log" 2>&1; then
+    exit 0
+else
+    status=$?
+    tail -n 30 "$build_dir/labwc.log" >&2
+    exit "$status"
+fi
