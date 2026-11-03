@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=System Update
+Comment=Update Arch, AUR packages, and Flatpak applications
+Exec=sh -c "exec \"\\$HOME/dotfiles/bash/bin/system-update\" --window"
+Icon=system-software-update
+Terminal=false
+Categories=Settings;PackageManager;
+Keywords=update;upgrade;packages;arch;flatpak;

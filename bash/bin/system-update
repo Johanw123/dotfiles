@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# Update Arch repositories, AUR packages, and installed Flatpaks interactively.
+set -uo pipefail
+
+case "${1:-}" in
+    --help|-h)
+        printf 'Usage: system-update [--window|--dry-run]\n\nUpdates Arch + AUR, then Flatpak. --window opens Alacritty and keeps the\nsummary visible. --dry-run prints commands without changing packages.\n'
+        exit 0 ;;
+    --window)
+        exec alacritty --title 'System Update' -e "$(realpath "$0")" --hold ;;
+    ''|--hold|--dry-run) ;;
+    *) printf 'Unknown option: %s\n' "$1" >&2; exit 2 ;;
+esac
+
+hold=false
+[[ ${1:-} == --hold ]] && hold=true
+dry_run=false
+[[ ${1:-} == --dry-run ]] && dry_run=true
+
+finish() {
+    local status=$?
+    trap - EXIT
+    if $hold && [[ -t 0 ]]; then
+        printf '\nPress Enter to close...'
+        read -r _ || true
+    fi
+    exit "$status"
+}
+trap finish EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+if ! $dry_run; then
+    if (( EUID == 0 )); then
+        printf 'Run this as your normal user; package tools request sudo when needed.\n' >&2
+        exit 1
+    fi
+    if [[ ! -t 0 ]]; then
+        printf 'An interactive terminal is required. Use system-update --window.\n' >&2
+        exit 1
+    fi
+    # Prevent two copies of this updater from running simultaneously.
+    exec 9>"${XDG_RUNTIME_DIR:?XDG_RUNTIME_DIR is not set}/system-update.lock"
+    flock -n 9 || { printf 'Another system update is already running.\n'; exit 1; }
+fi
+
+heading() { printf '\n━━ %s ━━\n' "$1"; }
+run() {
+    if $dry_run; then
+        printf '  '; printf '%q ' "$@"; printf '\n'
+    else
+        "$@"
+    fi
+}
+
+heading 'Arch System Update'
+printf 'Review Arch news before upgrading: https://archlinux.org/news/\n'
+printf 'Package managers will show changes and ask for confirmation.\n'
+
+heading '1 / 2 · Arch repositories and AUR'
+if command -v paru >/dev/null 2>&1; then
+    upgrade=(paru -Syu)
+elif command -v yay >/dev/null 2>&1; then
+    upgrade=(yay -Syu)
+else
+    upgrade=(sudo pacman -Syu)
+    printf 'No AUR helper found; only repository packages will be updated.\n'
+fi
+if ! run "${upgrade[@]}"; then
+    heading 'Update failed'
+    printf 'Arch/AUR upgrade did not complete. Resolve the error above and rerun.\n'
+    exit 1
+fi
+
+heading '2 / 2 · Flatpak applications and runtimes'
+if command -v flatpak >/dev/null 2>&1; then
+    if ! run flatpak update; then
+        heading 'Update incomplete'
+        printf 'Arch/AUR command succeeded, but Flatpak failed. Review the error above.\n'
+        exit 1
+    fi
+else
+    printf 'Flatpak is not installed; skipped.\n'
+fi
+
+heading 'Summary'
+if $dry_run; then
+    printf 'Preview only: no packages changed.\n'
+else
+    printf 'Update commands completed successfully.\n'
+    printf 'Review any warnings above. Reboot if the kernel or core system components changed.\n'
+fi

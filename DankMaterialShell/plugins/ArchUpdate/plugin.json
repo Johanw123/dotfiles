@@ -1,0 +1,11 @@
+{
+  "id": "archUpdate",
+  "name": "Arch System Update",
+  "description": "Open the interactive Arch, AUR and Flatpak updater",
+  "version": "1.0.0",
+  "author": "Local",
+  "icon": "system_update",
+  "type": "widget",
+  "component": "./ArchUpdate.qml",
+  "permissions": ["process"]
+}
