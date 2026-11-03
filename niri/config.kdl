@@ -406,6 +406,8 @@ spawn-at-startup "kwalletd6"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "dms" "run"
 spawn-at-startup "gsr-ui"
+// Skip Steam autostart on the work laptop.
+spawn-sh-at-startup "if [ \"$(hostname)\" != archlinux ]; then exec steam; fi"
 // spawn-at-startup "niri-float-sticky"
 // spawn-at-startup "niri-float-sticky" "-app-id" "org.mozilla.firefox" "-title" "Picture-in-Picture"
 
