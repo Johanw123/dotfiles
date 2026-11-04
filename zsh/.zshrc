@@ -53,3 +53,5 @@ alias tree='eza --tree $eza_params'
 # Load and initialise completion system
 autoload -Uz compinit
 compinit
+
+. "$HOME/.local/bin/env"
